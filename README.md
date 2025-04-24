@@ -1,7 +1,7 @@
 # DSWTP_FrontEnd
 UTNFRRo
 
-Desarrollo de Software - Trabajo Práctico - BackEnd - 2025
+Desarrollo de Software - Trabajo Práctico - FrontEnd - 2025
 
 Comisión: 303.
 
