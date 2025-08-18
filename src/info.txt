@@ -1,0 +1,11 @@
+/screens: for applications screens, we usually create a new folder for every 
+screen or application module, and for every screen folder, you should see a 
+components folder where we create screen components.
+
+/navigation: all navigation-related components ( Stacks, Tabs …)
+
+/components: this folder contains reusable components that can be used across
+the application. For example, buttons, inputs, cards, etc.
+
+/context: estado global con React Context. Maneja el estado global de la aplicación
+usando AuthContext.js → Maneja usuario logueado y token y ThemeContext.js → Maneja tema claro/oscuro..
