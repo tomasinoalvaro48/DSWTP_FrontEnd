@@ -4,6 +4,8 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-  "module": "node16", 
-  "moduleResolution": "node16"
+  "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16"
+  },
 }

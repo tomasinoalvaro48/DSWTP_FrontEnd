@@ -5,6 +5,8 @@
   "type": "module",
   "exports": "./index.js",
   "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview"
@@ -16,12 +18,17 @@
   "devDependencies": {
     "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
+    "@typescript-eslint/parser": "^8.40.0",
     "@vitejs/plugin-react": "4.4.1",
-    "eslint": "8.2.0",
-    "eslint-plugin-import": "2.25.3",
-    "eslint-plugin-jsx-a11y": "6.5.1",
-    "eslint-plugin-react": "7.28.0",
-    "eslint-plugin-react-hooks": "4.3.0",
+    "eslint": "^9.33.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.6.2",
     "typescript": "~5.8.3",
     "vite": "6.3.5"
   }
