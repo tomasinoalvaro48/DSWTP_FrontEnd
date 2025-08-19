@@ -1,7 +1,25 @@
-import { useState } from 'react'
+import Navbar from './components/Navbar.tsx'
 
 function App() {
-  return <></>
+  return (
+    <>
+      <html lang="en">
+        <head>
+          <meta charSet="UTF-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <title>Resolución de Anomalías</title>
+        </head>
+        <body>
+          <header>
+            <Navbar></Navbar>
+          </header>
+        </body>
+      </html>
+    </>
+  )
 }
 
 export default App
