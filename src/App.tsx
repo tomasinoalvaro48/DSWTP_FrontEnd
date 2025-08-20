@@ -1,23 +1,17 @@
-import Navbar from './components/Navbar.tsx'
+import { MainNavbar } from './components/Navbar.tsx'
+import { CRUDejemplo } from './screens/CRUDejemplo.tsx'
 
 function App() {
   return (
     <>
-      <html lang="en">
-        <head>
-          <meta charSet="UTF-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <title>Resolución de Anomalías</title>
-        </head>
-        <body>
-          <header>
-            <Navbar></Navbar>
-          </header>
-        </body>
-      </html>
+      <main>
+        <header>
+          <MainNavbar></MainNavbar>
+        </header>
+        <section>
+          <CRUDejemplo></CRUDejemplo>
+        </section>
+      </main>
     </>
   )
 }
