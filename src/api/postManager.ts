@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import type { TipoAnomalia } from '../DTOs/TipoAnomaliaDTO.ts'
+//import type { TipoAnomalia } from '../entities/entities.ts'
 
-export function postManager(url: string) {
-  const [post, setPost] = useState<TipoAnomalia[]>([])
+export function postManager<T = unknown>(url: string) {
+  const [post, setPost] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 

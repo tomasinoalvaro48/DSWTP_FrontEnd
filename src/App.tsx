@@ -1,16 +1,20 @@
 import { MainNavbar } from './navigation/MainNavbar.tsx'
 import { Home } from './screens/home.tsx'
-import { CRUD } from './screens/CRUD.tsx'
-import { Route, Routes } from 'react-router'
+import { ShowTiposAnomalias } from './components/showTiposAnomalias.tsx'
+import { createBrowserRouter, createRoutesFromElements, Route, Routes } from 'react-router'
 
 function App() {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      
+    )
   return (
     <>
       <main>
         <MainNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/crud-tipo-anomalia" element={<CRUD />} />
+          <Route path="/show-tipo-anomalia" element={<ShowTiposAnomalias />} />
         </Routes>
       </main>
     </>
