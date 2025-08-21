@@ -1,16 +1,17 @@
-import { MainNavbar } from './components/Navbar.tsx'
-import { CRUDejemplo } from './screens/CRUDejemplo.tsx'
+import { MainNavbar } from './navigation/MainNavbar.tsx'
+import { Home } from './screens/home.tsx'
+import { CRUD } from './screens/CRUD.tsx'
+import { Route, Routes } from 'react-router'
 
 function App() {
   return (
     <>
       <main>
-        <header>
-          <MainNavbar></MainNavbar>
-        </header>
-        <section>
-          <CRUDejemplo></CRUDejemplo>
-        </section>
+        <MainNavbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/crud-tipo-anomalia" element={<CRUD />} />
+        </Routes>
       </main>
     </>
   )
