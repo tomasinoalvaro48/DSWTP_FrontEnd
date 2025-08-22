@@ -3,15 +3,11 @@ import { Table } from 'react-bootstrap'
 import type { TipoAnomalia } from '../entities/entities.ts'
 
 export function ShowTiposAnomalias() {
-  const { post, loading, error } = postManager<TipoAnomalia>(
-    'http://localhost:3000/api/tipo_anomalia'
-  )
-  console.log(`Largo del arreglo post: ${post.length}`)
-  console.log(`Tipo de dato del post: ${typeof post}`)
+  const { post, loading, error } = postManager<TipoAnomalia>('tipo_anomalia')
 
   return (
     <div className="CRUD">
-      <h1>CRUD Tipo de Anomalia</h1>
+      <h1>Tipos de Anomalias</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -23,7 +19,7 @@ export function ShowTiposAnomalias() {
         <tbody>
           {loading && (
             <tr>
-              <th>Loading...</th>
+              <th>Cargando...</th>
             </tr>
           )}
           {error && (

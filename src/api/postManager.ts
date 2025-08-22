@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-//import type { TipoAnomalia } from '../entities/entities.ts'
+import { BACKEND_URL } from '../../endpoints.config.ts'
 
 export function postManager<T = unknown>(url: string) {
   const [post, setPost] = useState<T[]>([])
@@ -13,7 +13,7 @@ export function postManager<T = unknown>(url: string) {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get(url)
+      const response = await axios.get(`${BACKEND_URL}/api/${url}`)
       console.log(response.data.data)
       setPost(response.data.data)
     } catch (err: any) {
