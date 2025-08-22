@@ -1,6 +1,6 @@
 //import React from 'react'
 
-export function Home() {
+export function AdminHome() {
   return (
     <div>
       <h1>Welcome to the Home Screen</h1>

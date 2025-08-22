@@ -1,7 +1,4 @@
-import Container from 'react-bootstrap/Container'
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar'
-import NavDropdown from 'react-bootstrap/NavDropdown'
+import { Container, NavLink, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 export function MainNavbar() {
   return (
@@ -11,18 +8,14 @@ export function MainNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/show-tipo-anomalia">
-              CRUD Tipo de Anomalía
-            </Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+            <NavLink href="/show-tipo-anomalia">Tipos de Anomalías</NavLink>
+            <NavDropdown title="Dropdown" id="nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">
+                Configuración
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
-                Separated link
+                Cerrar Sesión
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
