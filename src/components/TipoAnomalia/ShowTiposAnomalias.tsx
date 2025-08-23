@@ -63,9 +63,9 @@ export function ShowTiposAnomalias() {
           {error}
         </div>
       )}
-      <Button variant="success" href="/add-tipo-anomalia">
-        Agregar Tipo de Anomalía
-      </Button>
+      <Link to="/add-tipo-anomalia">
+        <Button variant="success">+ Agregar Tipo de Anomalía</Button>
+      </Link>
     </div>
   )
 }
