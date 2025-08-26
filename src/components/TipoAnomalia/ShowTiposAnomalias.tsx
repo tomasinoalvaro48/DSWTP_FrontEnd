@@ -1,0 +1,64 @@
+import { get, remove } from '../../api/dataManager.ts'
+import { Table } from 'react-bootstrap'
+import type { TipoAnomalia } from '../../entities/entities.ts'
+import { Link } from 'react-router'
+
+// Función para manejar la eliminación (con confirmación)
+function handleDelete(id: string) {
+  const confirm = window.confirm(
+    '¿Está seguro que desea eliminar este tipo de anomalía?'
+  )
+  if (confirm) {
+    remove('tipo_anomalia/' + id)
+    location.reload()
+  }
+}
+
+// Componente para mostrar la tabla de Tipos de Anomalías
+export function ShowTiposAnomalias() {
+  const { data, loading, error } = get<TipoAnomalia>('tipo_anomalia')
+
+  return (
+    <div className="ShowTiposAnomalias">
+      <h1>Tipos de Anomalias</h1>
+      <Table striped bordered hover>
+        <thead className="table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Nivel de Dificultad</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data?.map((unTipo) => (
+            <tr key={unTipo.id}>
+              <th>{unTipo.id}</th>
+              <th>{unTipo.nombre_tipo_anomalia}</th>
+              <th>{'Nivel ' + unTipo.dificultad_tipo_anomalia}</th>
+              <th>
+                <Link
+                  to={`/update-tipo-anomalia/${unTipo.id}`}
+                  className="btn btn-sm btn-primary me-2"
+                >
+                  Editar
+                </Link>
+                <button
+                  className="btn btn-sm btn-danger"
+                  onClick={() => handleDelete(unTipo.id)}
+                >
+                  Eliminar
+                </button>
+              </th>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      {loading && <div>Cargando...</div>}
+      {error && <div>{error}</div>}
+      <Link to="/add-tipo-anomalia" className="btn btn-lg btn-success m-3 mt-0">
+        + Agregar Tipo de Anomalía
+      </Link>
+    </div>
+  )
+}
