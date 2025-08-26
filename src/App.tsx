@@ -8,22 +8,18 @@ import {
   RouterProvider,
 } from 'react-router'
 import { RootLayout } from './layout/RootLayout.tsx'
+import { UpdateTiposAnomalias } from './components/TipoAnomalia/UpdateTiposAnomalias.tsx'
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<AdminHome />} />
-        <Route path="show-tipo-anomalia" element={<ShowTiposAnomalias />}>
-          <Route
-            path="edit-tipo-anomalia/:id"
-            element={<AddTiposAnomalias />}
-          />
-          <Route
-            path="delete-tipo-anomalia/:id"
-            element={<AddTiposAnomalias />}
-          />
-        </Route>
+        <Route path="show-tipo-anomalia" element={<ShowTiposAnomalias />} />
+        <Route
+          path="update-tipo-anomalia/:id"
+          element={<UpdateTiposAnomalias />}
+        />
         <Route path="add-tipo-anomalia" element={<AddTiposAnomalias />} />
       </Route>
     )

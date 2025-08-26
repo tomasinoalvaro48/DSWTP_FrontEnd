@@ -1,34 +1,40 @@
+import { useNavigate, useParams, Link } from 'react-router'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
-import { post } from '../../api/dataManager.ts'
-import { Link } from 'react-router'
+import { getOne, patch } from '../../api/dataManager.ts'
+import type { TipoAnomalia } from '../../entities/entities.ts'
 
-export function AddTiposAnomalias() {
-  const [tipoNuevo, setTipoNuevo] = useState({
+// Componente para actualizar un Tipo de Anomalía
+export function UpdateTiposAnomalias() {
+  const { id } = useParams()
+
+  const { data } = getOne<TipoAnomalia>('tipo_anomalia/' + id)
+
+  const [tipoToUpdate, setTipoToUpdate] = useState<TipoAnomalia>({
+    id: '',
     nombre_tipo_anomalia: '',
     dificultad_tipo_anomalia: 0,
   })
 
   const navigate = useNavigate()
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.stopPropagation()
-    } else {
-      post('tipo_anomalia', tipoNuevo)
-      navigate('/show-tipo-anomalia') // Moverse a la ruta "show-tipo-anomalia" después del post
-    }
+    patch('tipo_anomalia/' + id, tipoToUpdate)
+    navigate('/show-tipo-anomalia') // Moverse a la ruta "show-tipo-anomalia" después del patch
   }
 
   return (
-    <div className="d-flex flex-column bg-light">
+    <div className="d-flex flex-column align-items-center justify-content-center bg-light">
+      <h1>Anomalia a Editar:</h1>
+      <div className="container mb-3 border rounded bg-light p-2">
+        <div>Id: {data?.id ?? 'error'}</div>
+        <div>Nombre: {data?.nombre_tipo_anomalia ?? 'error'}</div>
+        <div>Dificultad: {data?.dificultad_tipo_anomalia ?? 'error'}</div>
+      </div>
       <form
-        className="d-flex flex-column p-4 border rounded bg-light"
-        onSubmit={handleSubmit}
+        className="d-flex flex-column align-items-center justify-content-center p-4 border rounded bg-light"
+        onSubmit={handleUpdate}
       >
-        <h1>Agregar Tipo de Anomalía</h1>
         <div className="mb-3">
           <label htmlFor="nombre" className="form-label">
             Nombre
@@ -38,10 +44,11 @@ export function AddTiposAnomalias() {
             type="text"
             id="nombre"
             className="form-control"
-            placeholder="Nombre"
+            placeholder="Ingrese Nombre"
+            defaultValue={data?.nombre_tipo_anomalia}
             onChange={(e) =>
-              setTipoNuevo({
-                ...tipoNuevo,
+              setTipoToUpdate({
+                ...tipoToUpdate,
                 nombre_tipo_anomalia: e.target.value,
               })
             }
@@ -57,8 +64,8 @@ export function AddTiposAnomalias() {
               name="dificultad"
               id="n1"
               onChange={() =>
-                setTipoNuevo({
-                  ...tipoNuevo,
+                setTipoToUpdate({
+                  ...tipoToUpdate,
                   dificultad_tipo_anomalia: 1,
                 })
               }
@@ -74,8 +81,8 @@ export function AddTiposAnomalias() {
               name="dificultad"
               id="n2"
               onChange={() =>
-                setTipoNuevo({
-                  ...tipoNuevo,
+                setTipoToUpdate({
+                  ...tipoToUpdate,
                   dificultad_tipo_anomalia: 2,
                 })
               }
@@ -91,8 +98,8 @@ export function AddTiposAnomalias() {
               name="dificultad"
               id="n3"
               onChange={() =>
-                setTipoNuevo({
-                  ...tipoNuevo,
+                setTipoToUpdate({
+                  ...tipoToUpdate,
                   dificultad_tipo_anomalia: 3,
                 })
               }
