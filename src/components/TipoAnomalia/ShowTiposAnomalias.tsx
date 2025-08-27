@@ -1,18 +1,8 @@
-import { get, remove } from '../../api/dataManager.ts'
+import { get } from '../../api/dataManager.ts'
 import { Table } from 'react-bootstrap'
 import type { TipoAnomalia } from '../../entities/entities.ts'
 import { Link } from 'react-router'
-
-// Función para manejar la eliminación (con confirmación)
-function handleDelete(id: string) {
-  const confirm = window.confirm(
-    '¿Está seguro que desea eliminar este tipo de anomalía?'
-  )
-  if (confirm) {
-    remove('tipo_anomalia/' + id)
-    location.reload()
-  }
-}
+import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 // Componente para mostrar la tabla de Tipos de Anomalías
 export function ShowTiposAnomalias() {
@@ -43,12 +33,11 @@ export function ShowTiposAnomalias() {
                 >
                   Editar
                 </Link>
-                <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(unTipo.id)}
-                >
-                  Eliminar
-                </button>
+                <DeleteEntityButton
+                  idToDelete={unTipo.id}
+                  nameToDelete={unTipo.nombre_tipo_anomalia}
+                  route={'tipo_anomalia'}
+                />
               </th>
             </tr>
           ))}
