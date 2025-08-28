@@ -11,8 +11,8 @@ export function ShowTiposAnomalias() {
   return (
     <div className="ShowTiposAnomalias">
       <h1>Tipos de Anomalias</h1>
-      <Table striped bordered hover>
-        <thead className="table-dark">
+      <Table className="table table-bordered ">
+        <thead className="table-secondary text-center">
           <tr>
             <th>Id</th>
             <th>Nombre</th>
@@ -20,27 +20,33 @@ export function ShowTiposAnomalias() {
             <th>Acción</th>
           </tr>
         </thead>
-        <tbody>
-          {data?.map((unTipo) => (
-            <tr key={unTipo.id}>
-              <th>{unTipo.id}</th>
-              <th>{unTipo.nombre_tipo_anomalia}</th>
-              <th>{'Nivel ' + unTipo.dificultad_tipo_anomalia}</th>
-              <th>
-                <Link
-                  to={`/update-tipo-anomalia/${unTipo.id}`}
-                  className="btn btn-sm btn-primary me-2"
-                >
-                  Editar
-                </Link>
-                <DeleteEntityButton
-                  idToDelete={unTipo.id}
-                  nameToDelete={unTipo.nombre_tipo_anomalia}
-                  route={'tipo_anomalia'}
-                />
-              </th>
+        <tbody className="">
+          {data.length === 0 ? (
+            <tr>
+              <th>No hay entidades cargadas</th>
             </tr>
-          ))}
+          ) : (
+            data?.map((unTipo) => (
+              <tr key={unTipo.id}>
+                <th>{unTipo.id}</th>
+                <th>{unTipo.nombre_tipo_anomalia}</th>
+                <th>{'Nivel ' + unTipo.dificultad_tipo_anomalia}</th>
+                <th className="fit-content text-center">
+                  <Link
+                    to={`/update-tipo-anomalia/${unTipo.id}`}
+                    className="btn btn-sm btn-primary me-2"
+                  >
+                    Editar
+                  </Link>
+                  <DeleteEntityButton
+                    idToDelete={unTipo.id}
+                    nameToDelete={unTipo.nombre_tipo_anomalia}
+                    route={'tipo_anomalia'}
+                  />
+                </th>
+              </tr>
+            ))
+          )}
         </tbody>
       </Table>
       {loading && <div>Cargando...</div>}

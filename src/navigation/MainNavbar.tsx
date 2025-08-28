@@ -4,19 +4,23 @@ import { NavLink } from 'react-router'
 export function MainNavbar() {
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="bg-body-secondary border">
         <Container fluid className="align-items-center">
           <NavLink to="/">
-            <div className="bg-secondary" id="navbarBrand">
+            <h4 className="" id="navbarBrand">
               Resolución de Anomalías
-            </div>
+            </h4>
           </NavLink>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <NavLink to="/show-tipo-anomalia" className="nav-link">
+            <NavLink to="/show-tipo-anomalia" className="nav-link m-3 p-0">
               <div className="navbarOptionTipos">Tipos de Anomalías</div>
             </NavLink>
-            <NavDropdown title="" id="nav-dropdown">
+            <NavDropdown
+              title="Más Opciones"
+              id="nav-dropdown"
+              className="ms-auto m-3"
+            >
               <NavDropdown.Item href="#action/3.1">
                 Configuración
               </NavDropdown.Item>
