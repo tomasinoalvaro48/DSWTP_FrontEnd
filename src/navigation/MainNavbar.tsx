@@ -16,6 +16,9 @@ export function MainNavbar() {
             <NavLink to="/show-tipo-anomalia" className="nav-link m-3 p-0">
               <div className="navbarOptionTipos">Tipos de Anomalías</div>
             </NavLink>
+            <NavLink to="/show-localidad" className="nav-link">
+              <div className="navbarOptionTipos">Localidad</div>
+            </NavLink>
             <NavDropdown
               title="Más Opciones"
               id="nav-dropdown"

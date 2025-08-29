@@ -1,5 +1,5 @@
 interface BaseDTO {
-  id: string
+  id: string | undefined
 }
 
 interface TipoAnomalia extends BaseDTO {
@@ -7,4 +7,10 @@ interface TipoAnomalia extends BaseDTO {
   dificultad_tipo_anomalia: number
 }
 
-export type { BaseDTO, TipoAnomalia }
+interface Localidad extends BaseDTO {
+  nombre_localidad: string | undefined
+  codigo_localidad: string | undefined
+}
+
+export type { BaseDTO, TipoAnomalia, Localidad }
+
