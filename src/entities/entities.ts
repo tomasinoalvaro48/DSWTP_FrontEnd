@@ -1,5 +1,5 @@
 interface BaseDTO {
-  id: string | undefined
+  id: string
 }
 
 interface TipoAnomalia extends BaseDTO {
