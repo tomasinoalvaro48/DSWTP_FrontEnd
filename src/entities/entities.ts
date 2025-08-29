@@ -7,10 +7,15 @@ interface TipoAnomalia extends BaseDTO {
   dificultad_tipo_anomalia: number
 }
 
+interface Denunciante extends BaseDTO {
+  nombre_apellido_denunciante: string
+  telefono_denunciante: string
+  email_denunciante: string
+}
+
 interface Localidad extends BaseDTO {
   nombre_localidad: string | undefined
   codigo_localidad: string | undefined
 }
 
-export type { BaseDTO, TipoAnomalia, Localidad }
-
+export type { BaseDTO, TipoAnomalia, Denunciante, Localidad }
