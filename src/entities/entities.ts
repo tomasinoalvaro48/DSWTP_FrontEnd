@@ -14,8 +14,8 @@ interface Denunciante extends BaseDTO {
 }
 
 interface Localidad extends BaseDTO {
-  nombre_localidad: string | undefined
-  codigo_localidad: string | undefined
+  nombre_localidad: string
+  codigo_localidad: string
 }
 
 export type { BaseDTO, TipoAnomalia, Denunciante, Localidad }
