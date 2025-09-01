@@ -16,9 +16,7 @@ export function ShowLocalidad(){
                         <th>Id</th>
                         <th>Código</th>
                         <th>Nombre</th>
-
                         <th>Zonas</th>
-
                         <th>Acción</th>
                     </tr>
                 </thead>

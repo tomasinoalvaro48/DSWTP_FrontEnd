@@ -24,4 +24,13 @@ interface Zona extends BaseDTO{
   localidad: Localidad
 }
 
-export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona }
+interface Usuario extends BaseDTO{
+  nombre_usuario: string
+  email_usuario: string
+  password_usuario: string
+  tipo_usuario: string
+  zona: Zona
+  //faltan atributos
+}
+
+export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona, Usuario }

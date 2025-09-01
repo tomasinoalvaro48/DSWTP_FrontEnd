@@ -18,6 +18,7 @@ import { UpdateLocalidad } from './components/Localidad/UpdateLocalidad.tsx'
 import { ShowZonas } from './components/Zona/ShowZonas.tsx'
 import { AddZona } from './components/Zona/AddZona.tsx'
 import { UpdateZona } from './components/Zona/UpdateZona.tsx'
+import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
 
 function App() {
   const router = createBrowserRouter(
@@ -41,6 +42,8 @@ function App() {
         <Route path="show-zona" element={<ShowZonas/>}/>
         <Route path="add-zona" element={<AddZona/>}/>
         <Route path='update-zona/:id' element={<UpdateZona/>}></Route>
+
+        <Route path="show-usuario" element={<ShowUsuario/>}/>
 
       </Route>
 

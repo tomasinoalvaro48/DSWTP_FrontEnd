@@ -25,6 +25,9 @@ export function MainNavbar() {
             <NavLink to="/show-zona" className="nav-link m-3 p-0">
               <div className="navbarOptionTipos">Zonas</div>
             </NavLink>
+            <NavLink to="/show-usuario" className="nav-link m-3 p-0">
+              <div className="navbarOptionTipos">Usuarios</div>
+            </NavLink>
             <NavDropdown
               title="Más Opciones"
               id="nav-dropdown"
