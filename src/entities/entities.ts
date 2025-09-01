@@ -16,6 +16,12 @@ interface Denunciante extends BaseDTO {
 interface Localidad extends BaseDTO {
   nombre_localidad: string
   codigo_localidad: string
+  zonas: Zona[]
 }
 
-export type { BaseDTO, TipoAnomalia, Denunciante, Localidad }
+interface Zona extends BaseDTO{
+  nombre_zona: string
+  localidad: Localidad
+}
+
+export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona }

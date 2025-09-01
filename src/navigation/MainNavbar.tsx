@@ -20,7 +20,10 @@ export function MainNavbar() {
               <div className="navbarOptionTipos">Denunciantes</div>
             </NavLink>
             <NavLink to="/show-localidad" className="nav-link m-3 p-0">
-              <div className="navbarOptionTipos">Localidad</div>
+              <div className="navbarOptionTipos">Localidades</div>
+            </NavLink>
+            <NavLink to="/show-zona" className="nav-link m-3 p-0">
+              <div className="navbarOptionTipos">Zonas</div>
             </NavLink>
             <NavDropdown
               title="Más Opciones"

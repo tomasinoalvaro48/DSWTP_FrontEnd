@@ -16,15 +16,27 @@ export function ShowLocalidad(){
                         <th>Id</th>
                         <th>Código</th>
                         <th>Nombre</th>
+
+                        <th>Zonas</th>
+
                         <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data?.map((unaLocalidad)=> (
                         <tr key = {unaLocalidad.id}> 
+                            
                             <th>{unaLocalidad.id}</th>
                             <th>{unaLocalidad.codigo_localidad}</th>
                             <th>{unaLocalidad.nombre_localidad}</th>
+                            <th>
+                            {unaLocalidad.zonas.map((unaZona)=>
+                                <tr key={unaZona.id}>
+                                    <th>{`Zona ${unaZona.nombre_zona}`}</th>
+                                </tr>
+                            )}
+                            </th>
+
                             <th>
                                 <Link
                                     to={`/update-localidad/${unaLocalidad.id}`}
@@ -38,7 +50,9 @@ export function ShowLocalidad(){
                                     route={'localidad'}    
                                 />
                             </th>
+
                         </tr>
+
                     ))}
                 </tbody>
             </Table>
