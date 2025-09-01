@@ -49,7 +49,9 @@ export function UpdateDenunciantes() {
           <label htmlFor="nombre" className="form-label">
             Nombre y apellido
           </label>
-          <input required type="text" id="nombre" className="form-control" placeholder="Ingrese Nombre" defaultValue={data?.nombre_apellido_denunciante} onChange={(e) =>
+          <input required type="text" id="nombre" className="form-control" placeholder="Ingrese Nombre"
+          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="El nombre no puede tener números"
+          defaultValue={data?.nombre_apellido_denunciante} onChange={(e) =>
               setDenuncianteToUpdate({
                 ...denuncianteToUpdate,
                 nombre_apellido_denunciante: e.target.value,
@@ -62,7 +64,9 @@ export function UpdateDenunciantes() {
           <label htmlFor="telefono" className="form-label">
             Telefono
           </label>
-          <input required type="text" id="telefono" className="form-control" placeholder="Ingrese Telefono" defaultValue={data?.telefono_denunciante} onChange={(e) =>
+          <input required type="text" id="telefono" className="form-control" placeholder="Ingrese Telefono"
+          pattern="^[0-9]+$" title="El teléfono no puede tener letras ni espacios"
+          defaultValue={data?.telefono_denunciante} onChange={(e) =>
               setDenuncianteToUpdate({
                 ...denuncianteToUpdate,
                 telefono_denunciante: e.target.value,
@@ -75,7 +79,8 @@ export function UpdateDenunciantes() {
           <label htmlFor="email" className="form-label">
             Email
           </label>
-          <input required type="text" id="email" className="form-control" placeholder="Ingrese Email" defaultValue={data?.email_denunciante} onChange={(e) =>
+          <input required type="email" id="email" className="form-control" placeholder="Ingrese Email"
+          defaultValue={data?.email_denunciante} onChange={(e) =>
               setDenuncianteToUpdate({
                 ...denuncianteToUpdate,
                 email_denunciante: e.target.value,

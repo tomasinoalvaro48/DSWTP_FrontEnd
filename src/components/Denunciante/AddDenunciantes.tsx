@@ -35,7 +35,9 @@ export function AddDenunciantes() {
           <label htmlFor="nombre" className="form-label">
             Nombre y apellido
           </label>
-          <input required type="text" id="nombre" className="form-control" placeholder="Nombre" onChange={(e) =>
+          <input required type="text" id="nombre" className="form-control" placeholder="Nombre"
+          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="El nombre no puede tener números"
+          onChange={(e) =>
               setDenuncianteNuevo({
                 ...denuncianteNuevo,
                 nombre_apellido_denunciante: e.target.value,
@@ -48,7 +50,9 @@ export function AddDenunciantes() {
           <label htmlFor="telefono" className="form-label">
             Telefono
           </label>
-          <input required type="text" id="telefono" className="form-control" placeholder="Telefono" onChange={(e) =>
+          <input required type="text" id="telefono" className="form-control" placeholder="Telefono"
+          pattern="^[0-9]+$" title="El teléfono no puede tener letras ni espacios"
+          onChange={(e) =>
               setDenuncianteNuevo({
                 ...denuncianteNuevo,
                 telefono_denunciante: e.target.value,
@@ -61,7 +65,8 @@ export function AddDenunciantes() {
           <label htmlFor="email" className="form-label">
             Email
           </label>
-          <input required type="email" id="email" className="form-control" placeholder="Email" onChange={(e) =>
+          <input required type="email" id="email" className="form-control" placeholder="Email"
+          onChange={(e) =>
               setDenuncianteNuevo({
                 ...denuncianteNuevo,
                 email_denunciante: e.target.value,
