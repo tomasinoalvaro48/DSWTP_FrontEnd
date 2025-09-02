@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 
 export function AddUsuario(){
   const [newUsuario, setnNewUsuario] = useState({
+    id: '',
     nombre_usuario: '',
     email_usuario: '',
     password_usuario: '',
