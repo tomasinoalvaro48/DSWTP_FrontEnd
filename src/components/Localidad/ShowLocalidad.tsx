@@ -1,7 +1,7 @@
 import { get } from "../../api/dataManager.ts";
 import { Table } from "react-bootstrap";
 import type { Localidad } from "../../entities/entities.ts";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import DeleteEntityButton from "../DeleteEntityButton.tsx";
 
 export function ShowLocalidad(){

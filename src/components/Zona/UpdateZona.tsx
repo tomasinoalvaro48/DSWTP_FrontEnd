@@ -1,4 +1,4 @@
-import { useNavigate, useParams, Link } from 'react-router'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { Zona } from '../../entities/entities.ts'
