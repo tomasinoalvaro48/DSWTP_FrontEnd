@@ -1,10 +1,5 @@
 import { AdminHome } from './screens/adminHome.tsx'
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from 'react-router'
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import { RootLayout } from './layout/RootLayout.tsx'
 import { ShowTiposAnomalias } from './components/TipoAnomalia/ShowTiposAnomalias.tsx'
 import { AddTiposAnomalias } from './components/TipoAnomalia/AddTiposAnomalias.tsx'
@@ -21,6 +16,9 @@ import { UpdateZona } from './components/Zona/UpdateZona.tsx'
 import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
 import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
 import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
+import { Login } from './components/Auth/Login.tsx'
+import { Register } from './components/Auth/Register.tsx'
+import PrivateRoute from "./components/PrivateRoute.tsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -28,35 +26,31 @@ function App() {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<AdminHome />} />
 
-        <Route path="show-tipo-anomalia" element={<ShowTiposAnomalias />} />
-        <Route path="update-tipo-anomalia/:id" element={<UpdateTiposAnomalias />} />
-        <Route path="add-tipo-anomalia" element={<AddTiposAnomalias />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
 
-        <Route path="show-denunciante" element={<ShowDenunciantes />} />
-        <Route path="add-denunciante" element={<AddDenunciantes />} />
-        <Route path="update-denunciante/:id" element={<UpdateDenunciantes />} />
-        
-        <Route path="show-localidad" element={<ShowLocalidad/>}/>
-        <Route path="add-localidad" element={<AddLocalidad/>}/>
-        <Route path='update-localidad/:id' element={<UpdateLocalidad/>}></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="show-tipo-anomalia" element={<ShowTiposAnomalias />} />
+          <Route path="update-tipo-anomalia/:id" element={<UpdateTiposAnomalias />} />
+          <Route path="add-tipo-anomalia" element={<AddTiposAnomalias />} />
 
-        
-        <Route path="show-zona" element={<ShowZonas/>}/>
-        <Route path="add-zona" element={<AddZona/>}/>
-        <Route path='update-zona/:id' element={<UpdateZona/>}></Route>
+          <Route path="show-denunciante" element={<ShowDenunciantes />} />
+          <Route path="add-denunciante" element={<AddDenunciantes />} />
+          <Route path="update-denunciante/:id" element={<UpdateDenunciantes />} />
+          
+          <Route path="show-localidad" element={<ShowLocalidad/>}/>
+          <Route path="add-localidad" element={<AddLocalidad/>}/>
+          <Route path='update-localidad/:id' element={<UpdateLocalidad/>}></Route>
+          
+          <Route path="show-zona" element={<ShowZonas/>}/>
+          <Route path="add-zona" element={<AddZona/>}/>
+          <Route path='update-zona/:id' element={<UpdateZona/>}></Route>
 
-        <Route path="show-usuario" element={<ShowUsuario/>}/>
-        <Route path="add-usuario" element={<AddUsuario/>}/>
-        <Route path="update-usuario/:id" element={<UpdateUsuario/>}/>
-        
-
-
+          <Route path="show-usuario" element={<ShowUsuario/>}/>
+          <Route path="add-usuario" element={<AddUsuario/>}/>
+          <Route path="update-usuario/:id" element={<UpdateUsuario/>}/>
+        </Route>
       </Route>
-
-
-
-
-
     )
   )
   return (

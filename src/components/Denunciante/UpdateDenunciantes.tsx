@@ -1,4 +1,4 @@
-import { useNavigate, useParams, Link } from 'react-router'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { Denunciante } from '../../entities/entities.ts'
@@ -12,6 +12,7 @@ export function UpdateDenunciantes() {
     nombre_apellido_denunciante: '',
     telefono_denunciante: '',
     email_denunciante: '',
+    password_denunciante: '',
   })
   useEffect(() => {
     if (data) {
@@ -20,6 +21,7 @@ export function UpdateDenunciantes() {
         nombre_apellido_denunciante: data.nombre_apellido_denunciante,
         telefono_denunciante: data.telefono_denunciante,
         email_denunciante: data.email_denunciante,
+        password_denunciante: data.password_denunciante,
       })
     }
   }, [data])
@@ -50,13 +52,9 @@ export function UpdateDenunciantes() {
             Nombre y apellido
           </label>
           <input required type="text" id="nombre" className="form-control" placeholder="Ingrese Nombre"
+          defaultValue={data?.nombre_apellido_denunciante}
+          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, nombre_apellido_denunciante: e.target.value })}
           pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="El nombre no puede tener números"
-          defaultValue={data?.nombre_apellido_denunciante} onChange={(e) =>
-              setDenuncianteToUpdate({
-                ...denuncianteToUpdate,
-                nombre_apellido_denunciante: e.target.value,
-              })
-            }
           />
         </div>
 
@@ -65,13 +63,9 @@ export function UpdateDenunciantes() {
             Telefono
           </label>
           <input required type="text" id="telefono" className="form-control" placeholder="Ingrese Telefono"
+          defaultValue={data?.telefono_denunciante}
+          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, telefono_denunciante: e.target.value })}
           pattern="^[0-9]+$" title="El teléfono no puede tener letras ni espacios"
-          defaultValue={data?.telefono_denunciante} onChange={(e) =>
-              setDenuncianteToUpdate({
-                ...denuncianteToUpdate,
-                telefono_denunciante: e.target.value,
-              })
-            }
           />
         </div>
 
@@ -80,12 +74,19 @@ export function UpdateDenunciantes() {
             Email
           </label>
           <input required type="email" id="email" className="form-control" placeholder="Ingrese Email"
-          defaultValue={data?.email_denunciante} onChange={(e) =>
-              setDenuncianteToUpdate({
-                ...denuncianteToUpdate,
-                email_denunciante: e.target.value,
-              })
-            }
+          defaultValue={data?.email_denunciante}
+          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, email_denunciante: e.target.value })}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Contraseña
+          </label>
+          <input required type="password" id="password" className="form-control" placeholder="Ingrese Contraseña"
+          defaultValue={data?.password_denunciante}
+          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, password_denunciante: e.target.value })}
+          minLength={6} title="La contraseña debe tener al menos 6 caracteres"
           />
         </div>
         
