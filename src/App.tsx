@@ -19,6 +19,10 @@ import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
 import { Login } from './components/Auth/Login.tsx'
 import { Register } from './components/Auth/Register.tsx'
 import PrivateRoute from "./components/PrivateRoute.tsx";
+import { ShowPedidosResolucion } from './components/PedidoResolucion/ShowPedidoResolucion.tsx'
+import { GenerarPedidoPaso1 } from './components/PedidoResolucion/CUUGenerarPedido1.tsx'
+import { GenerarPedidoPaso2 } from './components/PedidoResolucion/CUUGenerarPedido2.tsx'
+import { GenerarPedidoPaso3 } from './components/PedidoResolucion/CUUGenerarPedido3.tsx'
 
 function App() {
   const router = createBrowserRouter(
@@ -49,6 +53,14 @@ function App() {
           <Route path="show-usuario" element={<ShowUsuario/>}/>
           <Route path="add-usuario" element={<AddUsuario/>}/>
           <Route path="update-usuario/:id" element={<UpdateUsuario/>}/>
+
+          <Route path="show-pedido" element={<ShowPedidosResolucion/>}/>
+          <Route path="/generar-pedido-paso-1" element={<GenerarPedidoPaso1/>}/>
+          <Route path="/generar-pedido-paso-2" element={<GenerarPedidoPaso2/>}/>
+          <Route path="/generar-pedido-paso-3" element={<GenerarPedidoPaso3/>}/>
+          
+          
+
         </Route>
       </Route>
     )

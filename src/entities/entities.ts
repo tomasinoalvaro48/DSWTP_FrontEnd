@@ -34,4 +34,24 @@ interface Usuario extends BaseDTO{
   //faltan atributos
 }
 
-export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona, Usuario }
+interface PedidoResolucion extends BaseDTO {
+  resultado_pedido_resolucion: string
+  dificultad_pedido_resolucion: number
+  estado_pedido_resolucion: string
+  fecha_pedido_resolucion: string
+  direccion_pedido_resolucion: string
+  descripcion_pedido_resolucion: string
+  comentario_pedido_resolucion: string
+  zona: Zona
+  cazador?: Usuario
+  anomalias: Anomalia[]
+  denunciante: Denunciante
+}
+
+interface Anomalia extends BaseDTO{
+  resultado_anomalia:string
+  pedido_resolucion: PedidoResolucion
+  tipo_anomalia: TipoAnomalia
+}
+
+export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona, Usuario,PedidoResolucion, Anomalia }
