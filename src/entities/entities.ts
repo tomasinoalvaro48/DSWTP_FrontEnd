@@ -54,4 +54,19 @@ interface Anomalia extends BaseDTO{
   tipo_anomalia: TipoAnomalia
 }
 
-export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona, Usuario,PedidoResolucion, Anomalia }
+interface PedidoAgregacion extends BaseDTO {
+  descripcion_pedido_agregacion: string
+  dificultad_pedido_agregacion: number
+  estado_pedido_agregacion: string
+  cazador?: Usuario
+  evidencias: Evidencia[]
+  tipo_anomalia?: TipoAnomalia
+}
+
+interface Evidencia extends BaseDTO{
+  url_evidencia?: string
+  archivo_evidencia?: string
+  pedido_agregacion: PedidoAgregacion
+}
+
+export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona, Usuario,PedidoResolucion, Anomalia, PedidoAgregacion, Evidencia }

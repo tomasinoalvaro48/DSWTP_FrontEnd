@@ -23,6 +23,9 @@ import { ShowPedidosResolucion } from './components/PedidoResolucion/ShowPedidoR
 import { GenerarPedidoPaso1 } from './components/PedidoResolucion/CUUGenerarPedido1.tsx'
 import { GenerarPedidoPaso2 } from './components/PedidoResolucion/CUUGenerarPedido2.tsx'
 import { GenerarPedidoPaso3 } from './components/PedidoResolucion/CUUGenerarPedido3.tsx'
+import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
+import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarPedidoAgregacion1.tsx'
+import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
 
 function App() {
   const router = createBrowserRouter(
@@ -59,8 +62,9 @@ function App() {
           <Route path="/generar-pedido-paso-2" element={<GenerarPedidoPaso2/>}/>
           <Route path="/generar-pedido-paso-3" element={<GenerarPedidoPaso3/>}/>
           
-          
-
+          <Route path="show-pedidos-agregacion" element={<ShowPedidosAgregacion/>}/>
+          <Route path="/generar-pedido-agregacion-1" element={<GenerarPedidoAgregacion1/>}/>
+          <Route path="/generar-pedido-agregacion-2" element={<GenerarPedidoAgregacion2/>}/>
         </Route>
       </Route>
     )
