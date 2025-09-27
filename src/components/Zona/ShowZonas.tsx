@@ -15,7 +15,7 @@ export function ShowZonas(){
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
-                        <th>Codigo Localidad</th>
+                        <th>Código Localidad</th>
                         <th>Nombre Localidad</th>
                         <th>Acción</th>
                     </tr>
@@ -52,7 +52,7 @@ export function ShowZonas(){
             {loading && <div>Cargando...</div>}
             {error && <div>{error}</div>}
             <Link to="/add-zona" className="btn btn-lg btn-success m-3 mt-0">
-                + Agregar Localidad
+                + Agregar Zona
             </Link>
         </div>
     )

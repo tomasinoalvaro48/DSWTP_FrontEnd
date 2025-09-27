@@ -5,30 +5,40 @@ import type { Zona } from '../../entities/entities.ts'
 
 
 export function UpdateZona(){
-    const {id} = useParams()
-    const {data} = getOne<Zona>('zona/'+id)
-    
-    const [zonaToUpdate, setZonaToUpdate] = useState<Zona|null>(null)
+    const { id } = useParams()
+    const { data } = getOne<Zona>('zona/' + id)
+
+    const [zonaToUpdate, setZonaToUpdate] = useState<Partial<Zona>>({
+        nombre_zona: '',
+        localidad: undefined
+    })
+
     const navigate = useNavigate()
 
     useEffect(() => {
         if(data){
             setZonaToUpdate({
-            id: data.id ??'',
-            nombre_zona: data.nombre_zona ?? '',
-            localidad: data.localidad ?? {}
-            }) 
+                id: data.id ?? '',
+                nombre_zona: data.nombre_zona ?? '',
+                localidad: data.localidad ?? undefined
+            })
         }
-    },[data])
+    }, [data])
 
 
     const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        patch('zona/'+id, zonaToUpdate)
+        if (!zonaToUpdate.nombre_zona || !zonaToUpdate.localidad) {
+            return
+        }
+        patch('zona/' + id, {
+            nombre_zona: zonaToUpdate.nombre_zona,
+            localidad: zonaToUpdate.localidad.id
+        })
         navigate('/show-zona')
     }
 
-    if (!zonaToUpdate) return <div>Cargando localidad...</div>
+    if (!zonaToUpdate) return <div>Cargando...</div>
 
 
     return(
@@ -39,6 +49,7 @@ export function UpdateZona(){
                 <div>Nombre: {data?.nombre_zona ?? 'error'}</div>
                 <div>Localidad: {data?.localidad.nombre_localidad ?? 'error'}</div>
             </div>
+            
             <form 
                 className="d-flex flex-column align-items-center justify-content-center p-4 border rounded bg-light"
                 onSubmit={handleUpdate}
@@ -61,13 +72,14 @@ export function UpdateZona(){
                             })
                         }
                     />
-
                 </div>
+
                 <button type="submit" className="btn btn-primary">
-                Enviar
+                    Enviar
                 </button>
+
                 <Link className="btn btn-secondary" to="/show-zona">
-                Cancelar
+                    Cancelar
                 </Link>
             </form>
         </div>
@@ -75,16 +87,10 @@ export function UpdateZona(){
 }
 
 /*
-
                 <div>Id: {zonaToUpdate.id}</div>
                 <div>Nombre: {zonaToUpdate.nombre_zona}</div>
                 <div>Localidad: {zonaToUpdate.localidad.nombre_localidad}</div>
                 
-
-
-
-
-
                     <label htmlFor="Localidad" className="form-label">
                         Id Localidad
                     </label>
@@ -102,4 +108,3 @@ export function UpdateZona(){
                             })
                         }
                     />*/
-

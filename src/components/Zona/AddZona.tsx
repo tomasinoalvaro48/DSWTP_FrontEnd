@@ -1,16 +1,16 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { post } from '../../api/dataManager.ts'
-import { Link } from 'react-router-dom'
-
+import { useNavigate, Link } from 'react-router-dom'
+import { post, get } from '../../api/dataManager.ts'
+import type { Localidad, Zona } from '../../entities/entities.ts'
 
 export function AddZona(){
-    const [zonaNueva, setZonaNueva] = useState({
+    const [zonaNueva, setZonaNueva] = useState<Partial<Zona>>({
         nombre_zona: '',
-        localidad: ''
+        localidad: undefined
     })
 
     const navigate = useNavigate()
+    const { data: localidades } = get<Localidad>('localidad')
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -18,8 +18,11 @@ export function AddZona(){
         if (form.checkValidity() === false) {
             event.stopPropagation()
         } else {
-            post('zona', zonaNueva)
-        navigate('/show-zona')
+            post('zona', {
+                nombre_zona: zonaNueva.nombre_zona,
+                localidad: zonaNueva.localidad?.id
+            })
+            navigate('/show-zona')
         }
     }
 
@@ -47,22 +50,24 @@ export function AddZona(){
                             })
                         }
                     />
+
                     <label htmlFor="localidad" className="form-label">
                         Localidad
                     </label>
-                    <input 
-                        required
-                        type="text" 
-                        id="nombre"
-                        className="form-control"
-                        placeholder="Localidad"
-                        onChange={(e)=>
-                            setZonaNueva({
-                                ...zonaNueva,
-                                localidad: e.target.value,
-                            })
-                        }
-                    />
+
+                    <select required id="localidad" className="form-select"
+                    value={zonaNueva.localidad?.id}
+                    onChange={(e) => {
+                        const selected = localidades.find((loc) => loc.id === e.target.value)
+                        setZonaNueva({ ...zonaNueva, localidad: selected })
+                    }}>
+                        <option value="">Seleccione una localidad</option>
+                        {localidades.map((loc) => (
+                            <option key={loc.id} value={loc.id}>
+                                {loc.nombre_localidad}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <button type="submit" className="btn btn-primary">
                 Enviar
@@ -73,5 +78,4 @@ export function AddZona(){
             </form>
         </div>
     )
-
 }
