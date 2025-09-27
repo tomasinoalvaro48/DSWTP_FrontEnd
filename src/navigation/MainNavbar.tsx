@@ -37,6 +37,9 @@ export function MainNavbar() {
                 <NavLink to="/show-pedido" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos</div>
                 </NavLink>
+                <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Pedidos para Cazador</div>
+                </NavLink>
                 <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
                   <NavDropdown.Item href="#action/3.1">
                     Configuración

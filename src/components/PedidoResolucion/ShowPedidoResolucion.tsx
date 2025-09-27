@@ -27,8 +27,9 @@ export function ShowPedidosResolucion(){
             <th>Estado</th>
             <th>Anomalias</th>
             <th>Fecha</th>
+            <th>Resultado</th>
             <th>Cazador</th>
-            <th>Accion</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -57,7 +58,7 @@ export function ShowPedidosResolucion(){
               </th>
               <th>{unPedido.fecha_pedido_resolucion}</th>
               <th>{unPedido.resultado_pedido_resolucion}</th>
-              <th>A IMPLEMENTAR</th>
+              
 
             </tr>
 
