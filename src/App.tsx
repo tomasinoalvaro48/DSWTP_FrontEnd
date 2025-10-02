@@ -25,6 +25,9 @@ import { GenerarPedidoPaso2 } from './components/PedidoResolucion/CUUGenerarPedi
 import { GenerarPedidoPaso3 } from './components/PedidoResolucion/CUUGenerarPedido3.tsx'
 import { ShowPosiblesPedidos } from './components/PedidoResolucion/ShowPosiblesPedidos.tsx'
 import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
+import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
+import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarPedidoAgregacion1.tsx'
+import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
 
 function App() {
   const router = createBrowserRouter(
@@ -68,8 +71,9 @@ function App() {
           <Route path="/mostrar-posibles-pedidos" element={<ShowPosiblesPedidos/>}/>
 
           
-          
-
+          <Route path="show-pedidos-agregacion" element={<ShowPedidosAgregacion/>}/>
+          <Route path="/generar-pedido-agregacion-1" element={<GenerarPedidoAgregacion1/>}/>
+          <Route path="/generar-pedido-agregacion-2" element={<GenerarPedidoAgregacion2/>}/>
         </Route>
       </Route>
     )

@@ -27,9 +27,8 @@ export function ShowPedidosResolucion(){
             <th>Estado</th>
             <th>Anomalias</th>
             <th>Fecha</th>
-            <th>Resultado</th>
             <th>Cazador</th>
-            
+            <th>Accion</th>
           </tr>
         </thead>
         <tbody>
@@ -52,20 +51,21 @@ export function ShowPedidosResolucion(){
                       <th>{`Anomalia ${unaAnomalia.tipo_anomalia.dificultad_tipo_anomalia}`}</th>
 
 
-                    </tr>
-                  )
-                }
-              </th>
-              <th>{unPedido.fecha_pedido_resolucion}</th>
-              <th>{unPedido.resultado_pedido_resolucion}</th>
-              
+                      </tr>
+                    )
+                  }
+                </th>
+                <th>{unPedido.fecha_pedido_resolucion}</th>
+                <th>{unPedido.resultado_pedido_resolucion}</th>
+                <th>A IMPLEMENTAR</th>
 
-            </tr>
+              </tr>
 
-          ))}
+            ))}
 
-        </tbody>
-      </Table>
+          </tbody>
+        </Table>
+
       {loading && <div>Cargando...</div>}
       {error && <div>{error}</div>}
       <Link to="/generar-pedido-paso-1" className="btn btn-lg btn-success m-3 mt-0">
