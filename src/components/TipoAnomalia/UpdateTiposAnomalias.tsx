@@ -1,5 +1,5 @@
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { TipoAnomalia } from '../../entities/entities.ts'
 
@@ -14,6 +14,15 @@ export function UpdateTiposAnomalias() {
     nombre_tipo_anomalia: '',
     dificultad_tipo_anomalia: 0,
   })
+  useEffect(() => {
+    if (data) {
+      setTipoToUpdate({
+        id: data.id,
+        nombre_tipo_anomalia: data.nombre_tipo_anomalia,
+        dificultad_tipo_anomalia: data.dificultad_tipo_anomalia,
+      })
+    }
+  }, [data])
 
   const navigate = useNavigate()
 

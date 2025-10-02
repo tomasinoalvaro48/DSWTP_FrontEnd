@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { get } from "../../api/dataManager"
-
+import { useEffect, useState } from 'react'
+import { get } from '../../api/dataManager'
 
 interface TipoAnomalia {
   id: string
@@ -10,35 +9,33 @@ interface TipoAnomalia {
 
 export function AutocompleteAnomalia({ onSelect }: { onSelect: (anomalia: TipoAnomalia) => void }) {
   const [anomalias, setAnomalias] = useState<TipoAnomalia[]>([])
-  const [filtro, setFiltro] = useState("")
+  const [filtro, setFiltro] = useState('')
   const [sugerencias, setSugerencias] = useState<TipoAnomalia[]>([])
 
   useEffect(() => {
     const fetchAnomalias = async () => {
       try {
-        const { data } = await get<TipoAnomalia>("tipo_anomalia")
+        const { data } = await get<TipoAnomalia>('tipo_anomalia')
         setAnomalias(data)
       } catch (error) {
-        console.error("Error cargando anomalías:", error)
+        console.error('Error cargando anomalías:', error)
       }
     }
     fetchAnomalias()
   }, [])
 
   useEffect(() => {
-    if (filtro.trim() === "") {
+    if (filtro.trim() === '') {
       setSugerencias([])
     } else {
       setSugerencias(
-        anomalias.filter((a) =>
-          a.nombre_tipo_anomalia.toLowerCase().includes(filtro.toLowerCase())
-        )
+        anomalias.filter((a) => a.nombre_tipo_anomalia.toLowerCase().includes(filtro.toLowerCase()))
       )
     }
   }, [filtro, anomalias])
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: 'relative' }}>
       <input
         type="text"
         className="form-control"
@@ -54,10 +51,10 @@ export function AutocompleteAnomalia({ onSelect }: { onSelect: (anomalia: TipoAn
               className="list-group-item list-group-item-action"
               onClick={() => {
                 onSelect(a)
-                setFiltro("")      // limpio input
+                setFiltro('') // limpio input
                 setSugerencias([]) // cierro sugerencias
               }}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
             >
               {a.nombre_tipo_anomalia} (dif: {a.dificultad_tipo_anomalia})
             </li>
