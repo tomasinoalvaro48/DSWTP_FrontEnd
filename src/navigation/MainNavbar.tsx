@@ -55,9 +55,13 @@ export function MainNavbar() {
                 <NavLink to="/login" className="nav-link ms-auto m-3 p-0">
                   <div className="navbarOptionTipos">Iniciar Sesión</div>
                 </NavLink>
-                <NavLink to="/register" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Registrarse</div>
+                <NavLink to="/register-denunciante" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Registrarse Denunciante</div>
                 </NavLink>
+                <NavLink to="/register-usuario" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Registrarse Usuario</div>
+                </NavLink>
+
               </>
             )}
           </Navbar.Collapse>

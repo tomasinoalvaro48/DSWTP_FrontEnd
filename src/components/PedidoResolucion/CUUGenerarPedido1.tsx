@@ -17,7 +17,6 @@ export function GenerarPedidoPaso1() {
       descripcion_pedido_resolucion: "" as string,
       zona: formData.get("zona") as string,
       direccion_pedido_resolucion: formData.get("direccion") as string,
-      denunciante: formData.get("denunciante") as string,
       anomalias: [] as { tipo_anomalia: string }[]
     }
 
@@ -65,17 +64,7 @@ export function GenerarPedidoPaso1() {
             required
           />
           
-          <label htmlFor="denunciante" className="form-label">
-            Denunciante
-          </label>
-          <input 
-            type="text" 
-            id= "denunciante"
-            name="denunciante"
-            className="form-control"
-            placeholder="Ingrese un denunciante"
-            required
-          />
+
         </div>
         <button type="submit" className="btn btn-primary">
           Siguiente

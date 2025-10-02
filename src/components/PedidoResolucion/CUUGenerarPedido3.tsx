@@ -13,20 +13,31 @@ export function GenerarPedidoPaso3() {
     descripcion_pedido_resolucion: string
     zona: string
     direccion_pedido_resolucion: string
-    denunciante: string
     anomalias: { tipo_anomalia: string }[]
   }
 
   const handleConfirmar = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
-    const pedidoPaso3 = { descripcion_pedido_resolucion: formData.get("descripcion") as string} 
-    
 
-    const pedidoCompleto = { ...pedidoPaso2,  ...pedidoPaso3}
-    post("pedido_resolucion", pedidoCompleto)
+    const pedidoPaso3 = { 
+      descripcion_pedido_resolucion: formData.get("descripcion") as string
+    }
+
+    const pedidoCompleto = { ...pedidoPaso2, ...pedidoPaso3 }
+
+    const token = localStorage.getItem("token")
+
+    post("pedido_resolucion", pedidoCompleto, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
     navigate("/show-pedido")
   }
+
+  
 
   return (
     <div className="d-flex flex-column bg-light">

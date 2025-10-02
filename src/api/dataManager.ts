@@ -50,6 +50,7 @@ function getOne<T>(url: string) {
 }
 
 // post function:
+/*
 async function post<T>(url: string, data: T) {
   try {
     await axios.post(`${BACKEND_URL}/api/${url}`, data)
@@ -58,6 +59,19 @@ async function post<T>(url: string, data: T) {
     console.log('Post request completed')
   }
 }
+*/
+
+//post funtion + config
+async function post<T>(url: string, data: T, config?: object) {
+  try {
+    await axios.post(`${BACKEND_URL}/api/${url}`, data, config)
+  } catch (err: any) {
+    console.error(err)
+  } finally {
+    console.log('Post request completed')
+  }
+}
+
 
 // update function:
 async function patch<T>(url: string, data: T) {

@@ -17,13 +17,14 @@ import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
 import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
 import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
 import { Login } from './components/Auth/Login.tsx'
-import { Register } from './components/Auth/Register.tsx'
+import { RegisterDenunciante } from './components/Auth/RegisterDenunciante.tsx'
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import { ShowPedidosResolucion } from './components/PedidoResolucion/ShowPedidoResolucion.tsx'
 import { GenerarPedidoPaso1 } from './components/PedidoResolucion/CUUGenerarPedido1.tsx'
 import { GenerarPedidoPaso2 } from './components/PedidoResolucion/CUUGenerarPedido2.tsx'
 import { GenerarPedidoPaso3 } from './components/PedidoResolucion/CUUGenerarPedido3.tsx'
 import { ShowPosiblesPedidos } from './components/PedidoResolucion/ShowPosiblesPedidos.tsx'
+import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
 
 function App() {
   const router = createBrowserRouter(
@@ -32,7 +33,11 @@ function App() {
         <Route index element={<AdminHome />} />
 
         <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="register-denunciante" element={<RegisterDenunciante />} />
+        <Route path='register-usuario' element={<RegisterUsuario/>}/>
+        
+
+        
 
         <Route element={<PrivateRoute />}>
           <Route path="show-tipo-anomalia" element={<ShowTiposAnomalias />} />

@@ -12,7 +12,6 @@ export function GenerarPedidoPaso2() {
     descripcion_pedido_resolucion: string
     zona: string
     direccion_pedido_resolucion: string
-    denunciante: string
     anomalias: { tipo_anomalia: string }[]
   }
 

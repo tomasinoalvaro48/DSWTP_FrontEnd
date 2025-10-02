@@ -3,12 +3,13 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../../../endpoints.config"
 
-export function Register() {
+export function RegisterDenunciante() {
   const [form, setForm] = useState({
     nombre_apellido_denunciante: "",
     telefono_denunciante: "",
     email_denunciante: "",
-    password_denunciante: ""
+    password_denunciante: "",
+    confir_password: ""
   })
 
   const navigate = useNavigate()
@@ -16,7 +17,7 @@ export function Register() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await axios.post(`${BACKEND_URL}/api/denunciantes/register`, form)
+      await axios.post(`${BACKEND_URL}/api/auth/register-denunciante`, form)
       alert("Registro exitoso, ahora podés iniciar sesión")
       navigate("/login")
     } catch (err: any) {
@@ -44,8 +45,13 @@ export function Register() {
       <input required type="password" className="form-control mb-2" placeholder="Contraseña"
         value={form.password_denunciante}
         onChange={(e) => setForm({ ...form, password_denunciante: e.target.value })}
-        minLength={6} title="La contraseña debe tener al menos 6 caracteres"
       />
+
+      <input required type="password" className="form-control mb-2" placeholder="Confirmar contraseña"
+        value={form.confir_password}   // 👈 ahora correcto
+        onChange={(e) => setForm({ ...form, confir_password: e.target.value })}
+      />
+
       <button className="btn btn-success">
         Registrarse
       </button>

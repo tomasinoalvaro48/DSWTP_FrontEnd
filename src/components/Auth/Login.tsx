@@ -13,7 +13,7 @@ export function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const res = await axios.post(`${BACKEND_URL}/api/denunciantes/login`, { email, password })
+      const res = await axios.patch(`${BACKEND_URL}/api/auth/login`, { email, password })
       login(res.data.token)
       navigate("/")
     } catch (err: any) {
