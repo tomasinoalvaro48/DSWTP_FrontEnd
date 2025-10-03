@@ -120,7 +120,7 @@ function getFilter<T>(url: string) {
     }
 
     fetchAll()
-  }, [url]) // 👈 ahora se vuelve a ejecutar cada vez que cambie `url`
+  }, [url])  
 
   return { data, loading, error }
 }

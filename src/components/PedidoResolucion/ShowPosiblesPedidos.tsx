@@ -59,12 +59,7 @@ if (localidadSeleccionada?.zonas) {
   });
 }
 
-
-
-
-  
-
-  setQuery(`pedido_resolucion?${params.toString()}`);
+setQuery(`pedido_resolucion?${params.toString()}`);
   console.log("Query generada:", `pedido_resolucion?${params.toString()}`);
   
 };
@@ -78,7 +73,9 @@ if (localidadSeleccionada?.zonas) {
             Authorization: `Bearer ${token}`
           }
         })
-      navigate("/mostrar-posibles-pedidos")
+      navigate("/mostrar-posibles-pedidos/") // La idea es que dps te dirija a mis pedidos esto es temporal
+      
+ 
     } catch (err) {
       console.error("Error al tomar el pedido:", err)
     }
