@@ -20,12 +20,12 @@ interface Localidad extends BaseDTO {
   zonas: Zona[]
 }
 
-interface Zona extends BaseDTO{
+interface Zona extends BaseDTO {
   nombre_zona: string
   localidad: Localidad
 }
 
-interface Usuario extends BaseDTO{
+interface Usuario extends BaseDTO {
   nombre_usuario: string
   email_usuario: string
   password_usuario: string
@@ -48,8 +48,8 @@ interface PedidoResolucion extends BaseDTO {
   denunciante: Denunciante
 }
 
-interface Anomalia extends BaseDTO{
-  resultado_anomalia:string
+interface Anomalia extends BaseDTO {
+  resultado_anomalia: string
   pedido_resolucion: PedidoResolucion
   tipo_anomalia: TipoAnomalia
 }
@@ -63,10 +63,21 @@ interface PedidoAgregacion extends BaseDTO {
   tipo_anomalia?: TipoAnomalia
 }
 
-interface Evidencia extends BaseDTO{
+interface Evidencia extends BaseDTO {
   url_evidencia?: string
   archivo_evidencia?: string
   pedido_agregacion: PedidoAgregacion
 }
 
-export type { BaseDTO, TipoAnomalia, Denunciante, Localidad, Zona, Usuario,PedidoResolucion, Anomalia, PedidoAgregacion, Evidencia }
+export type {
+  BaseDTO,
+  TipoAnomalia,
+  Denunciante,
+  Localidad,
+  Zona,
+  Usuario,
+  PedidoResolucion,
+  Anomalia,
+  PedidoAgregacion,
+  Evidencia,
+}

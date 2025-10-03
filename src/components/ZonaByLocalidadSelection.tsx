@@ -77,18 +77,6 @@ const ZonaByLocalidadSelection = ({ objToUpdate }: Props) => {
           </select>
         </div>
       )}
-
-      <label htmlFor="direccion" className="form-label">
-        Dirección aproximada donde ocurrió la anomalía:
-      </label>
-      <input
-        type="text"
-        id="direccion"
-        name="direccion"
-        className="form-control"
-        placeholder="Ingrese una direccion"
-        required
-      />
     </div>
   )
 }
