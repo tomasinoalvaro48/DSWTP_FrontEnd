@@ -2,31 +2,24 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import type { Denunciante, PedidoResolucion, Usuario, Zona } from '../../entities/entities.ts'
+import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
 
 export function GenerarPedidoPaso1() {
   const navigate = useNavigate()
+  const [direccion, setDireccion] = useState('')
+  const [zona, setZona] = useState<Zona>({} as Zona)
 
   // Objeto modelo
-  const [pedidoRes, _] = useState<PedidoResolucion>({
-    id: '',
-    resultado_pedido_resolucion: '',
-    dificultad_pedido_resolucion: 0,
-    estado_pedido_resolucion: '',
-    fecha_pedido_resolucion: '',
-    direccion_pedido_resolucion: '',
-    descripcion_pedido_resolucion: '',
-    comentario_pedido_resolucion: '',
-    zona: {} as Zona,
-    cazador: {} as Usuario,
-    anomalias: [],
-    denunciante: {} as Denunciante,
-  })
+  const pedidoRes = {
+    direccion_pedido_resolucion: direccion,
+    zona: zona,
+  }
 
   // Manejo de SUBMIT
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    console.log(pedidoRes)
     navigate('/generar-pedido-paso-2', { state: pedidoRes })
   }
 
@@ -34,7 +27,7 @@ export function GenerarPedidoPaso1() {
     <div className="d-flex flex-column bg-light">
       <h1>Generar Pedido</h1>
       <form className="d-flex flex-column p-4 border rounded bg-light" onSubmit={handleSubmit}>
-        <ZonaByLocalidadSelection objToUpdate={pedidoRes} />
+        <ZonaByLocalidadSelection setZona={setZona} />
 
         <label htmlFor="direccion" className="form-label">
           Dirección aproximada donde ocurrió la anomalía:
@@ -45,6 +38,8 @@ export function GenerarPedidoPaso1() {
           name="direccion"
           className="form-control"
           placeholder="Ingrese una direccion"
+          value={direccion}
+          onChange={(e) => setDireccion(e.target.value)}
           required
         />
 

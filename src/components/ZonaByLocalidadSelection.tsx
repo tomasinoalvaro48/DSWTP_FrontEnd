@@ -4,10 +4,10 @@ import { get } from '../api/dataManager.ts'
 import type { Localidad, Zona } from '../entities/entities.ts'
 
 interface Props {
-  objToUpdate: { zona: Zona }
+  setZona: (zona: Zona) => void
 }
 
-const ZonaByLocalidadSelection = ({ objToUpdate }: Props) => {
+const ZonaByLocalidadSelection = ({ setZona }: Props) => {
   const { data: localidades, loading: loadingLoc, error: errorLoc } = get<Localidad>('localidad')
   const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
 
@@ -15,12 +15,13 @@ const ZonaByLocalidadSelection = ({ objToUpdate }: Props) => {
     const loc_id = event.target.value
     const loc = localidades.find((l) => l.id === loc_id)
     setLocalidadSeleccionada(loc)
+    setZona({} as Zona) // reseteamos la zona asignada al obj cuando cambia la localidad
   }
 
   const handleCambioZona = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const zonaId = event.target.value
     const zon = localidadSeleccionada?.zonas?.find((z) => z.id === zonaId) || ({} as Zona)
-    objToUpdate.zona = zon
+    setZona(zon)
   }
 
   return (
@@ -42,9 +43,7 @@ const ZonaByLocalidadSelection = ({ objToUpdate }: Props) => {
             onChange={handleCambioLocalidad}
             required
           >
-            <option selected value="" disabled>
-              Seleccionar localidad...
-            </option>
+            <option value="">Seleccionar localidad...</option>
             {localidades?.map((loc) => (
               <option key={loc.id} value={loc.id}>
                 {loc.nombre_localidad}
@@ -66,9 +65,7 @@ const ZonaByLocalidadSelection = ({ objToUpdate }: Props) => {
             onChange={handleCambioZona}
             required
           >
-            <option selected value="" disabled>
-              Seleccionar zona...
-            </option>
+            <option value="">Seleccionar zona...</option>
             {localidadSeleccionada?.zonas.map((zon) => (
               <option key={zon.id} value={zon.id}>
                 {zon.nombre_zona}

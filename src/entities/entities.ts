@@ -40,8 +40,8 @@ interface PedidoResolucion extends BaseDTO {
   estado_pedido_resolucion: string
   fecha_pedido_resolucion: string
   direccion_pedido_resolucion: string
-  descripcion_pedido_resolucion: string
-  comentario_pedido_resolucion: string
+  descripcion_pedido_resolucion: string | null
+  comentario_pedido_resolucion: string | null
   zona: Zona
   cazador?: Usuario
   anomalias: Anomalia[]
@@ -50,7 +50,6 @@ interface PedidoResolucion extends BaseDTO {
 
 interface Anomalia extends BaseDTO {
   resultado_anomalia: string
-  pedido_resolucion: PedidoResolucion
   tipo_anomalia: TipoAnomalia
 }
 

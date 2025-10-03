@@ -1,5 +1,10 @@
 import { AdminHome } from './screens/adminHome.tsx'
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from 'react-router-dom'
 import { RootLayout } from './layout/RootLayout.tsx'
 import { ShowTiposAnomalias } from './components/TipoAnomalia/ShowTiposAnomalias.tsx'
 import { AddTiposAnomalias } from './components/TipoAnomalia/AddTiposAnomalias.tsx'
@@ -18,11 +23,10 @@ import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
 import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
 import { Login } from './components/Auth/Login.tsx'
 import { RegisterDenunciante } from './components/Auth/RegisterDenunciante.tsx'
-import PrivateRoute from "./components/PrivateRoute.tsx";
+import PrivateRoute from './components/PrivateRoute.tsx'
 import { ShowPedidosResolucion } from './components/PedidoResolucion/ShowPedidoResolucion.tsx'
 import { GenerarPedidoPaso1 } from './components/PedidoResolucion/CUUGenerarPedido1.tsx'
 import { GenerarPedidoPaso2 } from './components/PedidoResolucion/CUUGenerarPedido2.tsx'
-import { GenerarPedidoPaso3 } from './components/PedidoResolucion/CUUGenerarPedido3.tsx'
 import { ShowPosiblesPedidos } from './components/PedidoResolucion/ShowPosiblesPedidos.tsx'
 import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
 import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
@@ -37,10 +41,7 @@ function App() {
 
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
-        <Route path='register-usuario' element={<RegisterUsuario/>}/>
-        
-
-        
+        <Route path="register-usuario" element={<RegisterUsuario />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="show-tipo-anomalia" element={<ShowTiposAnomalias />} />
@@ -50,30 +51,28 @@ function App() {
           <Route path="show-denunciante" element={<ShowDenunciantes />} />
           <Route path="add-denunciante" element={<AddDenunciantes />} />
           <Route path="update-denunciante/:id" element={<UpdateDenunciantes />} />
-          
-          <Route path="show-localidad" element={<ShowLocalidad/>}/>
-          <Route path="add-localidad" element={<AddLocalidad/>}/>
-          <Route path='update-localidad/:id' element={<UpdateLocalidad/>}></Route>
-          
-          <Route path="show-zona" element={<ShowZonas/>}/>
-          <Route path="add-zona" element={<AddZona/>}/>
-          <Route path='update-zona/:id' element={<UpdateZona/>}></Route>
 
-          <Route path="show-usuario" element={<ShowUsuario/>}/>
-          <Route path="add-usuario" element={<AddUsuario/>}/>
-          <Route path="update-usuario/:id" element={<UpdateUsuario/>}/>
+          <Route path="show-localidad" element={<ShowLocalidad />} />
+          <Route path="add-localidad" element={<AddLocalidad />} />
+          <Route path="update-localidad/:id" element={<UpdateLocalidad />}></Route>
 
-          <Route path="show-pedido" element={<ShowPedidosResolucion/>}/>
-          <Route path="/generar-pedido-paso-1" element={<GenerarPedidoPaso1/>}/>
-          <Route path="/generar-pedido-paso-2" element={<GenerarPedidoPaso2/>}/>
-          <Route path="/generar-pedido-paso-3" element={<GenerarPedidoPaso3/>}/>
+          <Route path="show-zona" element={<ShowZonas />} />
+          <Route path="add-zona" element={<AddZona />} />
+          <Route path="update-zona/:id" element={<UpdateZona />}></Route>
 
-          <Route path="/mostrar-posibles-pedidos" element={<ShowPosiblesPedidos/>}/>
+          <Route path="show-usuario" element={<ShowUsuario />} />
+          <Route path="add-usuario" element={<AddUsuario />} />
+          <Route path="update-usuario/:id" element={<UpdateUsuario />} />
 
-          
-          <Route path="show-pedidos-agregacion" element={<ShowPedidosAgregacion/>}/>
-          <Route path="/generar-pedido-agregacion-1" element={<GenerarPedidoAgregacion1/>}/>
-          <Route path="/generar-pedido-agregacion-2" element={<GenerarPedidoAgregacion2/>}/>
+          <Route path="show-pedido" element={<ShowPedidosResolucion />} />
+          <Route path="/generar-pedido-paso-1" element={<GenerarPedidoPaso1 />} />
+          <Route path="/generar-pedido-paso-2" element={<GenerarPedidoPaso2 />} />
+
+          <Route path="/mostrar-posibles-pedidos" element={<ShowPosiblesPedidos />} />
+
+          <Route path="show-pedidos-agregacion" element={<ShowPedidosAgregacion />} />
+          <Route path="/generar-pedido-agregacion-1" element={<GenerarPedidoAgregacion1 />} />
+          <Route path="/generar-pedido-agregacion-2" element={<GenerarPedidoAgregacion2 />} />
         </Route>
       </Route>
     )
