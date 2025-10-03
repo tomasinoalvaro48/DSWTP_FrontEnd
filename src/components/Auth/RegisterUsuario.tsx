@@ -1,53 +1,48 @@
-import { useState } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import { BACKEND_URL } from "../../../endpoints.config"
-import { get } from "../../api/dataManager.ts"
-import type { Zona } from "../../entities/entities.ts"
+import { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { BACKEND_URL } from '../../../endpoints.config'
+import type { Zona } from '../../entities/entities.ts'
+import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
 
 export function RegisterUsuario() {
+  const [zona, setZona] = useState<Zona>()
   const [form, setForm] = useState({
-    nombre_usuario: "",
-    email_usuario: "",
-    password_usuario: "",
-    confir_password: "",
-    zona: ""
+    nombre_usuario: '',
+    email_usuario: '',
+    password_usuario: '',
+    confirm_password: '',
+    zona: '',
   })
 
   const navigate = useNavigate()
-  
-  const { data: zonas, loading, error } = get<Zona>("zona")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
-    if (form.password_usuario !== form.confir_password) {
-      alert("Las contraseñas no coinciden")
+
+    if (form.password_usuario !== form.confirm_password) {
+      alert('Las contraseñas no coinciden')
       return
     }
-    
+
+    setForm({ ...form, zona: zona?.id || '' })
     try {
       await axios.post(`${BACKEND_URL}/api/auth/register-usuario`, form)
 
-      alert("Registro exitoso como usuario, ahora podés iniciar sesión")
-      navigate("/login")
+      alert('Registro exitoso como usuario, ahora podés iniciar sesión')
+      navigate('/login')
     } catch (err: any) {
-      alert("Error en registro: " + err.response?.data?.message)
+      alert('Error en registro: ' + err.response?.data?.message)
     }
   }
 
   return (
     <div className="d-flex flex-column bg-light">
-      <form 
-        className="d-flex flex-column p-4 border rounded bg-light"
-        onSubmit={handleSubmit}
-      >
+      <form className="d-flex flex-column p-4 border rounded bg-light" onSubmit={handleSubmit}>
         <h2>Registro</h2>
-        {loading && <p>Cargando zonas...</p>}
-        {error && <p>Error al cargar zonas: {error}</p>}
 
         <label htmlFor="nombre" className="form-label">
-          Nombre y Apellido 
+          Nombre y Apellido
         </label>
         <input
           required
@@ -94,30 +89,13 @@ export function RegisterUsuario() {
           type="password"
           className="form-control mb-2"
           placeholder="Repetir contraseña"
-          value={form.confir_password}
-          onChange={(e) => setForm({ ...form, confir_password: e.target.value })}
+          value={form.confirm_password}
+          onChange={(e) => setForm({ ...form, confirm_password: e.target.value })}
           minLength={6}
           title="Repetí la misma contraseña"
         />
 
-        <label htmlFor="zona" className="form-label">
-          Zona 
-        </label>
-        <select
-          className="form-select mb-2"
-          id="zona"
-          name="zona"
-          required
-          value={form.zona}
-          onChange={(e) => setForm({ ...form, zona: e.target.value })}
-        >
-          <option value="">Selecciona entre las posibles zonas</option>
-          {zonas?.map((zona) => (
-            <option key={zona.id} value={zona.id}>
-              {zona.nombre_zona} ({zona.localidad.nombre_localidad})
-            </option>
-          ))}
-        </select>
+        <ZonaByLocalidadSelection setZona={setZona} />
 
         <button className="btn btn-success" type="submit">
           Registrarse
