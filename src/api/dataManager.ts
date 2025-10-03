@@ -30,6 +30,8 @@ function get<T>(url: string) {
   return { data, loading, error }
 }
 
+
+
 // getOne function:
 function getOne<T>(url: string) {
   const [data, setData] = useState<T>()
@@ -94,5 +96,36 @@ async function remove(url: string) {
   }
 }
 
+
+
+//Para los filter, de manera que cuando se actualice lo vuelve a cargar
+function getFilter<T>(url: string) {
+  const [data, setData] = useState<T[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      setLoading(true) // 👈 importante: para que marque loading cuando cambie url
+      setError(null)
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/${url}`)
+        setData(response.data.data)
+      } catch (err: any) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+        console.log('Data request completed', url)
+      }
+    }
+
+    fetchAll()
+  }, [url]) // 👈 ahora se vuelve a ejecutar cada vez que cambie `url`
+
+  return { data, loading, error }
+}
+
+
+
 // Exportamos las funciones para usarlas en otros archivos
-export { get, getOne, post, patch, remove }
+export { get, getOne, post, patch, remove,getFilter }
