@@ -8,11 +8,7 @@ interface Props {
   route: string
 }
 
-const DeleteEntityButton: React.FC<Props> = ({
-  idToDelete,
-  nameToDelete,
-  route,
-}) => {
+const DeleteEntityButton = ({ idToDelete, nameToDelete, route }: Props) => {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -31,18 +27,12 @@ const DeleteEntityButton: React.FC<Props> = ({
         Eliminar
       </button>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmar eliminación</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Está seguro que desea eliminar esta entidad:{' '}
-          <strong>{nameToDelete}</strong>?
+          ¿Está seguro que desea eliminar esta entidad: <strong>{nameToDelete}</strong>?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
