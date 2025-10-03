@@ -12,7 +12,6 @@ export function GenerarPedidoPaso2() {
 
   // Datos del paso 1
   const location = useLocation()
-  const state = location.state as PedidoResolucion
 
   // Objeto modelo
   const pedidoRes = {
@@ -40,8 +39,14 @@ export function GenerarPedidoPaso2() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     console.log(pedidoRes)
-    post<PedidoResolucion>('pedido_resolucion', state)
-    // navigate('/show-pedido')
+    const token = localStorage.getItem('token')
+
+    post<PedidoResolucion>('pedido_resolucion', pedidoRes, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    navigate('/show-pedido')
   }
 
   return (

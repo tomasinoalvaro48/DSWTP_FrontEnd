@@ -2,6 +2,7 @@ import { get } from '../../api/dataManager.ts'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import type { PedidoResolucion } from '../../entities/entities.ts'
+import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowPedidosResolucion() {
   const { data, loading, error } = get<PedidoResolucion>('pedido_resolucion')
@@ -17,44 +18,54 @@ export function ShowPedidosResolucion() {
         <Table striped bordered hover>
           <thead className="table-dark">
             <tr>
-              <th>Id</th>
-              <th>Descripcion</th>
+              <th>Descripción</th>
+              <th>Estado</th>
               <th>Comentario</th>
               <th>Zona</th>
-              <th>Denunciante Nombre</th>
-              <th>Denunciante Email</th>
-              <th>Direccion</th>
+              <th>Nombre de Denunciante</th>
+              <th>Email de Denunciante</th>
+              <th>Dirección</th>
               <th>Dificultad</th>
-              <th>Estado</th>
-              <th>Anomalias</th>
+              <th>Anomalías</th>
               <th>Fecha</th>
               <th>Cazador</th>
-              <th>Accion</th>
+              <th>Acción</th>
             </tr>
           </thead>
           <tbody>
             {data?.map((unPedido) => (
               <tr key={unPedido.id}>
-                <th>{unPedido.id}</th>
                 <th>{unPedido.descripcion_pedido_resolucion}</th>
-                <th>{unPedido.comentario_pedido_resolucion}</th>
+                <th>{unPedido.estado_pedido_resolucion}</th>
+                {unPedido.estado_pedido_resolucion !== 'libre' && (
+                  <th>{unPedido.comentario_pedido_resolucion}</th>
+                )}
+                {unPedido.estado_pedido_resolucion === 'libre' && <th>No se aceptó el pedido</th>}
                 <th>{unPedido.zona.nombre_zona}</th>
                 <th>{unPedido.denunciante.nombre_apellido_denunciante}</th>
                 <th>{unPedido.denunciante.email_denunciante}</th>
                 <th>{unPedido.direccion_pedido_resolucion}</th>
                 <th>{unPedido.dificultad_pedido_resolucion}</th>
-                <th>{unPedido.estado_pedido_resolucion}</th>
                 <th>
                   {unPedido.anomalias.map((unaAnomalia) => (
                     <tr key={unaAnomalia.id}>
-                      <th>{`Anomalia ${unaAnomalia.tipo_anomalia.nombre_tipo_anomalia}`}</th>
-                      <th>{`Anomalia ${unaAnomalia.tipo_anomalia.dificultad_tipo_anomalia}`}</th>
+                      <th>{unaAnomalia.tipo_anomalia.nombre_tipo_anomalia}</th>
+                      <th>{unaAnomalia.tipo_anomalia.dificultad_tipo_anomalia}</th>
                     </tr>
                   ))}
                 </th>
                 <th>{unPedido.fecha_pedido_resolucion}</th>
-                <th>{unPedido.resultado_pedido_resolucion}</th>
-                <th>A IMPLEMENTAR</th>
+                {unPedido.estado_pedido_resolucion !== 'libre' && (
+                  <th>{unPedido.cazador?.nombre_usuario}</th>
+                )}
+                {unPedido.estado_pedido_resolucion === 'libre' && <th>No se aceptó el pedido</th>}
+                <th>
+                  <DeleteEntityButton
+                    nameToDelete={unPedido.direccion_pedido_resolucion}
+                    idToDelete={unPedido.id}
+                    route="pedido_resolucion"
+                  />
+                </th>
               </tr>
             ))}
           </tbody>
