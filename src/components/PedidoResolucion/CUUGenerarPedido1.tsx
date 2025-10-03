@@ -37,16 +37,7 @@ export function GenerarPedidoPaso1() {
   // Manejo de SUBMIT
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-
-    const pedidoPaso1 = {
-      descripcion_pedido_resolucion: "" as string,
-      zona: formData.get("zona") as string,
-      direccion_pedido_resolucion: formData.get("direccion") as string,
-      anomalias: [] as { tipo_anomalia: string }[]
-    }
-
-    navigate("/generar-pedido-paso-2", { state: pedidoPaso1 })
+    navigate('/generar-pedido-paso-2', { state: pedidoRes })
   }
 
   // Manejar el cambio de localidad
@@ -64,9 +55,8 @@ export function GenerarPedidoPaso1() {
 
   return (
     <div className="d-flex flex-column bg-light">
+      <h1>Generar Pedido</h1>
       <form className="d-flex flex-column p-4 border rounded bg-light" onSubmit={handleSubmit}>
-        <h1>Generar Pedido</h1>
-
         <div className="mb-3">
           <label htmlFor="localidad" className="form-label">
             Localidad donde ocurrió la anomalía:
@@ -83,11 +73,13 @@ export function GenerarPedidoPaso1() {
                 className="form-select"
                 id="localidad"
                 name="localidad"
-                value={localidadSeleccionada?.id}
+                value={localidadSeleccionada?.id ?? ''}
                 onChange={handleCambioLocalidad}
                 required
               >
-                <option selected>Seleccionar localidad</option>
+                <option selected value="" disabled>
+                  Seleccionar localidad...
+                </option>
                 {localidades?.map((loc) => (
                   <option key={loc.id} value={loc.id}>
                     {loc.nombre_localidad}
@@ -95,8 +87,9 @@ export function GenerarPedidoPaso1() {
                 ))}
               </select>
 
-              {localidadSeleccionada == null && <p>Seleccione una localidad para ver sus zonas</p>}
-              {localidadSeleccionada != null}
+              {localidadSeleccionada === undefined && (
+                <p>Seleccione una localidad para ver sus zonas</p>
+              )}
               <label htmlFor="zona" className="form-label">
                 Zona donde ocurrió la anomalía:
               </label>
@@ -108,7 +101,9 @@ export function GenerarPedidoPaso1() {
                 onChange={handleCambioZona}
                 required
               >
-                <option selected>Seleccionar zona</option>
+                <option selected value="" disabled>
+                  Seleccionar zona...
+                </option>
                 {localidadSeleccionada?.zonas.map((zon) => (
                   <option key={zon.id} value={zon.id}>
                     {zon.nombre_zona}
@@ -129,8 +124,6 @@ export function GenerarPedidoPaso1() {
             placeholder="Ingrese una direccion"
             required
           />
-          
-
         </div>
         <button type="submit" className="btn btn-primary">
           Siguiente

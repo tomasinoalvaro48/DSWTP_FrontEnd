@@ -26,16 +26,7 @@ export function GenerarPedidoPaso3() {
 
     const pedidoCompleto = { ...pedidoPaso2, ...pedidoPaso3 }
 
-    const token = localStorage.getItem("token")
 
-    post("pedido_resolucion", pedidoCompleto, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-
-    navigate("/show-pedido")
-  }
 
   
 
@@ -46,16 +37,7 @@ export function GenerarPedidoPaso3() {
       <form 
         className="mb-3"
         onSubmit={handleConfirmar}>
-        <label htmlFor="descripcion" className="form-label">
-          Descripcion (Opcional)
-        </label>
-        <input 
-          type="text" 
-          id= "descripcion"
-          name="descripcion"
-          className="form-control"
-          placeholder="Ingrese una decripcion (Opcional)"
-        />
+        
         <button className="btn btn-primary" type="submit">
             Confirmar Pedido
         </button>
