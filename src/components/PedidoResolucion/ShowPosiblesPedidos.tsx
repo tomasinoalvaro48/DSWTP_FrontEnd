@@ -9,21 +9,42 @@ export function ShowPosiblesPedidos(){
     'pedido_resolucion?estado_pedido_resolucion=solicitado'
   )
   const navigate = useNavigate()
-
+/*
   const haddleTakePedido = () => {
 
-    const cazador = ''////////////////////// VER CAZADORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-    const pedidoActualizado = {
-      cazador:cazador
-    }
     
-    patch("pedido_resolucion/tomar-pedido", pedidoActualizado)
+    patch("pedido_resolucion/tomar-pedido", "") //No se bien si esto iria con patch
     navigate("/mostrar-posibles-pedidos")
   }
+*/
+  const haddleTakePedido = async (id: string) => {
+    try {
+
+      const token = localStorage.getItem("token")
+      await patch(`pedido_resolucion/tomar-pedido-resolucion/${id}`,{} ,{
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      navigate("/mostrar-posibles-pedidos")
+    } catch (err) {
+      console.error("Error al tomar el pedido:", err)
+    }
+  }
+
 
   return(
     <div className="ShowPosiblesPedidos">
       <h1>Posibles Pedidos Resolucion</h1>
+      <nav className="navbar bg-body-tertiary">
+        <div className="container-fluid">
+          <form className="d-flex" role="search">
+            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <button className="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
 
       {loading && (
         <div className="d-flex align-items-center">
@@ -86,9 +107,10 @@ export function ShowPosiblesPedidos(){
                     </div>
                   </div>
                   <div className="row text-start align-items-center">
-                    <button className="btn btn-primary" type="submit" onClick={haddleTakePedido}>
+                    <button className="btn btn-primary" type="button" onClick={() => haddleTakePedido(unPedido.id.toString())}>
                         Tomar Pedido
                     </button>
+                    
                     
                   </div>
                 </div>

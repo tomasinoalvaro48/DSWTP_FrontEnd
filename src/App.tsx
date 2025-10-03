@@ -29,6 +29,7 @@ import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidos
 import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarPedidoAgregacion1.tsx'
 import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
 
+
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(

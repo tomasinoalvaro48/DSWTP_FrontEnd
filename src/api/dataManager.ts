@@ -74,9 +74,9 @@ async function post<T>(url: string, data: T, config?: object) {
 
 
 // update function:
-async function patch<T>(url: string, data: T) {
+async function patch<T>(url: string, data: T,config?: object) {
   try {
-    await axios.patch(`${BACKEND_URL}/api/${url}`, data)
+    await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
   } finally {
     console.log('Patch request completed')

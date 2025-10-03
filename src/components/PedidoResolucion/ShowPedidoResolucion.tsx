@@ -56,7 +56,7 @@ export function ShowPedidosResolucion(){
                   }
                 </th>
                 <th>{unPedido.fecha_pedido_resolucion}</th>
-                <th>{unPedido.resultado_pedido_resolucion}</th>
+                <th>{unPedido.cazador?.nombre_usuario}</th>
                 <th>A IMPLEMENTAR</th>
 
               </tr>
