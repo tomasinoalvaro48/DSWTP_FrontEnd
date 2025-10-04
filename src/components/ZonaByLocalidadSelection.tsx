@@ -34,7 +34,7 @@ const ZonaByLocalidadSelection = ({ setZona }: Props) => {
       {errorLoc && <p>Error al cargar localidades: {errorLoc}</p>}
       {!loadingLoc && !errorLoc && localidades.length === 0 && <p>No hay localidades cargadas </p>}
       {!loadingLoc && !errorLoc && localidades.length > 0 && (
-        <div>
+        <>
           <select
             className="form-select"
             id="localidad"
@@ -72,7 +72,7 @@ const ZonaByLocalidadSelection = ({ setZona }: Props) => {
               </option>
             ))}
           </select>
-        </div>
+        </>
       )}
     </div>
   )

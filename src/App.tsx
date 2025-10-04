@@ -1,10 +1,10 @@
-import { AdminHome } from './screens/adminHome.tsx'
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from 'react-router-dom'
+import { AdminHome } from './screens/adminHome.tsx'
 import { RootLayout } from './layout/RootLayout.tsx'
 import { ShowTiposAnomalias } from './components/TipoAnomalia/ShowTiposAnomalias.tsx'
 import { AddTiposAnomalias } from './components/TipoAnomalia/AddTiposAnomalias.tsx'
@@ -34,13 +34,23 @@ import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarP
 import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
 import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
 
-
 function App() {
+  /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
+  import { useAuth } from './auth/AuthContext.tsx'
+
+  const { token, userRol } = useAuth() <-- adentro de App()
+ 
+  Adentro de "<Route path="/" element={<RootLayout />}>":
+  {token && userRol == 'operador' && <Route index element={<AdminHome />} />} 
+  {token && userRol == 'cazador' && <Route index element={<CazadorHome />} />}
+  {token && userRol == 'denunciante' && <Route index element={<DenuncianteHome />} />}
+  {!token && <Route index element={<PublicHome />} />}
+*/
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<AdminHome />} />
-
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="register-usuario" element={<RegisterUsuario />} />

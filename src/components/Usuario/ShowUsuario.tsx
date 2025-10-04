@@ -1,13 +1,13 @@
-import { get } from "../../api/dataManager.ts";
-import { Table } from "react-bootstrap";
-import type { Usuario } from "../../entities/entities.ts";
-import { Link } from "react-router-dom";
-import DeleteEntityButton from "../DeleteEntityButton.tsx";
+import { get } from '../../api/dataManager.ts'
+import { Table } from 'react-bootstrap'
+import type { Usuario } from '../../entities/entities.ts'
+import { Link } from 'react-router-dom'
+import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
-export function ShowUsuario(){
-  const {data, loading, error} = get<Usuario>('usuario')
+export function ShowUsuario() {
+  const { data, loading, error } = get<Usuario>('usuario')
 
-  return(
+  return (
     <div className="ShowUsuario">
       <h1>Usuarios</h1>
 
@@ -29,8 +29,8 @@ export function ShowUsuario(){
             </tr>
           </thead>
           <tbody>
-            {data?.map((unUsuario)=>(
-              <tr key = {unUsuario.id}>
+            {data?.map((unUsuario) => (
+              <tr key={unUsuario.id}>
                 <th>{unUsuario.id}</th>
                 <th>{unUsuario.nombre_usuario}</th>
                 <th>{unUsuario.email_usuario}</th>
@@ -42,12 +42,12 @@ export function ShowUsuario(){
                     to={`/update-usuario/${unUsuario.id}`}
                     className="btn btn-sm btn-primary me-2"
                   >
-                  Editar
+                    Editar
                   </Link>
                   <DeleteEntityButton
                     idToDelete={unUsuario.id}
                     nameToDelete={unUsuario.nombre_usuario}
-                    route={'usuario'}    
+                    route={'usuario'}
                   />
                 </th>
               </tr>
@@ -59,7 +59,7 @@ export function ShowUsuario(){
       {loading && <div>Cargando...</div>}
       {error && <div>{error}</div>}
       <Link to="/add-usuario" className="btn btn-lg btn-success m-3 mt-0">
-        + Agregar Localidad
+        + Agregar Usuario
       </Link>
     </div>
   )

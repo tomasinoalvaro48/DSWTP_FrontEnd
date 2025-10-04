@@ -3,8 +3,25 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.tsx'
 
 export function MainNavbar() {
-  const { token, logout } = useAuth()
-  const navigate = useNavigate();
+  const { token, logout, userRol } = useAuth()
+  const navigate = useNavigate()
+
+  const MoreOptions = () => {
+    return (
+      <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
+        <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item
+          onClick={() => {
+            logout()
+            navigate('/')
+          }}
+        >
+          Cerrar Sesión
+        </NavDropdown.Item>
+      </NavDropdown>
+    )
+  }
 
   return (
     <>
@@ -17,7 +34,7 @@ export function MainNavbar() {
           </NavLink>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            {token ? (
+            {token && userRol == 'operador' && (
               <>
                 <NavLink to="/show-tipo-anomalia" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Tipos de Anomalías</div>
@@ -46,17 +63,10 @@ export function MainNavbar() {
                 <NavLink to="/tomar-pedidos-agregacion" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Aceptar/Rechazar Pedidos de Agregacion (admin)</div>
                 </NavLink>
-                <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
-                  <NavDropdown.Item href="#action/3.1">
-                    Configuración
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={() => { logout(); navigate("/"); }}>
-                    Cerrar Sesión
-                  </NavDropdown.Item>
-                </NavDropdown>
+                <MoreOptions />
               </>
-            ) : (
+            )}
+            {!token && (
               <>
                 <NavLink to="/login" className="nav-link ms-auto m-3 p-0">
                   <div className="navbarOptionTipos">Iniciar Sesión</div>
@@ -67,7 +77,25 @@ export function MainNavbar() {
                 <NavLink to="/register-usuario" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Registrarse Usuario</div>
                 </NavLink>
-
+              </>
+            )}
+            {token && userRol == 'denunciante' && (
+              <>
+                <NavLink to="/show-pedido" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Pedidos</div>
+                </NavLink>
+                <MoreOptions />
+              </>
+            )}
+            {token && userRol == 'cazador' && (
+              <>
+                <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Pedidos para Cazador</div>
+                </NavLink>
+                <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Pedidos de Agregacion</div>
+                </NavLink>
+                <MoreOptions />
               </>
             )}
           </Navbar.Collapse>

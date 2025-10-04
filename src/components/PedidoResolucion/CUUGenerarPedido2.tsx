@@ -38,7 +38,6 @@ export function GenerarPedidoPaso2() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log(pedidoRes)
     const token = localStorage.getItem('token')
 
     post<PedidoResolucion>('pedido_resolucion', pedidoRes, {
