@@ -32,6 +32,7 @@ import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
 import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
 import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarPedidoAgregacion1.tsx'
 import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
+import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
 
 
 function App() {
@@ -74,6 +75,8 @@ function App() {
           <Route path="show-pedidos-agregacion" element={<ShowPedidosAgregacion />} />
           <Route path="/generar-pedido-agregacion-1" element={<GenerarPedidoAgregacion1 />} />
           <Route path="/generar-pedido-agregacion-2" element={<GenerarPedidoAgregacion2 />} />
+
+          <Route path="/tomar-pedidos-agregacion" element={<TomarPedidosAgregacion />} />
         </Route>
       </Route>
     )
