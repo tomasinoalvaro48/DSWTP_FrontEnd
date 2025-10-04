@@ -1,21 +1,25 @@
 import { useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { BACKEND_URL } from '../../../endpoints.config'
 import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
+import { post } from '../../api/dataManager.ts'
 
 export function RegisterUsuario() {
-  const [zona, setZona] = useState<Zona>()
-  const [form, setForm] = useState({
-    nombre_usuario: '',
-    email_usuario: '',
-    password_usuario: '',
-    confirm_password: '',
-    zona: '',
-  })
-
   const navigate = useNavigate()
+
+  const [nombre, setNombre] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [zona, setZona] = useState<Zona>()
+
+  const form = {
+    nombre_usuario: nombre,
+    email_usuario: email,
+    password_usuario: password,
+    confirm_password: confirmPassword,
+    zona: zona?.id,
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,15 +29,9 @@ export function RegisterUsuario() {
       return
     }
 
-    setForm({ ...form, zona: zona?.id || '' })
-    try {
-      await axios.post(`${BACKEND_URL}/api/auth/register-usuario`, form)
-
-      alert('Registro exitoso como usuario, ahora podés iniciar sesión')
-      navigate('/login')
-    } catch (err: any) {
-      alert('Error en registro: ' + err.response?.data?.message)
-    }
+    post('auth/register-usuario', form)
+    alert('Registro exitoso como usuario, ahora podés iniciar sesión')
+    navigate('/login')
   }
 
   return (
@@ -50,7 +48,7 @@ export function RegisterUsuario() {
           className="form-control mb-2"
           placeholder="Nombre y Apellido"
           value={form.nombre_usuario}
-          onChange={(e) => setForm({ ...form, nombre_usuario: e.target.value })}
+          onChange={(e) => setNombre(e.target.value)}
           pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
           title="El nombre no puede tener números"
         />
@@ -64,7 +62,7 @@ export function RegisterUsuario() {
           className="form-control mb-2"
           placeholder="Email"
           value={form.email_usuario}
-          onChange={(e) => setForm({ ...form, email_usuario: e.target.value })}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <label htmlFor="password" className="form-label">
@@ -76,7 +74,7 @@ export function RegisterUsuario() {
           className="form-control mb-2"
           placeholder="Contraseña"
           value={form.password_usuario}
-          onChange={(e) => setForm({ ...form, password_usuario: e.target.value })}
+          onChange={(e) => setPassword(e.target.value)}
           minLength={6}
           title="La contraseña debe tener al menos 6 caracteres"
         />
@@ -90,7 +88,7 @@ export function RegisterUsuario() {
           className="form-control mb-2"
           placeholder="Repetir contraseña"
           value={form.confirm_password}
-          onChange={(e) => setForm({ ...form, confirm_password: e.target.value })}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           minLength={6}
           title="Repetí la misma contraseña"
         />
