@@ -32,6 +32,8 @@ import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
 import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
 import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarPedidoAgregacion1.tsx'
 import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
+import { ShowMisPedidos } from './components/PedidoResolucion/ShowMisPedidos.tsx'
+import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
 
 
 function App() {
@@ -70,6 +72,12 @@ function App() {
           <Route path="/generar-pedido-paso-2" element={<GenerarPedidoPaso2 />} />
 
           <Route path="/mostrar-posibles-pedidos" element={<ShowPosiblesPedidos />} />
+          <Route path="/show-mis-pedidos" element={<ShowMisPedidos />} />
+
+          
+
+          <Route path="/add-inspeccion/:id" element={<AddInspeccion />} />
+
 
           <Route path="show-pedidos-agregacion" element={<ShowPedidosAgregacion />} />
           <Route path="/generar-pedido-agregacion-1" element={<GenerarPedidoAgregacion1 />} />

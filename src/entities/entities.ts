@@ -12,6 +12,8 @@ interface Denunciante extends BaseDTO {
   telefono_denunciante: string
   email_denunciante: string
   password_denunciante: string
+  tipo_documento_denunciante: string
+  numero_documento_denunciante: string
 }
 
 interface Localidad extends BaseDTO {
@@ -46,6 +48,7 @@ interface PedidoResolucion extends BaseDTO {
   cazador?: Usuario
   anomalias: Anomalia[]
   denunciante: Denunciante
+  inspecciones: Inspecciones []
 }
 
 interface Anomalia extends BaseDTO {
@@ -60,6 +63,15 @@ interface PedidoAgregacion extends BaseDTO {
   cazador?: Usuario
   evidencias: Evidencia[]
   tipo_anomalia?: TipoAnomalia
+}
+
+interface Inspecciones extends BaseDTO{
+  numero_inspeccion: number
+  comentario_inspeccion: string
+  fecha_inspeccion: string
+  pedido_resolucion: PedidoAgregacion
+
+
 }
 
 interface Evidencia extends BaseDTO {
@@ -79,4 +91,5 @@ export type {
   Anomalia,
   PedidoAgregacion,
   Evidencia,
+  Inspecciones
 }
