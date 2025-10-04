@@ -5,7 +5,7 @@ import type { PedidoAgregacion } from "../../entities/entities.ts";
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowPedidosAgregacion(){
-  const {data, loading, error}= get<PedidoAgregacion>('pedido_agregacion')
+  const { data, loading, error } = get<PedidoAgregacion>('pedido_agregacion')
 
   return(
     <div className="ShowPedidosAgregacion">
@@ -27,19 +27,21 @@ export function ShowPedidosAgregacion(){
               <th>Acción</th>
             </tr>
           </thead>
+
           <tbody>
             {data?.map((unPedido)=>(
               <tr key= {unPedido.id}>
                 <th>{unPedido.id}</th>
                 <th>{unPedido.descripcion_pedido_agregacion}</th>
                 <th>
-                  {Number(unPedido.dificultad_pedido_agregacion) === 1? "Fácil"
-                    : Number(unPedido.dificultad_pedido_agregacion) === 2? "Medio"
-                    : Number(unPedido.dificultad_pedido_agregacion) === 3? "Difícil"
+                  {Number(unPedido.dificultad_pedido_agregacion) === 1? "Nivel 1"
+                    : Number(unPedido.dificultad_pedido_agregacion) === 2? "Nivel 2"
+                    : Number(unPedido.dificultad_pedido_agregacion) === 3? "Nivel 3"
                     : unPedido.dificultad_pedido_agregacion
                   }
                 </th>
                 <th>{unPedido.estado_pedido_agregacion}</th>
+
                 <th>
                   <ul className="list-group">
                     {unPedido.evidencias.map((unaEvidencia) => (
@@ -58,6 +60,7 @@ export function ShowPedidosAgregacion(){
                     ))}
                   </ul>
                 </th>
+                
                 <th>
                   <DeleteEntityButton
                     idToDelete={unPedido.id}
@@ -73,6 +76,7 @@ export function ShowPedidosAgregacion(){
 
       {loading && <div>Cargando...</div>}
       {error && <div>{error}</div>}
+      
       <Link to="/generar-pedido-agregacion-1" className="btn btn-lg btn-success m-3 mt-0">
           + Generar Pedido de Agregación
       </Link>
