@@ -32,9 +32,20 @@ export function AddDenunciantes() {
           <label htmlFor="nombre" className="form-label">
             Nombre y apellido
           </label>
-          <input required type="text" id="nombre" className="form-control" placeholder="Nombre"
-          onChange={(e) => setDenuncianteNuevo({ ...denuncianteNuevo, nombre_apellido_denunciante: e.target.value })}
-          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="El nombre no puede tener números"
+          <input
+            required
+            type="text"
+            id="nombre"
+            className="form-control"
+            placeholder="Nombre"
+            onChange={(e) =>
+              setDenuncianteNuevo({
+                ...denuncianteNuevo,
+                nombre_apellido_denunciante: e.target.value,
+              })
+            }
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="El nombre no puede tener números"
           />
         </div>
 
@@ -42,9 +53,17 @@ export function AddDenunciantes() {
           <label htmlFor="telefono" className="form-label">
             Telefono
           </label>
-          <input required type="text" id="telefono" className="form-control" placeholder="Telefono"
-          onChange={(e) => setDenuncianteNuevo({ ...denuncianteNuevo, telefono_denunciante: e.target.value })}
-          pattern="^[0-9]+$" title="El teléfono no puede tener letras ni espacios"
+          <input
+            required
+            type="text"
+            id="telefono"
+            className="form-control"
+            placeholder="Telefono"
+            onChange={(e) =>
+              setDenuncianteNuevo({ ...denuncianteNuevo, telefono_denunciante: e.target.value })
+            }
+            pattern="^[0-9]+$"
+            title="El teléfono no puede tener letras ni espacios"
           />
         </div>
 
@@ -52,8 +71,15 @@ export function AddDenunciantes() {
           <label htmlFor="email" className="form-label">
             Email
           </label>
-          <input required type="email" id="email" className="form-control" placeholder="Email"
-          onChange={(e) => setDenuncianteNuevo({ ...denuncianteNuevo, email_denunciante: e.target.value })}
+          <input
+            required
+            type="email"
+            id="email"
+            className="form-control"
+            placeholder="Email"
+            onChange={(e) =>
+              setDenuncianteNuevo({ ...denuncianteNuevo, email_denunciante: e.target.value })
+            }
           />
         </div>
 
@@ -61,11 +87,19 @@ export function AddDenunciantes() {
           <label htmlFor="password" className="form-label">
             Constraseña
           </label>
-          <input required type="password" id="password" className="form-control" placeholder="Contraseña"
-          onChange={(e) => setDenuncianteNuevo({ ...denuncianteNuevo, password_denunciante: e.target.value })}
-          minLength={6} title="La contraseña debe tener al menos 6 caracteres"
+          <input
+            required
+            type="password"
+            id="password"
+            className="form-control"
+            placeholder="Contraseña"
+            onChange={(e) =>
+              setDenuncianteNuevo({ ...denuncianteNuevo, password_denunciante: e.target.value })
+            }
+            minLength={6}
+            title="La contraseña debe tener al menos 6 caracteres"
           />
-        </div>*/
+        </div>
 
         <button type="submit" className="btn btn-primary">
           Enviar

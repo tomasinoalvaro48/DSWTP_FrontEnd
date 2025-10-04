@@ -6,6 +6,23 @@ export function MainNavbar() {
   const { token, logout, userRol } = useAuth()
   const navigate = useNavigate()
 
+  const MoreOptions = () => {
+    return (
+      <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
+        <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item
+          onClick={() => {
+            logout()
+            navigate('/')
+          }}
+        >
+          Cerrar Sesión
+        </NavDropdown.Item>
+      </NavDropdown>
+    )
+  }
+
   return (
     <>
       <Navbar expand="lg" className="bg-body-secondary border">
@@ -43,18 +60,7 @@ export function MainNavbar() {
                 <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos de Agregacion</div>
                 </NavLink>
-                <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
-                  <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item
-                    onClick={() => {
-                      logout()
-                      navigate('/')
-                    }}
-                  >
-                    Cerrar Sesión
-                  </NavDropdown.Item>
-                </NavDropdown>
+                <MoreOptions />
               </>
             )}
             {!token && (
@@ -75,6 +81,7 @@ export function MainNavbar() {
                 <NavLink to="/show-pedido" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos</div>
                 </NavLink>
+                <MoreOptions />
               </>
             )}
             {token && userRol == 'cazador' && (
@@ -82,6 +89,10 @@ export function MainNavbar() {
                 <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos para Cazador</div>
                 </NavLink>
+                <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Pedidos de Agregacion</div>
+                </NavLink>
+                <MoreOptions />
               </>
             )}
           </Navbar.Collapse>
