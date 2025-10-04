@@ -27,7 +27,7 @@ const ZonaByLocalidadSelection = ({ setZona }: Props) => {
   return (
     <div className="mb-3">
       <label htmlFor="localidad" className="form-label">
-        Localidad donde ocurrió la anomalía:
+        Localidad:
       </label>
 
       {loadingLoc && <p>Cargando localidades...</p>}
@@ -55,7 +55,7 @@ const ZonaByLocalidadSelection = ({ setZona }: Props) => {
             <p>Seleccione una localidad para ver sus zonas</p>
           )}
           <label htmlFor="zona" className="form-label">
-            Zona donde ocurrió la anomalía:
+            Zona:
           </label>
           <select
             className="form-select"
