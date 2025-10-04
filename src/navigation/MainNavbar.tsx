@@ -61,7 +61,9 @@ export function MainNavbar() {
                   <div className="navbarOptionTipos">Pedidos de Agregacion (cazador)</div>
                 </NavLink>
                 <NavLink to="/tomar-pedidos-agregacion" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Aceptar/Rechazar Pedidos de Agregacion (admin)</div>
+                  <div className="navbarOptionTipos">
+                    Aceptar/Rechazar Pedidos de Agregacion (admin)
+                  </div>
                 </NavLink>
                 <MoreOptions />
               </>
@@ -90,7 +92,7 @@ export function MainNavbar() {
             {token && userRol == 'cazador' && (
               <>
                 <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos para Cazador</div>
+                  <div className="navbarOptionTipos">Pedidos</div>
                 </NavLink>
                 <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos de Agregacion</div>
