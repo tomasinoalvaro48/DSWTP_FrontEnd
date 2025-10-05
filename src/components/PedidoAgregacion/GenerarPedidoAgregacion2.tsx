@@ -36,7 +36,10 @@ export function GenerarPedidoAgregacion2() {
 
     const pedidoCompleto = { ...pedidoPaso1, evidencias }
 
-    post("pedido_agregacion", pedidoCompleto)
+    const token = localStorage.getItem('token')
+    post('pedido_agregacion', pedidoCompleto, {
+      headers: { Authorization: `Bearer ${token}`, },
+    })
     navigate("/show-pedidos-agregacion")
   }
 

@@ -5,7 +5,10 @@ import type { PedidoAgregacion } from "../../entities/entities.ts";
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowPedidosAgregacion(){
-  const { data, loading, error } = get<PedidoAgregacion>('pedido_agregacion')
+  const token = localStorage.getItem('token')
+  const { data, loading, error } = get<PedidoAgregacion>('pedido_agregacion', {
+    headers: { Authorization: `Bearer ${token}`, },
+  })
 
   return(
     <div className="ShowPedidosAgregacion">

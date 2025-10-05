@@ -4,25 +4,19 @@ import { get, patch } from "../../api/dataManager.ts";
 import type { PedidoAgregacion } from "../../entities/entities.ts";
 
 export function TomarPedidosAgregacion() {
-  const { data, loading, error } = get<PedidoAgregacion>("pedido_agregacion");
+  const token = localStorage.getItem('token')
+  const { data, loading, error } = get<PedidoAgregacion>("pedido_agregacion", {
+    headers: { Authorization: `Bearer ${token}` }
+  })
   const [procesando, setProcesando] = useState<string | null>(null);
 
   const handleTomarPedido = async (id: string, accion: "aceptar" | "rechazar") => {
     try {
       setProcesando(id);
-      /*const token = localStorage.getItem("token");
-      const cazadorId = localStorage.getItem("userId");
-
-      if (!cazadorId) {
-        alert("No se encontró el usuario logueado.");
-        return;
-      }*/
 
       await patch(
         `pedido_agregacion/tomar-pedidos-agregacion/${id}`,
-        //{ accion, cazadorId },
         { accion }
-        //{ headers: { Authorization: `Bearer ${token}` } }
       );
 
       alert(accion === "aceptar"
@@ -82,6 +76,9 @@ export function TomarPedidosAgregacion() {
                     <div className="row">
                       <div className="col-md-6">
                         <ul>
+                          <li>
+                            <strong>Cazador que lo solicitó:</strong> {p.cazador?.nombre_usuario || "Sin asignar"}
+                          </li>
                           <li>
                             <strong>Descripción:</strong> {p.descripcion_pedido_agregacion}
                           </li>
