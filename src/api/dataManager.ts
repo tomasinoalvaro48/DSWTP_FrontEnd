@@ -8,7 +8,6 @@ import { BACKEND_URL } from '../../endpoints.config.ts'
 // Cuando se llame a la función (usando import { get, post, patch, remove } from './api/dataManager.ts')
 // se debe especificar el tipo de dato que se espera (por ejemplo, get<TipoAnomalia>("tipo_anomalia"))
 
-
 // Controlador global de recargas
 /*
 let reloadListeners: (() => void)[] = [];
@@ -53,16 +52,6 @@ function get<T>(url: string, config?: object) {
   return { data, loading, error }
 }
 */
-
-
-
-
-
-
-
-
-
-
 
 // get function:
 function get<T>(url: string, config?: object) {
@@ -196,12 +185,6 @@ async function remove(url: string) {
   }
 }
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> CUU-3-y-4
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar
 function getFilter<T>(url: string) {
   const [data, setData] = useState<T[]>([])
