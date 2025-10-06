@@ -10,6 +10,7 @@ import { BACKEND_URL } from '../../endpoints.config.ts'
 
 
 // Controlador global de recargas
+/*
 let reloadListeners: (() => void)[] = [];
 
 export function triggerReload() {
@@ -51,6 +52,7 @@ function get<T>(url: string, config?: object) {
 
   return { data, loading, error }
 }
+*/
 
 
 
@@ -62,7 +64,6 @@ function get<T>(url: string, config?: object) {
 
 
 
-/*
 // get function:
 function get<T>(url: string, config?: object) {
   const [data, setData] = useState<T[]>([])
@@ -84,7 +85,7 @@ function get<T>(url: string, config?: object) {
   }
   return { data, loading, error }
 }
-*/
+
 
 
 // getOne function:
@@ -105,7 +106,7 @@ function getOne<T>(url: string) {
   }
   return { data }
 }
-
+/*
 
 async function patch<T>(url: string, data: T, config?: object) {
   try {
@@ -141,7 +142,7 @@ async function remove(url: string) {
 }
 
 
-
+*/
 
 // post function:
 /*
@@ -154,7 +155,7 @@ async function post<T>(url: string, data: T) {
   }
 }
 */
-/*
+
 //post funtion + config
 async function post<T>(url: string, data: T, config?: object) {
   try {
@@ -188,7 +189,7 @@ async function remove(url: string) {
   }
 }
 
-*/
+
 
 
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar

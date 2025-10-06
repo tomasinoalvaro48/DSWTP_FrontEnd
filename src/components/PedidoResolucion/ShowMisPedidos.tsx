@@ -18,8 +18,10 @@ export function ShowMisPedidos(){
 
   const navigate = useNavigate()
 
+  
+
   const [dificultadFilter, setDificultadFilter] = useState(0);
-  const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter); // <-- Nuevo estado
+  const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,8 +33,22 @@ export function ShowMisPedidos(){
   
   const token = localStorage.getItem('token')
 
-  let { data: pedido_resolucion, loading: pedido_resolucion_loading, error: pedido_resolucion_error } =
-  get<PedidoResolucion>(`pedido_resolucion/mis_pedidos`, {
+
+  const [queryActual, setQueryActual] = useState(`pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'aceptado'}`);
+
+
+  let { data: pedido_resolucion_actual, loading: pedido_resolucion_loading_actual, error: pedido_resolucion_error_actual } =
+  get<PedidoResolucion>(queryActual, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const [queryHistorico, setQueryHistorico] = useState(`pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'resuelto'}`);
+
+  let { data: pedido_resolucion_historico, loading: pedido_resolucion_loading_historico, error: pedido_resolucion_error_historico } =
+  get<PedidoResolucion>(queryHistorico, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +62,7 @@ const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {
 
 const haddleResolucionAnomalia = (id : string)=>{
   patch(`anomalia/resolver_anomalia/${id}`,{});
-  navigate(`/show-mis-pedidos`)
+  location.reload()
 }
 
 const haddleAgregarInspeccion = (idPedidoResolcion : string) => {
@@ -130,210 +146,442 @@ const haddleAgregarInspeccion = (idPedidoResolcion : string) => {
 
 
 
+      <div className="mb-4 border-bottom border-2">
 
+        {pedido_resolucion_loading_actual && (
+          <div className="d-flex align-items-center">
+            <Spinner animation="border" role="status" size="sm" className="me-2" />
+            <span>Cargando pedidos...</span>
+          </div>
+        )}
+        {pedido_resolucion_error_actual && <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error_actual}</Alert>}
 
-
-
-      {pedido_resolucion_loading && (
-        <div className="d-flex align-items-center">
-          <Spinner animation="border" role="status" size="sm" className="me-2" />
-          <span>Cargando pedidos...</span>
-        </div>
-      )}
-      {pedido_resolucion_error && <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error}</Alert>}
-
-      {!pedido_resolucion_loading && !pedido_resolucion_error && pedido_resolucion && (
-        
-        <div className="accordion my-3 mx-4">
-        <Accordion>
-          {pedido_resolucion?.map((unPedido)=>(
-            <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
-             <Accordion.Header>
-                <div className="row justify-content-between w-100 align-items-center">
-                  <div className="col-3 md">
-                    <strong>Localidad: </strong> {unPedido.zona.localidad.nombre_localidad} <br />
-                    <strong>Zona: </strong> {unPedido.zona.nombre_zona}
-                  </div>
-                  
-                  <div className="col-3 md">
-                    <strong>Direccion: </strong> {unPedido.direccion_pedido_resolucion}
-                  </div>
-
-                  <div className="col-2 md">
-                    <strong>Dificultad: </strong> {unPedido.dificultad_pedido_resolucion}
-                  </div>
-
-                  <div className="col-md-3 col-sm-2">
-                    <strong>Fecha Realiz: </strong>
-                    {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString("es-AR")}
-                  </div>
-
-                  <div className="col-md-1 col-sm-2 justify-content-right">
-                    Ver detalle
-                  </div>
-                </div>
-              </Accordion.Header>
-              <Accordion.Body>
-                <div className="container">
-                  <div className="container denunciante border rounded-4 mb-4 p-4">
-                    <div className="row justify-content-left w-100 align-items-center ">
-                      <h2>Datos Denunciante</h2>
+        {!pedido_resolucion_loading_actual && !pedido_resolucion_error_actual && pedido_resolucion_actual && (
+          
+          <div className="accordion my-3 mx-4">
+          <Accordion>
+            {pedido_resolucion_actual?.map((unPedido)=>(
+              <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
+              <Accordion.Header>
+                  <div className="row justify-content-between w-100 align-items-center">
+                    <div className="col-3 md">
+                      <strong>Localidad: </strong> {unPedido.zona.localidad.nombre_localidad} <br />
+                      <strong>Zona: </strong> {unPedido.zona.nombre_zona}
                     </div>
-                    <div className="row justify-content-between w-100 align-items-center ">
-                      <div className="col-3 md">
-                        <strong>Nombre y Apellido: </strong> 
-                        {unPedido.denunciante.nombre_apellido_denunciante}
-                      </div>
-                      
-                      <div className="col-md-2">
-                        <strong>Tipo Documento: </strong> 
-                        {unPedido.denunciante.tipo_documento_denunciante}
-                      </div>
-                      <div className="col-md-2">
-                        <strong>Numero Documento: </strong> 
-                        {unPedido.denunciante.numero_documento_denunciante}
-                      </div>
+                    
+                    <div className="col-3 md">
+                      <strong>Direccion: </strong> {unPedido.direccion_pedido_resolucion}
+                    </div>
 
-                      <div className="col-md-2">
-                        <strong>Telefono: </strong> {unPedido.denunciante.telefono_denunciante}
-                      </div>
+                    <div className="col-2 md">
+                      <strong>Dificultad: </strong> {unPedido.dificultad_pedido_resolucion}
+                    </div>
 
-                      <div className="col-md-3">
-                        <strong>Email: </strong>
-                        {unPedido.denunciante.email_denunciante}
-                      </div>          
+                    <div className="col-md-3 col-sm-2">
+                      <strong>Fecha Realiz: </strong>
+                      {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString("es-AR")}
+                    </div>
+
+                    <div className="col-md-1 col-sm-2 justify-content-right">
+                      Ver detalle
                     </div>
                   </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <div className="container">
+                    <div className="container denunciante border rounded-4 mb-4 p-4">
+                      <div className="row justify-content-left w-100 align-items-center ">
+                        <h2>Datos Denunciante</h2>
+                      </div>
+                      <div className="row justify-content-between w-100 align-items-center ">
+                        <div className="col-3 md">
+                          <strong>Nombre y Apellido: </strong> 
+                          {unPedido.denunciante.nombre_apellido_denunciante}
+                        </div>
+                        
+                        <div className="col-md-2">
+                          <strong>Tipo Documento: </strong> 
+                          {unPedido.denunciante.tipo_documento_denunciante}
+                        </div>
+                        <div className="col-md-2">
+                          <strong>Numero Documento: </strong> 
+                          {unPedido.denunciante.numero_documento_denunciante}
+                        </div>
 
-                  <div className="mb-4">
-                    <strong>Descripcion: </strong>
-                    {unPedido.descripcion_pedido_resolucion ? unPedido.descripcion_pedido_resolucion : 'No hay descripcion cargada'}
-                  </div>
+                        <div className="col-md-2">
+                          <strong>Telefono: </strong> {unPedido.denunciante.telefono_denunciante}
+                        </div>
 
-                  <div className="mb-4">
-                    {/* Ver anomalías */}
-                    <Accordion>
-                      {/* La primera anomalía (la de mayor dificultad) */}
-                      {unPedido.anomalias.length > 0 && (
-                        <Accordion.Item eventKey={`${unPedido.id}-top`}>
-                          <Accordion.Header>
-                            <div className="row justify-content-center w-100 align-items-center">
-                              Ver Anomalías
-                            </div>
-                          </Accordion.Header>
-                          <Accordion.Body>
+                        <div className="col-md-3">
+                          <strong>Email: </strong>
+                          {unPedido.denunciante.email_denunciante}
+                        </div>          
+                      </div>
+                    </div>
 
+                    <div className="mb-4">
+                      <strong>Descripcion: </strong>
+                      {unPedido.descripcion_pedido_resolucion ? unPedido.descripcion_pedido_resolucion : 'No hay descripcion cargada'}
+                    </div>
 
-                            {/* Cuando se despliega muestro TODAS las anomalías */}
-                            <div className="row justify-content-center w-100 align-items-center">
-                              {unPedido.anomalias.map((anomalia) => (
-                                <div key={anomalia.id} className="row border-bottom py-1 text-center">
-                                  <div className="col-md-3">
-                                    <strong>{anomalia.tipo_anomalia.nombre_tipo_anomalia}</strong>
-                                  </div>
-                                  <div className="col-md-3">
-                                    <strong>Dificultad: </strong>{anomalia.tipo_anomalia.dificultad_tipo_anomalia}
-                                  </div>
-                                  <div className="col-md-3">
-                                    <strong>Resultado: </strong>{anomalia.resultado_anomalia}
-                                  </div>
-                                  <div className="col-md-3">
-                                    <button className="btn btn-success" onClick={() => haddleResolucionAnomalia(anomalia.id)}> Resolver </button>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      )}
-                    </Accordion>
-                  </div>
-
-
-                  <div className="mb-4">
-                    <Accordion>
-                      {/* Inspecciones) */}
-
-                      {unPedido.inspecciones.length > 0 && (
-                        <Accordion.Item eventKey={`${unPedido.id}-top`}> {/*ver que onda con el pedidoId */}
-                          <Accordion.Header>
-                            <div className="row justify-content-center w-100 align-items-center">
+                    <div className="mb-4">
+                      {/* Ver anomalías */}
+                      <Accordion>
+                        {/* La primera anomalía (la de mayor dificultad) */}
+                        {unPedido.anomalias.length > 0 && (
+                          <Accordion.Item eventKey={`${unPedido.id}-top`}>
+                            <Accordion.Header>
                               <div className="row justify-content-center w-100 align-items-center">
-                                <div className="col-md-12">
-                                  <h2>Inspecciones</h2>
-                                </div>
+                                Ver Anomalías
+                              </div>
+                            </Accordion.Header>
+                            <Accordion.Body>
 
+
+                              {/* Cuando se despliega muestro TODAS las anomalías */}
+                              <div className="row justify-content-center w-100 align-items-center">
+                                {unPedido.anomalias.map((anomalia) => (
+                                  <div key={anomalia.id} className="row border-bottom py-1 text-center">
+                                    <div className="col-md-3">
+                                      <strong>{anomalia.tipo_anomalia.nombre_tipo_anomalia}</strong>
+                                    </div>
+                                    <div className="col-md-3">
+                                      <strong>Dificultad: </strong>{anomalia.tipo_anomalia.dificultad_tipo_anomalia}
+                                    </div>
+                                    <div className="col-md-3">
+                                      <strong>Resultado: </strong>{anomalia.resultado_anomalia}
+                                    </div>
+                                    <div className="col-md-3">
+                                      {anomalia.resultado_anomalia === "pendiente" && (
+                                        <button
+                                          className="btn btn-success"
+                                          onClick={() => haddleResolucionAnomalia(anomalia.id)}
+                                        >
+                                          Resolver
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
 
-                              <div className="row justify-content-between w-100 align-items-left">
-                                <div className="col-md-2">
-                                  <strong>Inspeccion Número: </strong> {unPedido.inspecciones[0].numero_inspeccion}
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        )}
+                      </Accordion>
+                    </div>
+
+
+                    <div className="mb-4">
+                      <Accordion>
+                        {/* Inspecciones) */}
+
+                        {unPedido.inspecciones.length > 0 && (
+                          <Accordion.Item eventKey={`${unPedido.id}-top`}> {/*ver que onda con el pedidoId */}
+                            <Accordion.Header>
+                              <div className="row justify-content-center w-100 align-items-center">
+                                <div className="row justify-content-center w-100 align-items-center">
+                                  <div className="col-md-12">
+                                    <h2>Inspecciones</h2>
+                                  </div>
+
                                 </div>
-                                <div className="col-md-2">
-                                  <strong>Fecha: </strong>{new Date(unPedido.inspecciones[0].fecha_inspeccion).toLocaleDateString("es-AR")}
+
+                                <div className="row justify-content-between w-100 align-items-left">
+                                  <div className="col-md-2">
+                                    <strong>Inspeccion Número: </strong> {unPedido.inspecciones[0].numero_inspeccion}
+                                  </div>
+                                  <div className="col-md-2">
+                                    <strong>Fecha: </strong>{new Date(unPedido.inspecciones[0].fecha_inspeccion).toLocaleDateString("es-AR")}
+                                  </div>
+                                  <div className="col-md-8 text-">
+                                    <strong>Comentario de avance: </strong>{unPedido.inspecciones[0].comentario_inspeccion}
+                                  </div>
+
+                                      
                                 </div>
-                                <div className="col-md-8 text-">
-                                  <strong>Comentario de avance: </strong>{unPedido.inspecciones[0].comentario_inspeccion}
-                                </div>
+                              </div>
+
+                            </Accordion.Header>
+                            <Accordion.Body>
+
+
+                              {/* Cuando se despliega muestro TODAS las anomalías */}
+                              <div className="row justify-content-center w-100 align-items-left">
+                                {unPedido.inspecciones.map((inspeccion) => (
+                                  <div key={inspeccion.id} className="row border-bottom py-1 text-left">
+                                    <div className="col-md-2">
+                                      <strong>Inspeccion Número: </strong>  {inspeccion.numero_inspeccion}
+                                    </div>
+                                    <div className="col-md-2">
+                                      <strong>Fecha: </strong>{new Date(inspeccion.fecha_inspeccion).toLocaleDateString("es-AR")}
+                                    </div>
+                                    <div className="col-md-8">
+                                      <strong>Comentario de avance: </strong> {inspeccion.comentario_inspeccion}
+                                    </div>
 
                                     
+                                  </div>
+                                ))}
                               </div>
-                            </div>
 
-                          </Accordion.Header>
-                          <Accordion.Body>
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        )}
+                      </Accordion>
+                    </div>
+
+                    <div className="row mb-4 justify-content-center">
+                      <div className="col-md-2">
+                        <button 
+                          className="btn btn-success w-100" 
+                          onClick={() => haddleAgregarInspeccion(unPedido.id)}
+                        >
+                          Agregar Inspección
+                        </button>
+                      </div>
+                    </div>
 
 
-                            {/* Cuando se despliega muestro TODAS las anomalías */}
-                            <div className="row justify-content-center w-100 align-items-left">
-                              {unPedido.inspecciones.map((inspeccion) => (
-                                <div key={inspeccion.id} className="row border-bottom py-1 text-left">
-                                  <div className="col-md-2">
-                                    <strong>Inspeccion Número: </strong>  {inspeccion.numero_inspeccion}
-                                  </div>
-                                  <div className="col-md-2">
-                                    <strong>Fecha: </strong>{new Date(inspeccion.fecha_inspeccion).toLocaleDateString("es-AR")}
-                                  </div>
-                                  <div className="col-md-8">
-                                    <strong>Comentario de avance: </strong> {inspeccion.comentario_inspeccion}
-                                  </div>
 
-                                  
-                                </div>
-                              ))}
-                            </div>
 
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      )}
-                    </Accordion>
                   </div>
+                </Accordion.Body>
+              </Accordion.Item>
+            ))}
+          </Accordion>
+          </div>
+        )}
 
-                  <div className="row mb-4 justify-content-center">
-                    <div className="col-md-2">
-                      <button 
-                        className="btn btn-success w-100" 
-                        onClick={() => haddleAgregarInspeccion(unPedido.id)}
-                      >
-                        Agregar Inspección
-                      </button>
+        {pedido_resolucion_loading_actual && <div>Cargando...</div>}
+        {pedido_resolucion_error_actual && <div>{pedido_resolucion_error_actual}</div>}
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div>
+          {pedido_resolucion_loading_historico && (
+          <div className="d-flex align-items-center">
+            <Spinner animation="border" role="status" size="sm" className="me-2" />
+            <span>Cargando pedidos...</span>
+          </div>
+        )}
+        {pedido_resolucion_error_historico && <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error_historico}</Alert>}
+
+        {!pedido_resolucion_loading_historico && !pedido_resolucion_error_historico && pedido_resolucion_historico && (
+          
+          <div className="accordion my-3 mx-4">
+          <Accordion>
+            {pedido_resolucion_historico?.map((unPedido)=>(
+              <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
+              <Accordion.Header>
+                  <div className="row justify-content-between w-100 align-items-center">
+                    <div className="col-3 md">
+                      <strong>Localidad: </strong> {unPedido.zona.localidad.nombre_localidad} <br />
+                      <strong>Zona: </strong> {unPedido.zona.nombre_zona}
+                    </div>
+                    
+                    <div className="col-3 md">
+                      <strong>Direccion: </strong> {unPedido.direccion_pedido_resolucion}
+                    </div>
+
+                    <div className="col-2 md">
+                      <strong>Dificultad: </strong> {unPedido.dificultad_pedido_resolucion}
+                    </div>
+
+                    <div className="col-md-3 col-sm-2">
+                      <strong>Fecha Realiz: </strong>
+                      {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString("es-AR")}
+                    </div>
+
+                    <div className="col-md-1 col-sm-2 justify-content-right">
+                      Ver detalle
                     </div>
                   </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <div className="container">
+                    <div className="container denunciante border rounded-4 mb-4 p-4">
+                      <div className="row justify-content-left w-100 align-items-center ">
+                        <h2>Datos Denunciante</h2>
+                      </div>
+                      <div className="row justify-content-between w-100 align-items-center ">
+                        <div className="col-3 md">
+                          <strong>Nombre y Apellido: </strong> 
+                          {unPedido.denunciante.nombre_apellido_denunciante}
+                        </div>
+                        
+                        <div className="col-md-2">
+                          <strong>Tipo Documento: </strong> 
+                          {unPedido.denunciante.tipo_documento_denunciante}
+                        </div>
+                        <div className="col-md-2">
+                          <strong>Numero Documento: </strong> 
+                          {unPedido.denunciante.numero_documento_denunciante}
+                        </div>
+
+                        <div className="col-md-2">
+                          <strong>Telefono: </strong> {unPedido.denunciante.telefono_denunciante}
+                        </div>
+
+                        <div className="col-md-3">
+                          <strong>Email: </strong>
+                          {unPedido.denunciante.email_denunciante}
+                        </div>          
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <strong>Descripcion: </strong>
+                      {unPedido.descripcion_pedido_resolucion ? unPedido.descripcion_pedido_resolucion : 'No hay descripcion cargada'}
+                    </div>
+
+                    <div className="mb-4">
+                      {/* Ver anomalías */}
+                      <Accordion>
+                        {/* La primera anomalía (la de mayor dificultad) */}
+                        {unPedido.anomalias.length > 0 && (
+                          <Accordion.Item eventKey={`${unPedido.id}-top`}>
+                            <Accordion.Header>
+                              <div className="row justify-content-center w-100 align-items-center">
+                                Ver Anomalías
+                              </div>
+                            </Accordion.Header>
+                            <Accordion.Body>
+
+
+                              {/* Cuando se despliega muestro TODAS las anomalías */}
+                              <div className="row justify-content-center w-100 align-items-center">
+                                {unPedido.anomalias.map((anomalia) => (
+                                  <div key={anomalia.id} className="row border-bottom py-1 text-center">
+                                    <div className="col-md-3">
+                                      <strong>{anomalia.tipo_anomalia.nombre_tipo_anomalia}</strong>
+                                    </div>
+                                    <div className="col-md-3">
+                                      <strong>Dificultad: </strong>{anomalia.tipo_anomalia.dificultad_tipo_anomalia}
+                                    </div>
+                                    <div className="col-md-3">
+                                      <strong>Resultado: </strong>{anomalia.resultado_anomalia}
+                                    </div>
+                                    <div className="col-md-3">
+                                      {anomalia.resultado_anomalia === "pendiente" && (
+                                        <button
+                                          className="btn btn-success"
+                                          onClick={() => haddleResolucionAnomalia(anomalia.id)}
+                                        >
+                                          Resolver
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        )}
+                      </Accordion>
+                    </div>
+
+
+                    <div className="mb-4">
+                      <Accordion>
+                        {/* Inspecciones) */}
+
+                        {unPedido.inspecciones.length > 0 && (
+                          <Accordion.Item eventKey={`${unPedido.id}-top`}> {/*ver que onda con el pedidoId */}
+                            <Accordion.Header>
+                              <div className="row justify-content-center w-100 align-items-center">
+                                <div className="row justify-content-center w-100 align-items-center">
+                                  <div className="col-md-12">
+                                    <h2>Inspecciones</h2>
+                                  </div>
+
+                                </div>
+
+                                <div className="row justify-content-between w-100 align-items-left">
+                                  <div className="col-md-2">
+                                    <strong>Inspeccion Número: </strong> {unPedido.inspecciones[0].numero_inspeccion}
+                                  </div>
+                                  <div className="col-md-2">
+                                    <strong>Fecha: </strong>{new Date(unPedido.inspecciones[0].fecha_inspeccion).toLocaleDateString("es-AR")}
+                                  </div>
+                                  <div className="col-md-8 text-">
+                                    <strong>Comentario de avance: </strong>{unPedido.inspecciones[0].comentario_inspeccion}
+                                  </div>
+
+                                      
+                                </div>
+                              </div>
+
+                            </Accordion.Header>
+                            <Accordion.Body>
+
+
+                              {/* Cuando se despliega muestro TODAS las anomalías */}
+                              <div className="row justify-content-center w-100 align-items-left">
+                                {unPedido.inspecciones.map((inspeccion) => (
+                                  <div key={inspeccion.id} className="row border-bottom py-1 text-left">
+                                    <div className="col-md-2">
+                                      <strong>Inspeccion Número: </strong>  {inspeccion.numero_inspeccion}
+                                    </div>
+                                    <div className="col-md-2">
+                                      <strong>Fecha: </strong>{new Date(inspeccion.fecha_inspeccion).toLocaleDateString("es-AR")}
+                                    </div>
+                                    <div className="col-md-8">
+                                      <strong>Comentario de avance: </strong> {inspeccion.comentario_inspeccion}
+                                    </div>
+
+                                    
+                                  </div>
+                                ))}
+                              </div>
+
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        )}
+                      </Accordion>
+                    </div>
+
+                    <div className="row mb-4 justify-content-center">
+                      <div className="col-md-2">
+                        <button 
+                          className="btn btn-success w-100" 
+                          onClick={() => haddleAgregarInspeccion(unPedido.id)}
+                        >
+                          Agregar Inspección
+                        </button>
+                      </div>
+                    </div>
 
 
 
 
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-        </div>
-      )}
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+            ))}
+          </Accordion>
+          </div>
+        )}
 
-      {pedido_resolucion_loading && <div>Cargando...</div>}
-      {pedido_resolucion_error && <div>{pedido_resolucion_error}</div>}
+        {pedido_resolucion_loading_historico && <div>Cargando...</div>}
+        {pedido_resolucion_error_historico && <div>{pedido_resolucion_error_historico}</div>}
+      </div>
 
     </div>
   )
