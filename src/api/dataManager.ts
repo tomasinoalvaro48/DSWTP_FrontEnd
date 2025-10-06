@@ -18,11 +18,7 @@ function get<T>(url: string, config?: object) {
   }, [])
   const fetchAll = async () => {
     try {
-<<<<<<< HEAD
-      const response = await axios.get(`${BACKEND_URL}/api/${url}`,config)
-=======
       const response = await axios.get(`${BACKEND_URL}/api/${url}`, config)
->>>>>>> b76dbaca405269e1403f75839a30f43a25a9227b
       setData(response.data.data)
     } catch (err: any) {
       setError(err.message)
