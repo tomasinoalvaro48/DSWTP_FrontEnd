@@ -8,6 +8,62 @@ import { BACKEND_URL } from '../../endpoints.config.ts'
 // Cuando se llame a la función (usando import { get, post, patch, remove } from './api/dataManager.ts')
 // se debe especificar el tipo de dato que se espera (por ejemplo, get<TipoAnomalia>("tipo_anomalia"))
 
+
+// Controlador global de recargas
+/*
+let reloadListeners: (() => void)[] = [];
+
+export function triggerReload() {
+  reloadListeners.forEach(listener => listener());
+}
+
+
+function get<T>(url: string, config?: object) {
+  const [data, setData] = useState<T[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchAll = async () => {
+    setLoading(true)
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/${url}`, config)
+      setData(response.data.data)
+      setError(null)
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+      console.log('Data request completed')
+    }
+  }
+
+  useEffect(() => {
+    fetchAll()
+
+    // suscribirse a las recargas globales
+    const listener = () => fetchAll()
+    reloadListeners.push(listener)
+
+    // limpieza al desmontar
+    return () => {
+      reloadListeners = reloadListeners.filter(l => l !== listener)
+    }
+  }, [url]) // se recarga también si cambia la URL
+
+  return { data, loading, error }
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
 // get function:
 function get<T>(url: string, config?: object) {
   const [data, setData] = useState<T[]>([])
@@ -48,6 +104,43 @@ function getOne<T>(url: string) {
   }
   return { data }
 }
+/*
+
+async function patch<T>(url: string, data: T, config?: object) {
+  try {
+    await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
+    triggerReload() // 🔄 notifica a todos los get()
+  } catch (err: any) {
+    console.error(err)
+  } finally {
+    console.log('Patch request completed')
+  }
+}
+
+async function post<T>(url: string, data: T, config?: object) {
+  try {
+    await axios.post(`${BACKEND_URL}/api/${url}`, data, config)
+    triggerReload() // 🔄
+  } catch (err: any) {
+    console.error(err)
+  } finally {
+    console.log('Post request completed')
+  }
+}
+
+async function remove(url: string) {
+  try {
+    await axios.delete(`${BACKEND_URL}/api/${url}`)
+    triggerReload() // 🔄
+  } catch (err: any) {
+    console.error(err)
+  } finally {
+    console.log('Delete request completed')
+  }
+}
+
+
+*/
 
 // post function:
 /*
@@ -103,6 +196,12 @@ async function remove(url: string) {
   }
 }
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> CUU-3-y-4
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar
 function getFilter<T>(url: string) {
   const [data, setData] = useState<T[]>([])
