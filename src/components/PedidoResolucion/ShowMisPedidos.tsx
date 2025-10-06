@@ -40,9 +40,14 @@ export function ShowMisPedidos(){
   );
 
 const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+
+
 }
 
-const haddleResolucionAnomalia = ()=>{}
+const haddleResolucionAnomalia = (id : string)=>{
+  patch(`anomalia/resolver_anomalia/${id}`,{});
+  navigate(`/show-mis-pedidos`)
+}
 
 const haddleAgregarInspeccion = (idPedidoResolcion : string) => {
   navigate(`/add-inspeccion/${idPedidoResolcion}`)
@@ -227,13 +232,13 @@ const haddleAgregarInspeccion = (idPedidoResolcion : string) => {
                                     <strong>{anomalia.tipo_anomalia.nombre_tipo_anomalia}</strong>
                                   </div>
                                   <div className="col-md-3">
-                                    Dificultad: {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
+                                    <strong>Dificultad: </strong>{anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                   </div>
                                   <div className="col-md-3">
-                                    Resultado: {anomalia.resultado_anomalia}
+                                    <strong>Resultado: </strong>{anomalia.resultado_anomalia}
                                   </div>
                                   <div className="col-md-3">
-                                    <button className="btn btn-success" onClick={haddleResolucionAnomalia}> Resolver </button>
+                                    <button className="btn btn-success" onClick={() => haddleResolucionAnomalia(anomalia.id)}> Resolver </button>
                                   </div>
                                 </div>
                               ))}
