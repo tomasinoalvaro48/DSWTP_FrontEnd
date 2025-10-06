@@ -27,14 +27,14 @@ const ZonaByLocalidadSelection = ({ setZona }: Props) => {
   return (
     <div className="mb-3">
       <label htmlFor="localidad" className="form-label">
-        Localidad donde ocurrió la anomalía:
+        Localidad:
       </label>
 
       {loadingLoc && <p>Cargando localidades...</p>}
       {errorLoc && <p>Error al cargar localidades: {errorLoc}</p>}
       {!loadingLoc && !errorLoc && localidades.length === 0 && <p>No hay localidades cargadas </p>}
       {!loadingLoc && !errorLoc && localidades.length > 0 && (
-        <div>
+        <>
           <select
             className="form-select"
             id="localidad"
@@ -55,7 +55,7 @@ const ZonaByLocalidadSelection = ({ setZona }: Props) => {
             <p>Seleccione una localidad para ver sus zonas</p>
           )}
           <label htmlFor="zona" className="form-label">
-            Zona donde ocurrió la anomalía:
+            Zona:
           </label>
           <select
             className="form-select"
@@ -72,7 +72,7 @@ const ZonaByLocalidadSelection = ({ setZona }: Props) => {
               </option>
             ))}
           </select>
-        </div>
+        </>
       )}
     </div>
   )

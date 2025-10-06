@@ -18,7 +18,11 @@ function get<T>(url: string, config?: object) {
   }, [])
   const fetchAll = async () => {
     try {
+<<<<<<< HEAD
       const response = await axios.get(`${BACKEND_URL}/api/${url}`,config)
+=======
+      const response = await axios.get(`${BACKEND_URL}/api/${url}`, config)
+>>>>>>> b76dbaca405269e1403f75839a30f43a25a9227b
       setData(response.data.data)
     } catch (err: any) {
       setError(err.message)
@@ -29,8 +33,6 @@ function get<T>(url: string, config?: object) {
   }
   return { data, loading, error }
 }
-
-
 
 // getOne function:
 function getOne<T>(url: string) {
@@ -74,14 +76,23 @@ async function post<T>(url: string, data: T, config?: object) {
   }
 }
 
-
 // update function:
-async function patch<T>(url: string, data: T,config?: object) {
+async function patch<T>(url: string, data: T, config?: object) {
   try {
     await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
   } finally {
     console.log('Patch request completed')
+  }
+}
+
+async function patchAuth(email: string, password: string) {
+  try {
+    const res = await axios.patch(`${BACKEND_URL}/api/auth/login`, { email, password })
+    return { token: res.data.token, rol: res.data.rol }
+  } catch (err: any) {
+    console.error('Error en login: ' + err.response.data.message)
+    return
   }
 }
 
@@ -95,8 +106,6 @@ async function remove(url: string) {
     console.log('Delete request completed')
   }
 }
-
-
 
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar
 function getFilter<T>(url: string) {
@@ -120,12 +129,10 @@ function getFilter<T>(url: string) {
     }
 
     fetchAll()
-  }, [url])  
+  }, [url])
 
   return { data, loading, error }
 }
 
-
-
 // Exportamos las funciones para usarlas en otros archivos
-export { get, getOne, post, patch, remove,getFilter }
+export { get, getOne, post, patch, remove, getFilter, patchAuth }

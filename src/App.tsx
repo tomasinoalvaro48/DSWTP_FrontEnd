@@ -1,10 +1,7 @@
+import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
+import ProtectedRoute from './auth/ProtectedRoute.tsx'
+import { RouterProvider } from 'react-router-dom'
 import { AdminHome } from './screens/adminHome.tsx'
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-} from 'react-router-dom'
 import { RootLayout } from './layout/RootLayout.tsx'
 import { ShowTiposAnomalias } from './components/TipoAnomalia/ShowTiposAnomalias.tsx'
 import { AddTiposAnomalias } from './components/TipoAnomalia/AddTiposAnomalias.tsx'
@@ -35,53 +32,238 @@ import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarP
 import { ShowMisPedidos } from './components/PedidoResolucion/ShowMisPedidos.tsx'
 import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
 
+import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
 
 function App() {
+  /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
+  import { useAuth } from './auth/AuthContext.tsx'
+
+  const { token, userRol } = useAuth() <-- adentro de App()
+ 
+  Adentro de "<Route path="/" element={<RootLayout />}>":
+  {token && userRol == 'operador' && <Route index element={<AdminHome />} />} 
+  {token && userRol == 'cazador' && <Route index element={<CazadorHome />} />}
+  {token && userRol == 'denunciante' && <Route index element={<DenuncianteHome />} />}
+  {!token && <Route index element={<PublicHome />} />}
+
+  <ProtectedRoute> </ProtectedRoute>
+*/
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
-        <Route index element={<AdminHome />} />
+        <Route
+          index
+          element={
+            <ProtectedRoute allowedRoles={['operador']}>
+              <AdminHome />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="register-usuario" element={<RegisterUsuario />} />
-
         <Route element={<PrivateRoute />}>
-          <Route path="show-tipo-anomalia" element={<ShowTiposAnomalias />} />
-          <Route path="update-tipo-anomalia/:id" element={<UpdateTiposAnomalias />} />
-          <Route path="add-tipo-anomalia" element={<AddTiposAnomalias />} />
+          <Route
+            path="show-tipo-anomalia"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowTiposAnomalias />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="update-tipo-anomalia/:id"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <UpdateTiposAnomalias />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="add-tipo-anomalia"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <AddTiposAnomalias />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="show-denunciante" element={<ShowDenunciantes />} />
-          <Route path="add-denunciante" element={<AddDenunciantes />} />
-          <Route path="update-denunciante/:id" element={<UpdateDenunciantes />} />
+          <Route
+            path="show-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowDenunciantes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="add-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <AddDenunciantes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="update-denunciante/:id"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <UpdateDenunciantes />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="show-localidad" element={<ShowLocalidad />} />
-          <Route path="add-localidad" element={<AddLocalidad />} />
-          <Route path="update-localidad/:id" element={<UpdateLocalidad />}></Route>
+          <Route
+            path="show-localidad"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowLocalidad />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="add-localidad"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <AddLocalidad />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="update-localidad/:id"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <UpdateLocalidad />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="show-zona" element={<ShowZonas />} />
-          <Route path="add-zona" element={<AddZona />} />
-          <Route path="update-zona/:id" element={<UpdateZona />}></Route>
+          <Route
+            path="show-zona"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowZonas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="add-zona"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <AddZona />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="update-zona/:id"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <UpdateZona />
+              </ProtectedRoute>
+            }
+          ></Route>
 
-          <Route path="show-usuario" element={<ShowUsuario />} />
-          <Route path="add-usuario" element={<AddUsuario />} />
-          <Route path="update-usuario/:id" element={<UpdateUsuario />} />
+          <Route
+            path="show-usuario"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowUsuario />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="add-usuario"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <AddUsuario />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="update-usuario/:id"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <UpdateUsuario />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="show-pedido" element={<ShowPedidosResolucion />} />
-          <Route path="/generar-pedido-paso-1" element={<GenerarPedidoPaso1 />} />
-          <Route path="/generar-pedido-paso-2" element={<GenerarPedidoPaso2 />} />
+          <Route
+            path="show-pedido"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+                <ShowPedidosResolucion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/generar-pedido-paso-1"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+                <GenerarPedidoPaso1 />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/generar-pedido-paso-2"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+                <GenerarPedidoPaso2 />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/mostrar-posibles-pedidos" element={<ShowPosiblesPedidos />} />
-          <Route path="/show-mis-pedidos" element={<ShowMisPedidos />} />
-
-          
+          <Route path="/show-mis-pedidos" element={<ShowMisPedidos />} />         
 
           <Route path="/add-inspeccion/:id" element={<AddInspeccion />} />
 
 
-          <Route path="show-pedidos-agregacion" element={<ShowPedidosAgregacion />} />
-          <Route path="/generar-pedido-agregacion-1" element={<GenerarPedidoAgregacion1 />} />
-          <Route path="/generar-pedido-agregacion-2" element={<GenerarPedidoAgregacion2 />} />
+          
+
+          <Route
+            path="/mostrar-posibles-pedidos"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+                <ShowPosiblesPedidos />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="show-pedidos-agregacion"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+                <ShowPedidosAgregacion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/generar-pedido-agregacion-1"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+                <GenerarPedidoAgregacion1 />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/generar-pedido-agregacion-2"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+                <GenerarPedidoAgregacion2 />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/tomar-pedidos-agregacion"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <TomarPedidosAgregacion />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Route>
     )

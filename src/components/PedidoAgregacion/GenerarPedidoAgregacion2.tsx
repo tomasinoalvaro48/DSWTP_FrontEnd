@@ -8,8 +8,7 @@ export function GenerarPedidoAgregacion2() {
 
   const pedidoPaso1 = location.state as {
     descripcion_pedido_agregacion: string
-    dificultad_pedido_agregacion: string
-    evidencias: { url?: string; archivo?: string }[]
+    dificultad_pedido_agregacion: number
   }
 
   const [evidencias, setEvidencias] = useState<{ url_evidencia?: string; archivo_evidencia?: string }[]>([])
@@ -29,14 +28,18 @@ export function GenerarPedidoAgregacion2() {
     setArchivo("")
   }
 
-  const handleConfirmar = () => {
+  const handleSubmit = () => {
     if (evidencias.length === 0) {
       alert("Debes cargar al menos una evidencia.");
       return;
     }
 
     const pedidoCompleto = { ...pedidoPaso1, evidencias }
-    post("pedido_agregacion", pedidoCompleto)
+
+    const token = localStorage.getItem('token')
+    post('pedido_agregacion', pedidoCompleto, {
+      headers: { Authorization: `Bearer ${token}`, },
+    })
     navigate("/show-pedidos-agregacion")
   }
 
@@ -49,15 +52,25 @@ export function GenerarPedidoAgregacion2() {
             URL evidencia
         </label>
 
-        <input type="text" value={url} className="form-control" placeholder="http://..."
-        onChange={(e) => setUrl(e.target.value)}/>
+        <input
+          type="text"
+          value={url}
+          className="form-control"
+          placeholder="http://..."
+          onChange={(e) => setUrl(e.target.value)}
+        />
 
         <label className="mt-2">
             Archivo evidencia
         </label>
 
-        <input type="text" value={archivo} className="form-control" placeholder="Nombre de archivo (falta implementar archivo adjunto)"
-        onChange={(e) => setArchivo(e.target.value)}/>
+        <input
+          type="text"
+          value={archivo}
+          className="form-control"
+          placeholder="Nombre de archivo (falta implementar archivo adjunto)"
+          onChange={(e) => setArchivo(e.target.value)}
+        />
 
         <button type="submit" className="btn btn-primary mt-2">
           Agregar evidencia
@@ -71,12 +84,13 @@ export function GenerarPedidoAgregacion2() {
       <ul className="list-group mb-3">
         {evidencias.map((ev, idx) => (
           <li key={idx} className="list-group-item">
-            {ev.url_evidencia && <span>{ev.url_evidencia}</span>} {ev.archivo_evidencia && <span>{ev.archivo_evidencia}</span>}
+            {ev.url_evidencia && <span>{ev.url_evidencia}</span>}
+            {ev.archivo_evidencia && <span>{ev.archivo_evidencia}</span>}
           </li>
         ))}
       </ul>
 
-      <button className="btn btn-success" onClick={handleConfirmar}>
+      <button className="btn btn-success" onClick={handleSubmit}>
         Confirmar Pedido
       </button>
 
