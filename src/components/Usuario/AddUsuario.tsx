@@ -51,6 +51,8 @@ export function AddUsuario() {
             id="nombre"
             className="form-control"
             placeholder="Nombre"
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="El nombre no puede tener números"
             onChange={(e) =>
               setnNewUsuario({
                 ...newUsuario,
@@ -84,6 +86,8 @@ export function AddUsuario() {
             id="psw"
             className="form-control"
             placeholder="Password"
+            minLength={6}
+            title="La contraseña debe tener al menos 6 caracteres"
             onChange={(e) =>
               setnNewUsuario({
                 ...newUsuario,

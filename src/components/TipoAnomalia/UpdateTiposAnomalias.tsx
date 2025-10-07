@@ -55,6 +55,8 @@ export function UpdateTiposAnomalias() {
             className="form-control"
             placeholder="Ingrese Nombre"
             defaultValue={data?.nombre_tipo_anomalia}
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="El nombre no puede tener números"
             onChange={(e) =>
               setTipoToUpdate({
                 ...tipoToUpdate,

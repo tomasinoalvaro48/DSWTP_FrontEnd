@@ -131,6 +131,8 @@ export function UpdateLocalidad() {
             className="form-control"
             placeholder="Ingrese Codigo"
             value={localidadToUpdate.codigo_localidad}
+            pattern="^[0-9]+$"
+            title="El código no puede tener letras"
             onChange={(e) =>
               setLocalidadToUpdate({
                 ...localidadToUpdate,
@@ -147,6 +149,8 @@ export function UpdateLocalidad() {
             className="form-control"
             placeholder="Nombre"
             value={localidadToUpdate.nombre_localidad}
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="El nombre no puede tener números"
             onChange={(e) =>
               setLocalidadToUpdate({
                 ...localidadToUpdate,

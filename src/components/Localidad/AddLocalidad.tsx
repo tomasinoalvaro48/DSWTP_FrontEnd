@@ -40,6 +40,8 @@ export function AddLocalidad(){
                         id="codigo"
                         className="form-control"
                         placeholder="Codigo"
+                        pattern="^[0-9]+$"
+                        title="El código no puede tener letras"
                         onChange={(e)=>
                             setLocalidadNueva({
                                 ...localidadNueva,
@@ -56,6 +58,8 @@ export function AddLocalidad(){
                         id="nombre"
                         className="form-control"
                         placeholder="Nombre"
+                        pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+                        title="El nombre no puede tener números"
                         onChange={(e)=>
                             setLocalidadNueva({
                                 ...localidadNueva,

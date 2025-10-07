@@ -38,14 +38,14 @@ export function AddDenunciantes() {
             id="nombre"
             className="form-control"
             placeholder="Nombre"
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="El nombre no puede tener números"
             onChange={(e) =>
               setDenuncianteNuevo({
                 ...denuncianteNuevo,
                 nombre_apellido_denunciante: e.target.value,
               })
             }
-            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
-            title="El nombre no puede tener números"
           />
         </div>
 
@@ -59,11 +59,11 @@ export function AddDenunciantes() {
             id="telefono"
             className="form-control"
             placeholder="Telefono"
+            pattern="^[0-9]+$"
+            title="El teléfono no puede tener letras ni espacios"
             onChange={(e) =>
               setDenuncianteNuevo({ ...denuncianteNuevo, telefono_denunciante: e.target.value })
             }
-            pattern="^[0-9]+$"
-            title="El teléfono no puede tener letras ni espacios"
           />
         </div>
 
@@ -93,11 +93,11 @@ export function AddDenunciantes() {
             id="password"
             className="form-control"
             placeholder="Contraseña"
+            minLength={6}
+            title="La contraseña debe tener al menos 6 caracteres"
             onChange={(e) =>
               setDenuncianteNuevo({ ...denuncianteNuevo, password_denunciante: e.target.value })
             }
-            minLength={6}
-            title="La contraseña debe tener al menos 6 caracteres"
           />
         </div>
 

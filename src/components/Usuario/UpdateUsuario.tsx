@@ -58,6 +58,8 @@ export function UpdateUsuario(){
               className="form-control"
               placeholder="Nombre"
               value={usuarioToUpdate.nombre_usuario}
+              pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+              title="El nombre no puede tener números"
               onChange={(e)=>
                 setUsuarioToUpdate({
                   ...usuarioToUpdate,
@@ -94,6 +96,8 @@ export function UpdateUsuario(){
               className="form-control"
               placeholder="Password"
               value={usuarioToUpdate.password_usuario}
+              minLength={6}
+              title="La contraseña debe tener al menos 6 caracteres"
               onChange={(e)=>
                 setUsuarioToUpdate({
                   ...usuarioToUpdate,

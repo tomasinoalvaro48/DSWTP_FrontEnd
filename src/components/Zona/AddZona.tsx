@@ -43,6 +43,8 @@ export function AddZona(){
                         id="nombre"
                         className="form-control"
                         placeholder="Nombre"
+                        pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+                        title="El nombre no puede tener números"
                         onChange={(e)=>
                             setZonaNueva({
                                 ...zonaNueva,

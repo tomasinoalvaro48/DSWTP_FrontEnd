@@ -51,10 +51,16 @@ export function UpdateDenunciantes() {
           <label htmlFor="nombre" className="form-label">
             Nombre y apellido
           </label>
-          <input required type="text" id="nombre" className="form-control" placeholder="Ingrese Nombre"
-          defaultValue={data?.nombre_apellido_denunciante}
-          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, nombre_apellido_denunciante: e.target.value })}
-          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$" title="El nombre no puede tener números"
+          <input
+            required
+            type="text"
+            id="nombre"
+            className="form-control"
+            placeholder="Ingrese Nombre"
+            defaultValue={data?.nombre_apellido_denunciante}
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="El nombre no puede estar vacío ni tener números"
+            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, nombre_apellido_denunciante: e.target.value })}
           />
         </div>
 
@@ -62,10 +68,16 @@ export function UpdateDenunciantes() {
           <label htmlFor="telefono" className="form-label">
             Telefono
           </label>
-          <input required type="text" id="telefono" className="form-control" placeholder="Ingrese Telefono"
-          defaultValue={data?.telefono_denunciante}
-          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, telefono_denunciante: e.target.value })}
-          pattern="^[0-9]+$" title="El teléfono no puede tener letras ni espacios"
+          <input
+            required
+            type="text"
+            id="telefono"
+            className="form-control"
+            placeholder="Ingrese Telefono"
+            defaultValue={data?.telefono_denunciante}
+            pattern="^[0-9]+$"
+            title="El teléfono no puede tener letras ni espacios"
+            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, telefono_denunciante: e.target.value })}
           />
         </div>
 
@@ -73,9 +85,14 @@ export function UpdateDenunciantes() {
           <label htmlFor="email" className="form-label">
             Email
           </label>
-          <input required type="email" id="email" className="form-control" placeholder="Ingrese Email"
-          defaultValue={data?.email_denunciante}
-          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, email_denunciante: e.target.value })}
+          <input
+            required
+            type="email"
+            id="email"
+            className="form-control"
+            placeholder="Ingrese Email"
+            defaultValue={data?.email_denunciante}
+            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, email_denunciante: e.target.value })}
           />
         </div>
 
@@ -83,10 +100,16 @@ export function UpdateDenunciantes() {
           <label htmlFor="password" className="form-label">
             Contraseña
           </label>
-          <input required type="password" id="password" className="form-control" placeholder="Ingrese Contraseña"
-          defaultValue={data?.password_denunciante}
-          onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, password_denunciante: e.target.value })}
-          minLength={6} title="La contraseña debe tener al menos 6 caracteres"
+          <input
+            required
+            type="password"
+            id="password"
+            className="form-control"
+            placeholder="Ingrese Contraseña"
+            defaultValue={data?.password_denunciante}
+            minLength={6}
+            title="La contraseña debe tener al menos 6 caracteres"
+            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, password_denunciante: e.target.value })}
           />
         </div>
         
