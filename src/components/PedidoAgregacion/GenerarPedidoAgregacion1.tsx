@@ -18,51 +18,61 @@ export function GenerarPedidoAgregacion1() {
   }
 
   return (
-    <div className="d-flex flex-column bg-light p-4 border rounded">
-      <h1>Generar Pedido de Agregación - Paso 1</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="container my-4">
+      <div className="bg-white p-4 rounded shadow-sm border">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2>Generar Pedido de Agregación - Paso 1</h2>
+          <Link to="/show-pedidos-agregacion" className="btn btn-outline-secondary">
+            Volver
+          </Link>
+        </div>
 
-        <label htmlFor="descripcion" className="form-label">
-            Descripción
-        </label>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="descripcion" className="form-label fw-bold">
+              Descripción de la anomalía
+            </label>
+            <input
+              required
+              type="text"
+              id="descripcion"
+              name="descripcion"
+              className="form-control"
+              placeholder="Ingrese descripción de la anomalía detectada"
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+            />
+          </div>
 
-        <input
-          required
-          type="text"
-          id="descripcion"
-          name="descripcion"
-          className="form-control"
-          placeholder="Ingrese una descripción"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-        />
+          <div className="mb-4">
+            <label htmlFor="dificultad" className="form-label fw-bold">
+              Nivel de dificultad
+            </label>
+            <select
+              required
+              id="dificultad"
+              name="dificultad"
+              className="form-select"
+              value={dificultad}
+              onChange={(e) => setDificultad(e.target.value)}
+            >
+              <option value="">Seleccione dificultad</option>
+              <option value="1">Nivel 1</option>
+              <option value="2">Nivel 2</option>
+              <option value="3">Nivel 3</option>
+            </select>
+          </div>
 
-        <label htmlFor="dificultad" className="form-label mt-3">
-            Dificultad
-        </label>
-
-        <select
-          required
-          id="dificultad"
-          name="dificultad"
-          className="form-select"
-          value={dificultad}
-          onChange={(e) => setDificultad(e.target.value)}
-        >
-          <option value="">Seleccione dificultad</option>
-          <option value="1">Nivel 1</option>
-          <option value="2">Nivel 2</option>
-          <option value="3">Nivel 3</option>
-        </select>
-
-        <button type="submit" className="btn btn-primary mt-3">
-          Siguiente
-        </button>
-
-        <Link to="/show-pedidos-agregacion" className="btn btn-secondary mt-3 ms-2">
-          Cancelar
-        </Link>
-      </form>
+          <div className="d-flex justify-content-end gap-3">
+            <button type="submit" className="btn btn-primary px-4">
+              Siguiente ➜
+            </button>
+            <Link to="/show-pedidos-agregacion" className="btn btn-outline-danger px-4">
+              Cancelar
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
