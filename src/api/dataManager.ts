@@ -8,6 +8,21 @@ import { BACKEND_URL } from '../../endpoints.config.ts'
 // Cuando se llame a la función (usando import { get, post, patch, remove } from './api/dataManager.ts')
 // se debe especificar el tipo de dato que se espera (por ejemplo, get<TipoAnomalia>("tipo_anomalia"))
 
+// axios interceptor para agregar el token a las requests
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    console.log(token)
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
 // Controlador global de recargas
 /*
 let reloadListeners: (() => void)[] = [];
@@ -67,9 +82,15 @@ function get<T>(url: string, config?: object) {
       setData(response.data.data)
     } catch (err: any) {
       setError(err.message)
+      console.error('❌ Error en POST:', {
+        url: `${BACKEND_URL}/api/${url}`,
+        status: err.response?.status,
+        message: err.response?.data?.message,
+        errors: err.response?.data?.errors,
+        data: data,
+      })
     } finally {
       setLoading(false)
-      console.log('Data request completed')
     }
   }
   return { data, loading, error }
@@ -164,9 +185,9 @@ async function patch<T>(url: string, data: T, config?: object) {
   }
 }
 
-async function patchAuth(email: string, password: string) {
+async function postAuth(email: string, password: string) {
   try {
-    const res = await axios.patch(`${BACKEND_URL}/api/auth/login`, { email, password })
+    const res = await axios.post(`${BACKEND_URL}/api/auth/login`, { email, password })
     return { token: res.data.token, rol: res.data.rol }
   } catch (err: any) {
     console.error('Error en login: ' + err.response.data.message)
@@ -213,4 +234,4 @@ function getFilter<T>(url: string) {
 }
 
 // Exportamos las funciones para usarlas en otros archivos
-export { get, getOne, post, patch, remove, getFilter, patchAuth }
+export { get, getOne, post, patch, remove, getFilter, postAuth }
