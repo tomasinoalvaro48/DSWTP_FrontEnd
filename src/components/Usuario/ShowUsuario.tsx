@@ -22,8 +22,8 @@ export function ShowUsuario() {
               <th>Id</th>
               <th>Nombre</th>
               <th>Email</th>
-              <th>Password</th>
               <th>Tipo</th>
+              <th>Localidad</th>
               <th>Zona</th>
               <th>Acción</th>
             </tr>
@@ -34,8 +34,8 @@ export function ShowUsuario() {
                 <th>{unUsuario.id}</th>
                 <th>{unUsuario.nombre_usuario}</th>
                 <th>{unUsuario.email_usuario}</th>
-                <th>{unUsuario.password_usuario}</th>
                 <th>{unUsuario.tipo_usuario}</th>
+                <th>{unUsuario.zona.localidad.nombre_localidad}</th>
                 <th>{unUsuario.zona.nombre_zona}</th>
                 <th>
                   <Link

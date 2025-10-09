@@ -215,12 +215,9 @@ function App() {
             }
           />
 
-          <Route path="/show-mis-pedidos" element={<ShowMisPedidos />} />         
+          <Route path="/show-mis-pedidos" element={<ShowMisPedidos />} />
 
           <Route path="/add-inspeccion/:id" element={<AddInspeccion />} />
-
-
-          
 
           <Route
             path="/mostrar-posibles-pedidos"

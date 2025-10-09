@@ -60,7 +60,12 @@ export function UpdateDenunciantes() {
             defaultValue={data?.nombre_apellido_denunciante}
             pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
             title="El nombre no puede estar vacío ni tener números"
-            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, nombre_apellido_denunciante: e.target.value })}
+            onChange={(e) =>
+              setDenuncianteToUpdate({
+                ...denuncianteToUpdate,
+                nombre_apellido_denunciante: e.target.value,
+              })
+            }
           />
         </div>
 
@@ -77,7 +82,12 @@ export function UpdateDenunciantes() {
             defaultValue={data?.telefono_denunciante}
             pattern="^[0-9]+$"
             title="El teléfono no puede tener letras ni espacios"
-            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, telefono_denunciante: e.target.value })}
+            onChange={(e) =>
+              setDenuncianteToUpdate({
+                ...denuncianteToUpdate,
+                telefono_denunciante: e.target.value,
+              })
+            }
           />
         </div>
 
@@ -92,27 +102,12 @@ export function UpdateDenunciantes() {
             className="form-control"
             placeholder="Ingrese Email"
             defaultValue={data?.email_denunciante}
-            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, email_denunciante: e.target.value })}
+            onChange={(e) =>
+              setDenuncianteToUpdate({ ...denuncianteToUpdate, email_denunciante: e.target.value })
+            }
           />
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Contraseña
-          </label>
-          <input
-            required
-            type="password"
-            id="password"
-            className="form-control"
-            placeholder="Ingrese Contraseña"
-            defaultValue={data?.password_denunciante}
-            minLength={6}
-            title="La contraseña debe tener al menos 6 caracteres"
-            onChange={(e) => setDenuncianteToUpdate({ ...denuncianteToUpdate, password_denunciante: e.target.value })}
-          />
-        </div>
-        
         <button type="submit" className="btn btn-primary">
           Enviar
         </button>
@@ -120,7 +115,6 @@ export function UpdateDenunciantes() {
         <Link className="btn btn-secondary" to="/show-denunciante">
           Cancelar
         </Link>
-
       </form>
     </div>
   )

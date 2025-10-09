@@ -15,7 +15,6 @@ axios.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
-    console.log(token)
     return config
   },
   (error) => {
@@ -82,13 +81,7 @@ function get<T>(url: string, config?: object) {
       setData(response.data.data)
     } catch (err: any) {
       setError(err.message)
-      console.error('❌ Error en POST:', {
-        url: `${BACKEND_URL}/api/${url}`,
-        status: err.response?.status,
-        message: err.response?.data?.message,
-        errors: err.response?.data?.errors,
-        data: data,
-      })
+      console.error(err.message)
     } finally {
       setLoading(false)
     }
@@ -180,8 +173,7 @@ async function patch<T>(url: string, data: T, config?: object) {
   try {
     await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
-  } finally {
-    console.log('Patch request completed')
+    console.error(err.message)
   }
 }
 
@@ -190,7 +182,7 @@ async function postAuth(email: string, password: string) {
     const res = await axios.post(`${BACKEND_URL}/api/auth/login`, { email, password })
     return { token: res.data.token, rol: res.data.rol }
   } catch (err: any) {
-    console.error('Error en login: ' + err.response.data.message)
+    console.error(err.message)
     return
   }
 }

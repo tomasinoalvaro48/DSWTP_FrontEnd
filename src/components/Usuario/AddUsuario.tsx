@@ -14,7 +14,7 @@ export function AddUsuario() {
     nombre_usuario: '',
     email_usuario: '',
     password_usuario: '',
-    tipo_usuario: '',
+    confirm_password: '',
     zona: zona?.id,
   })
 
@@ -31,8 +31,11 @@ export function AddUsuario() {
     const form = event.currentTarget
     if (form.checkValidity() === false) {
       event.stopPropagation()
+    } else if (newUsuario.password_usuario !== newUsuario.confirm_password) {
+      alert('Las contraseñas no coinciden')
+      return
     } else {
-      post('usuario', newUsuario)
+      post('auth/register-usuario', newUsuario)
       navigate('/show-usuario')
     }
   }
@@ -96,44 +99,24 @@ export function AddUsuario() {
             }
           />
 
-          <div className="mb-3">
-            <label className="form-label">Tipo</label>
-            <div className="form-check">
-              <input
-                required
-                className="form-check-input"
-                type="radio"
-                name="tipo"
-                id="t1"
-                onChange={() =>
-                  setnNewUsuario({
-                    ...newUsuario,
-                    tipo_usuario: 'cazador',
-                  })
-                }
-              />
-              <label className="form-check-label" htmlFor="t1">
-                Cazador
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="tipo"
-                id="t2"
-                onChange={() =>
-                  setnNewUsuario({
-                    ...newUsuario,
-                    tipo_usuario: 'operador',
-                  })
-                }
-              />
-              <label className="form-check-label" htmlFor="t2">
-                Operador
-              </label>
-            </div>
-          </div>
+          <label htmlFor="confir_password" className="form-label">
+            Repetir contraseña
+          </label>
+          <input
+            required
+            type="text"
+            id="psw"
+            className="form-control"
+            placeholder="Repetir contraseña"
+            minLength={6}
+            title="Repetí la misma contraseña"
+            onChange={(e) =>
+              setnNewUsuario({
+                ...newUsuario,
+                confirm_password: e.target.value,
+              })
+            }
+          />
 
           <ZonaByLocalidadSelection setZona={setZona} />
         </div>
