@@ -31,8 +31,8 @@ import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarP
 import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
 import { ShowMisPedidos } from './components/PedidoResolucion/ShowMisPedidos.tsx'
 import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
-
 import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
+import { NavMapPage } from './navigation/NavMapPage.tsx'
 
 function App() {
   /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
@@ -65,6 +65,15 @@ function App() {
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="register-usuario" element={<RegisterUsuario />} />
         <Route element={<PrivateRoute />}>
+          <Route
+            path="nav-map"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
+                <NavMapPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="show-tipo-anomalia"
             element={

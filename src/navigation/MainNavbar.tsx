@@ -9,6 +9,9 @@ export function MainNavbar() {
   const MoreOptions = () => {
     return (
       <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
+        <NavDropdown.Item onClick={() => navigate('/nav-map')}>
+          Mapa de Navegación
+        </NavDropdown.Item>
         <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item
