@@ -58,42 +58,25 @@ export function ShowMisPedidos() {
 
   const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {}
 
-  const haddleResolucionAnomalia = (id: string) => {
-    patch(`anomalia/resolver_anomalia/${id}`, {})
-    location.reload()
+  const haddleResolucionAnomalia = async (id: string) => {
+    try {
+      await patch(`anomalia/resolver_anomalia/${id}`, {})
+      alert('Anomalía resuelta correctamente.')
+      location.reload()
+    } catch (err: any) {
+      console.error('Error al resolver anomalía:', err)
+      alert(err?.response?.data?.message ?? 'No se pudo resolver la anomalía.')
+    }
   }
 
   const haddleAgregarInspeccion = (idPedidoResolcion: string) => {
     navigate(`/add-inspeccion/${idPedidoResolcion}`)
   }
 
-<<<<<<< HEAD
   const haddleFinalizarPedido = (idPedidoResolcion: string) => {
     navigate(`/finalizar-pedido/${idPedidoResolcion}`)
   }
   return (
-=======
-
-}
-
-const haddleResolucionAnomalia = async (id: string) => {
-  try {
-    await patch(`anomalia/resolver_anomalia/${id}`, {});
-    alert("Anomalía resuelta correctamente.");
-    location.reload();
-  } catch (err: any) {
-    console.error("Error al resolver anomalía:", err);
-    alert(err?.response?.data?.message ?? "No se pudo resolver la anomalía.");
-  }
-}
-
-const haddleAgregarInspeccion = (idPedidoResolcion : string) => {
-  navigate(`/add-inspeccion/${idPedidoResolcion}`)
-
-}
-
-  return(
->>>>>>> 03619c07d4f552907260112382a830bec233cb54
     <div className="ShowPosiblesPedidos">
       {loadingLoc && (
         <div className="d-flex align-items-center">
