@@ -215,12 +215,23 @@ function App() {
             }
           />
 
-          <Route path="/show-mis-pedidos" element={<ShowMisPedidos />} />         
+          <Route
+            path="/show-mis-pedidos"
+            element={
+              <ProtectedRoute allowedRoles={['cazador']}>
+                <ShowMisPedidos />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/add-inspeccion/:id" element={<AddInspeccion />} />
-
-
-          
+          <Route
+            path="/add-inspeccion/:id"
+            element={
+              <ProtectedRoute allowedRoles={['cazador']}>
+                <AddInspeccion />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/mostrar-posibles-pedidos"

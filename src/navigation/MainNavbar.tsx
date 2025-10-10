@@ -57,16 +57,11 @@ export function MainNavbar() {
                 <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos para Cazador</div>
                 </NavLink>
-                <NavLink to="/show-mis-pedidos" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Mis Pedidos</div>
-                </NavLink>
                 <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos de Agregacion</div>
                 </NavLink>
                 <NavLink to="/tomar-pedidos-agregacion" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">
-                    Aceptar/Rechazar Pedidos de Agregacion
-                  </div>
+                  <div className="navbarOptionTipos">Aceptar/Rechazar Pedidos de Agregacion</div>
                 </NavLink>
                 <MoreOptions />
               </>
@@ -99,6 +94,9 @@ export function MainNavbar() {
                 </NavLink>
                 <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos de Agregacion</div>
+                </NavLink>
+                <NavLink to="/show-mis-pedidos" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Mis Pedidos</div>
                 </NavLink>
                 <MoreOptions />
               </>

@@ -196,12 +196,6 @@ async function remove(url: string) {
   }
 }
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> CUU-3-y-4
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar
 function getFilter<T>(url: string) {
   const [data, setData] = useState<T[]>([])
