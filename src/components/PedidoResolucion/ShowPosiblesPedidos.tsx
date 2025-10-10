@@ -24,6 +24,7 @@ export function ShowPosiblesPedidos(){
 
   const [dificultadFilter, setDificultadFilter] = useState(0);
   const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter); // <-- Nuevo estado
+  const [errorTakePedido, setErrorTakePedido] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -66,18 +67,18 @@ setQuery(`pedido_resolucion?${params.toString()}`);
 
 
   const haddleTakePedido = async (id: string) => {
+    setErrorTakePedido(null)
+    const token = localStorage.getItem("token")
     try {
-      const token = localStorage.getItem("token")
       await patch(`pedido_resolucion/tomar-pedido-resolucion/${id}`,{} ,{
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       navigate("/mostrar-posibles-pedidos/") // La idea es que dps te dirija a mis pedidos esto es temporal
-      
- 
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error al tomar el pedido:", err)
+      setErrorTakePedido(err?.response?.data?.message ?? "Error al tomar el pedido.");
     }
   }
 
@@ -91,6 +92,8 @@ setQuery(`pedido_resolucion?${params.toString()}`);
         </div>
       )}
       {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
+      {errorTakePedido && <Alert variant="warning">{errorTakePedido}</Alert>}
+
 
       {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
         <nav className="navbar bg-body-tertiary px-3">

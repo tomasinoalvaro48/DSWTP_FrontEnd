@@ -23,10 +23,15 @@ export function UpdateUsuario() {
     }
   }, [data])
 
-  const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    patch('usuario/' + id, usuarioToUpdate)
-    navigate('/show-usuario')
+    try {
+      await patch('usuario/' + id, usuarioToUpdate)
+      navigate('/show-usuario')
+    } catch (err: any) {
+      console.error("Error al actualizar usuario:", err);
+      alert(err?.response?.data?.message ?? "No se pudo actualizar el usuario.");
+    }
   }
 
   if (!usuarioToUpdate) return <div>Cargando localidad...</div>

@@ -26,16 +26,22 @@ export function UpdateZona(){
     }, [data])
 
 
-    const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!zonaToUpdate.nombre_zona || !zonaToUpdate.localidad) {
+            alert("Completar todos los campos obligatorios.");
             return
         }
-        patch('zona/' + id, {
-            nombre_zona: zonaToUpdate.nombre_zona,
-            localidad: zonaToUpdate.localidad.id
-        })
-        navigate('/show-zona')
+        try {
+            await patch('zona/' + id, {
+                nombre_zona: zonaToUpdate.nombre_zona,
+                localidad: zonaToUpdate.localidad.id
+            })
+            navigate('/show-zona')
+        } catch (err: any) {
+            console.error("Error al actualizar zona:", err);
+            alert(err?.response?.data?.message ?? "No se pudo actualizar la zona.");
+        }
     }
 
     if (!zonaToUpdate) return <div>Cargando...</div>

@@ -101,10 +101,15 @@ export function UpdateLocalidad() {
     }
   }, [data])
 
-  const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    patch('localidad/' + id, localidadToUpdate)
-    navigate('/show-localidad') 
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      await patch('localidad/' + id, localidadToUpdate);
+      navigate('/show-localidad');
+    } catch (err: any) {
+      console.error("Error al actualizar localidad:", err);
+      alert(err?.response?.data?.message ?? "No se pudo actualizar la localidad.");
+    }
   }
 
   if (!localidadToUpdate) return <div>Cargando localidad...</div>
