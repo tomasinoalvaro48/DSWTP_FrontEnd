@@ -26,10 +26,15 @@ export function UpdateTiposAnomalias() {
 
   const navigate = useNavigate()
 
-  const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    patch('tipo_anomalia/' + id, tipoToUpdate)
-    navigate('/show-tipo-anomalia') // Moverse a la ruta "show-tipo-anomalia" después del patch
+    try {
+      await patch('tipo_anomalia/' + id, tipoToUpdate)
+      navigate('/show-tipo-anomalia') // Moverse a la ruta "show-tipo-anomalia" después del patch
+    } catch (err: any) {
+      console.error("Error al actualizar tipo de anomalía:", err);
+      alert(err?.response?.data?.message ?? "No se pudo actualizar el tipo de anomalía.");
+    }
   }
 
   return (

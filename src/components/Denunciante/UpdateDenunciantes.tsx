@@ -28,10 +28,15 @@ export function UpdateDenunciantes() {
 
   const navigate = useNavigate()
 
-  const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    patch('denunciantes/' + id, denuncianteToUpdate)
-    navigate('/show-denunciante')
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      await patch('denunciantes/' + id, denuncianteToUpdate);
+      navigate('/show-denunciante');
+    } catch (err: any) {
+      console.error("Error al actualizar denunciante:", err);
+      alert(err?.response?.data?.message ?? "No se pudo actualizar el denunciante.");
+    }
   }
 
   return (

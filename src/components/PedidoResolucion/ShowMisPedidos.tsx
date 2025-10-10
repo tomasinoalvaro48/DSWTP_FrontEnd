@@ -60,9 +60,15 @@ const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {
 
 }
 
-const haddleResolucionAnomalia = (id : string)=>{
-  patch(`anomalia/resolver_anomalia/${id}`,{});
-  location.reload()
+const haddleResolucionAnomalia = async (id: string) => {
+  try {
+    await patch(`anomalia/resolver_anomalia/${id}`, {});
+    alert("Anomalía resuelta correctamente.");
+    location.reload();
+  } catch (err: any) {
+    console.error("Error al resolver anomalía:", err);
+    alert(err?.response?.data?.message ?? "No se pudo resolver la anomalía.");
+  }
 }
 
 const haddleAgregarInspeccion = (idPedidoResolcion : string) => {
