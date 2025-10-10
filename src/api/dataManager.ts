@@ -171,9 +171,10 @@ async function post<T>(url: string, data: T, config?: object) {
 // update function:
 async function patch<T>(url: string, data: T, config?: object) {
   try {
-    await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
+    return await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
     console.error(err.message)
+    throw err;
   }
 }
 
