@@ -30,73 +30,90 @@ export function GenerarPedidoAgregacion2() {
 
   const handleSubmit = () => {
     if (evidencias.length === 0) {
-      alert("Debes cargar al menos una evidencia.");
-      return;
+      alert("Debes cargar al menos una evidencia.")
+      return
     }
 
     const pedidoCompleto = { ...pedidoPaso1, evidencias }
 
-    const token = localStorage.getItem('token')
-    post('pedido_agregacion', pedidoCompleto, {
-      headers: { Authorization: `Bearer ${token}`, },
+    const token = localStorage.getItem("token")
+    post("pedido_agregacion", pedidoCompleto, {
+      headers: { Authorization: `Bearer ${token}` },
     })
     navigate("/show-pedidos-agregacion")
   }
 
   return (
-    <div className="d-flex flex-column bg-light p-4 border rounded">
-      <h1>Generar Pedido de Agregación - Paso 2</h1>
+    <div className="container my-4">
+      <div className="bg-white p-4 rounded shadow-sm border">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2>Generar Pedido de Agregación - Paso 2</h2>
+          <Link to="/show-pedidos-agregacion" className="btn btn-outline-secondary">
+            Volver
+          </Link>
+        </div>
 
-      <form onSubmit={handleAddEvidencia} className="mb-3">
-        <label>
-            URL evidencia
-        </label>
+        <form onSubmit={handleAddEvidencia} className="mb-4">
+          <div className="mb-3">
+            <label className="form-label fw-bold">URL de evidencia</label>
+            <input
+              type="text"
+              value={url}
+              className="form-control"
+              placeholder="https://ejemplo.com/evidencia"
+              onChange={(e) => setUrl(e.target.value)}
+            />
+          </div>
 
-        <input
-          type="text"
-          value={url}
-          className="form-control"
-          placeholder="http://..."
-          onChange={(e) => setUrl(e.target.value)}
-        />
+          <div className="mb-3">
+            <label className="form-label fw-bold">Archivo de evidencia</label>
+            <input
+              type="text"
+              value={archivo}
+              className="form-control"
+              placeholder="Nombre de archivo (por ahora texto)"
+              onChange={(e) => setArchivo(e.target.value)}
+            />
+          </div>
 
-        <label className="mt-2">
-            Archivo evidencia
-        </label>
+          <button type="submit" className="btn btn-primary w-100">
+            + Agregar evidencia
+          </button>
 
-        <input
-          type="text"
-          value={archivo}
-          className="form-control"
-          placeholder="Nombre de archivo (falta implementar archivo adjunto)"
-          onChange={(e) => setArchivo(e.target.value)}
-        />
+          {error && <div className="text-danger mt-2">{error}</div>}
+        </form>
 
-        <button type="submit" className="btn btn-primary mt-2">
-          Agregar evidencia
-        </button>
+        <h4 className="mb-3">Evidencias cargadas</h4>
+        {evidencias.length === 0 ? (
+          <p className="text-muted fst-italic">Aún no se agregaron evidencias.</p>
+        ) : (
+          <ul className="list-group mb-4">
+            {evidencias.map((ev, idx) => (
+              <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  {ev.url_evidencia && (
+                    <a href={ev.url_evidencia} target="_blank" rel="noopener noreferrer" className="text-decoration-underline">
+                      {ev.url_evidencia}
+                    </a>
+                  )}
+                  {ev.archivo_evidencia && <span>{ev.archivo_evidencia}</span>}
+                </div>
+                <span className="badge bg-light text-dark">#{idx + 1}</span>
+              </li>
+            ))}
+          </ul>
+        )}
 
-        {error && <div className="text-danger mt-2">{error}</div>}
-      </form>
+        <div className="d-flex justify-content-end gap-3">
+          <button className="btn btn-success px-4" onClick={handleSubmit}>
+            Confirmar Pedido
+          </button>
 
-      <h3>Evidencias cargadas:</h3>
-
-      <ul className="list-group mb-3">
-        {evidencias.map((ev, idx) => (
-          <li key={idx} className="list-group-item">
-            {ev.url_evidencia && <span>{ev.url_evidencia}</span>}
-            {ev.archivo_evidencia && <span>{ev.archivo_evidencia}</span>}
-          </li>
-        ))}
-      </ul>
-
-      <button className="btn btn-success" onClick={handleSubmit}>
-        Confirmar Pedido
-      </button>
-
-      <Link to="/show-pedidos-agregacion" className="btn btn-secondary ms-2">
-        Cancelar
-      </Link>
+          <Link to="/show-pedidos-agregacion" className="btn btn-outline-danger px-4">
+            Cancelar
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

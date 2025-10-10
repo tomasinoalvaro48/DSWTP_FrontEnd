@@ -9,6 +9,9 @@ export function MainNavbar() {
   const MoreOptions = () => {
     return (
       <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
+        <NavDropdown.Item onClick={() => navigate('/nav-map')}>
+          Mapa de Navegación
+        </NavDropdown.Item>
         <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item
@@ -27,7 +30,14 @@ export function MainNavbar() {
     <>
       <Navbar expand="lg" className="bg-body-secondary border">
         <Container fluid className="align-items-center">
-          <NavLink to="/">
+          <NavLink to="/" className="d-flex align-items-center text-decoration-none">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              width="70"
+              height="70"
+              className="me-3"
+            />
             <h4 className="" id="navbarBrand">
               Resolución de Anomalías
             </h4>

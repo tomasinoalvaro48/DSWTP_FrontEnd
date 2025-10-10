@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext.tsx'
-import { patchAuth } from '../../api/dataManager.ts'
+import { postAuth } from '../../api/dataManager.ts'
 
 export function Login() {
   const [email, setEmail] = useState('')
@@ -11,7 +11,7 @@ export function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const response = await patchAuth(email, password)
+    const response = await postAuth(email, password)
     if (response) {
       login(response.token, response.rol)
       navigate('/')

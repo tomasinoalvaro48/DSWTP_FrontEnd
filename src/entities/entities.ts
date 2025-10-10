@@ -12,8 +12,8 @@ interface Denunciante extends BaseDTO {
   telefono_denunciante: string
   email_denunciante: string
   password_denunciante: string
-  tipo_documento_denunciante: string
-  numero_documento_denunciante: string
+  //tipo_documento_denunciante: string
+  //numero_documento_denunciante: string
 }
 
 interface Localidad extends BaseDTO {

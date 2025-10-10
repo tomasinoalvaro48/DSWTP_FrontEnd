@@ -65,6 +65,8 @@ export function UpdateZona(){
                         className="form-control"
                         placeholder="Nombre"
                         value={zonaToUpdate.nombre_zona}
+                        pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+                        title="El nombre no puede tener números"
                         onChange={(e)=>
                             setZonaToUpdate({
                                 ...zonaToUpdate,
