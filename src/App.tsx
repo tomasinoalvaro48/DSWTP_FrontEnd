@@ -33,6 +33,7 @@ import { ShowMisPedidos } from './components/PedidoResolucion/ShowMisPedidos.tsx
 import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
 import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
 import { NavMapPage } from './navigation/NavMapPage.tsx'
+import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
 
 function App() {
   /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
@@ -82,6 +83,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="finalizar-pedido/:id"
+            element={
+              <ProtectedRoute allowedRoles={['cazador']}>
+                <FinalizarPedido />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="update-tipo-anomalia/:id"
             element={
@@ -224,7 +235,6 @@ function App() {
             }
           />
 
-<<<<<<< HEAD
           <Route
             path="/show-mis-pedidos"
             element={
@@ -242,11 +252,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-=======
-          <Route path="/show-mis-pedidos" element={<ShowMisPedidos />} />
-
-          <Route path="/add-inspeccion/:id" element={<AddInspeccion />} />
->>>>>>> b3440e99ef241dbd2151e7c8af57b362248bcb24
 
           <Route
             path="/mostrar-posibles-pedidos"
