@@ -13,6 +13,9 @@ export function MainNavbar() {
           Mapa de Navegación
         </NavDropdown.Item>
         <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
+        <NavDropdown.Item onClick={() => navigate('/change-password')}>
+          Cambiar Contraseña
+        </NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item
           onClick={() => {

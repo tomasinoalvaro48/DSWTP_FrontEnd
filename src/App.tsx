@@ -34,6 +34,7 @@ import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
 import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
 import { NavMapPage } from './navigation/NavMapPage.tsx'
 import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
+import { ChangePassword } from './components/Auth/ChangePassword.tsx'
 
 function App() {
   /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
@@ -292,6 +293,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['operador']}>
                 <TomarPedidosAgregacion />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
+                <ChangePassword />
               </ProtectedRoute>
             }
           />
