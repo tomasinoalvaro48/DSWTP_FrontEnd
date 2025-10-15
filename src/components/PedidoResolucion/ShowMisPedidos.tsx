@@ -85,11 +85,6 @@ export function ShowMisPedidos() {
 
       // Actualizar estado en React
       setQueryHistorico(nuevaUrl)
-
-      // Si querés que la URL del navegador también se actualice (opcional):
-      window.history.pushState({}, '', `?${params.toString()}`)
-
-      //location.reload()
     } catch (err: any) {
       console.error(err)
       alert(err?.response?.data?.message ?? 'Error al realizar la busqueda.')
@@ -121,67 +116,9 @@ export function ShowMisPedidos() {
   }
   return (
     <div className="ShowPosiblesPedidos">
-      {loadingLoc && (
-        <div className="d-flex align-items-center">
-          <Spinner animation="border" role="status" size="sm" className="me-2" />
-          <span>Cargando localidades...</span>
-        </div>
-      )}
-      {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
-
-      {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
-        <nav className="navbar bg-body-tertiary px-3">
-          <h1 className="me-auto">Posibles Pedidos Resolucion</h1>
-
-          <form className="d-flex align-items-center gap-3" onSubmit={haddleSearch}>
-            {/* Slider de dificultad */}
-            <div className="d-flex align-items-center">
-              <label htmlFor="dificultad" className="me-2 mb-0 strong">
-                <strong> Dificultad: </strong>
-              </label>
-              <span className="ms-2" style={{ minWidth: '100px', display: 'inline-block' }}>
-                {dificultadMostrada === 0 ? 'No seleccionada' : dificultadMostrada}
-              </span>
-              <input
-                id="dificultad"
-                type="range"
-                min="0"
-                max="10"
-                step="1"
-                value={dificultadFilter}
-                onChange={(e) => setDificultadFilter(parseInt(e.target.value))}
-                className="form-range dificultad-slider"
-                style={{
-                  width: '120px',
-                  height: '4px',
-                  accentColor: '#0d6efd',
-                }}
-              />
-            </div>
-
-            {/* Selector de localidad */}
-            <select
-              className="form-select"
-              id="localidad"
-              name="localidad"
-              value={localidadSeleccionada?.id}
-              onChange={handleCambioLocalidad}
-            >
-              <option value="">Seleccionar localidad</option>
-              {localidades?.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.nombre_localidad}
-                </option>
-              ))}
-            </select>
-
-            {/* Botón buscar */}
-            <button className="btn btn-success" type="submit">
-              Search
-            </button>
-          </form>
-        </nav>
-      )}
+      <div className="navbar bg-body-tertiary px-3">
+        <h1 className="me-auto">Mis Pedidos</h1>
+      </div>
 
       <div className="mb-4 border-bottom border-2">
         {pedido_resolucion_loading_actual && (
@@ -198,7 +135,10 @@ export function ShowMisPedidos() {
           !pedido_resolucion_error_actual &&
           pedido_resolucion_actual && (
             <div className="accordion my-3 mx-4">
-              <Accordion>
+              <Accordion
+                alwaysOpen
+                defaultActiveKey={pedido_resolucion_actual?.map((p) => p.id.toString())}
+              >
                 {pedido_resolucion_actual?.map((unPedido) => (
                   <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
                     <Accordion.Header>
@@ -409,6 +349,82 @@ export function ShowMisPedidos() {
 
         {pedido_resolucion_loading_actual && <div>Cargando...</div>}
         {pedido_resolucion_error_actual && <div>{pedido_resolucion_error_actual}</div>}
+      </div>
+
+      <div>
+        {loadingLoc && (
+          <div className="d-flex align-items-center">
+            <Spinner animation="border" role="status" size="sm" className="me-2" />
+            <span>Cargando localidades...</span>
+          </div>
+        )}
+        {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
+
+        {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
+          <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
+            {/* Título */}
+            <h2 className="m-0 flex-shrink-0">Pedidos Históricos</h2>
+
+            {/* Filtros */}
+            <form
+              className="d-flex align-items-center gap-5 flex-nowrap"
+              onSubmit={haddleSearch}
+              style={{ flexGrow: 1, justifyContent: 'flex-end' }}
+            >
+              {/* Dificultad */}
+              <div className="d-flex align-items-center gap-3">
+                <label htmlFor="dificultad" className="mb-0">
+                  <strong>Dificultad:</strong>
+                </label>
+                <span style={{ minWidth: '40px', textAlign: 'center' }}>
+                  {dificultadMostrada === 0 ? '0' : dificultadMostrada}
+                </span>
+                <input
+                  id="dificultad"
+                  type="range"
+                  min="0"
+                  max="10"
+                  step="1"
+                  value={dificultadFilter}
+                  onChange={(e) => setDificultadFilter(parseInt(e.target.value))}
+                  className="form-range"
+                  style={{
+                    width: '150px',
+                    height: '6px',
+                    accentColor: '#0d6efd',
+                  }}
+                />
+              </div>
+
+              {/* Localidad */}
+              <div className="d-flex align-items-center gap-3">
+                <label htmlFor="localidad" className="mb-0">
+                  <strong>Localidad:</strong>
+                </label>
+                <select
+                  className="form-select"
+                  id="localidad"
+                  name="localidad"
+                  value={localidadSeleccionada?.id}
+                  onChange={handleCambioLocalidad}
+                  style={{ width: '220px' }}
+                >
+                  <option value="">Seleccionar localidad</option>
+                  {localidades?.map((loc) => (
+                    <option key={loc.id} value={loc.id}>
+                      {loc.nombre_localidad}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Botón */}
+              <button className="btn btn-success px-4" type="submit">
+                Buscar
+              </button>
+            </form>
+          </div>
+        )}
       </div>
 
       <div>
