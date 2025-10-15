@@ -8,20 +8,6 @@ import { BACKEND_URL } from '../../endpoints.config.ts'
 // Cuando se llame a la función (usando import { get, post, patch, remove } from './api/dataManager.ts')
 // se debe especificar el tipo de dato que se espera (por ejemplo, get<TipoAnomalia>("tipo_anomalia"))
 
-// axios interceptor para agregar el token a las requests
-axios.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
-
 // Controlador global de recargas
 /*
 let reloadListeners: (() => void)[] = [];
@@ -174,7 +160,7 @@ async function patch<T>(url: string, data: T, config?: object) {
     return await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
     console.error(err.message)
-    throw err;
+    throw err
   }
 }
 
