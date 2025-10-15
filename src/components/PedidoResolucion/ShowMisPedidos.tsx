@@ -50,13 +50,51 @@ export function ShowMisPedidos() {
     data: pedido_resolucion_historico,
     loading: pedido_resolucion_loading_historico,
     error: pedido_resolucion_error_historico,
-  } = get<PedidoResolucion>(queryHistorico, {
+  } = getFilter<PedidoResolucion>(queryHistorico, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
 
-  const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {}
+  const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault()
+
+      const params = new URLSearchParams()
+
+      // Estado del pedido
+      const estado_pedido_resolucion = 'resuelto'
+      if (estado_pedido_resolucion) {
+        params.append('estado_pedido_resolucion', estado_pedido_resolucion)
+      }
+
+      // Dificultad
+      if (dificultadFilter > 0) {
+        params.append('dificultad_pedido_resolucion', dificultadFilter.toString())
+      }
+
+      // Zonas
+      if (localidadSeleccionada?.zonas) {
+        localidadSeleccionada.zonas.forEach((zona: any) => {
+          params.append('zonas', zona.id.toString())
+        })
+      }
+
+      // Construir nueva URL
+      const nuevaUrl = `pedido_resolucion/mis_pedidos?${params.toString()}`
+
+      // Actualizar estado en React
+      setQueryHistorico(nuevaUrl)
+
+      // Si querés que la URL del navegador también se actualice (opcional):
+      window.history.pushState({}, '', `?${params.toString()}`)
+
+      //location.reload()
+    } catch (err: any) {
+      console.error(err)
+      alert(err?.response?.data?.message ?? 'Error al realizar la busqueda.')
+    }
+  }
 
   const haddleResolucionAnomalia = async (id: string) => {
     try {
@@ -74,7 +112,12 @@ export function ShowMisPedidos() {
   }
 
   const haddleFinalizarPedido = (idPedidoResolcion: string) => {
-    navigate(`/finalizar-pedido/${idPedidoResolcion}`)
+    try {
+      navigate(`/finalizar-pedido/${idPedidoResolcion}`)
+    } catch (err: any) {
+      console.error('Error al resolver anomalía:', err)
+      alert(err?.response?.data?.message ?? 'Hay anomalias pendientes')
+    }
   }
   return (
     <div className="ShowPosiblesPedidos">

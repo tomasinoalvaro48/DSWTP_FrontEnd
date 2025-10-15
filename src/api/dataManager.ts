@@ -174,7 +174,7 @@ async function patch<T>(url: string, data: T, config?: object) {
     return await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
     console.error(err.message)
-    throw err;
+    throw err
   }
 }
 
@@ -200,7 +200,7 @@ async function remove(url: string) {
 }
 
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar
-function getFilter<T>(url: string) {
+function getFilter<T>(url: string, config?: object) {
   const [data, setData] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
