@@ -113,7 +113,7 @@ export function RegisterDenunciante() {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label className="form-label fw-semibold">Contraseña</label>
           <input
             type={showPassword ? 'text' : 'password'}
@@ -131,7 +131,7 @@ export function RegisterDenunciante() {
           ></i>
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label className="form-label fw-semibold">Confirmar contraseña</label>
           <input
             type={showConfirmPassword ? 'text' : 'password'}

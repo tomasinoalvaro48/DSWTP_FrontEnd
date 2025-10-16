@@ -73,7 +73,7 @@ export function Login() {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label htmlFor="password" className="form-label fw-semibold">Contraseña</label>
           <input
             required

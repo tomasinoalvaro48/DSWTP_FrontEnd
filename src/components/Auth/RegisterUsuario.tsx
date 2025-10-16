@@ -107,7 +107,7 @@ export function RegisterUsuario() {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label className="form-label fw-semibold">Contraseña</label>
           <input
             required
@@ -125,7 +125,7 @@ export function RegisterUsuario() {
           ></i>
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label className="form-label fw-semibold">Confirmar contraseña</label>
           <input
             required
