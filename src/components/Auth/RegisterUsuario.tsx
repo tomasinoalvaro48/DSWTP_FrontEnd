@@ -69,7 +69,7 @@ export function RegisterUsuario() {
 
   return (
     <div className="container mt-4" style={{ maxWidth: '500px' }}>
-      <h3 className="mb-3 text-center">Registro de Usuario</h3>
+      <h3 className="mb-3 text-center">Registro de Cazador</h3>
 
       {message && messageType !== 'success' && (
         <div className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`} role="alert">
@@ -119,7 +119,7 @@ export function RegisterUsuario() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label fw-semibold">Repetir contraseña</label>
+          <label className="form-label fw-semibold">Confirmar contraseña</label>
           <input
             required
             type="password"
