@@ -65,7 +65,7 @@ export function DenuncianteHome() {
 
       {/* Botón de acción */}
       <Link
-        to="/generar-pedido"
+        to="/generar-pedido-paso-1"
         className="btn btn-outline-dark px-4 py-2 fs-5 rounded-pill shadow-sm"
       >
         Realizar una denuncia
