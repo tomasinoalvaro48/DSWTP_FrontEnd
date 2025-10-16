@@ -19,7 +19,10 @@ export function Login() {
       login(response.token, response.rol)
       navigate('/')
     }
-    if (response.message !== 'Acceso denegado. Cazador pendiente de aprobación.') {
+    if (
+      response.message !== 'Acceso denegado. Cazador pendiente de aprobación.' &&
+      response.message !== 'Acceso denegado. Cazador rechazado.'
+    ) {
       setAlertMessage(response.message)
       setModalAlert(true)
     }

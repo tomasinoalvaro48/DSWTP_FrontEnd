@@ -11,12 +11,12 @@ interface Props {
 
 const ModalAlert = ({ setShowModalAlert, title, body, navigateOnClose }: Props) => {
   const [show, setShow] = useState(true)
-  const navigate = useNavigate()
+  const navigate = navigateOnClose ? useNavigate() : null
 
   const handleClose = () => {
     setShowModalAlert(false)
     setShow(false)
-    if (navigateOnClose) {
+    if (navigateOnClose && navigate) {
       navigate(navigateOnClose)
     }
   }
