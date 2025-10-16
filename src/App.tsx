@@ -39,33 +39,29 @@ import { ShowMisPedidosDenunciante } from './components/PedidoResolucion/ShowMis
 import { ShowMisPedidosResueltosDenunciante } from './components/PedidoResolucion/ShowMisPedidosResueltosDen.tsx'
 import { UpdatePerfil } from './components/Auth/UpdatePerfil.tsx'
 import PoliticasDeUso from './footer/PoliticasDeUso.tsx'
+import { useAuth } from './auth/AuthContext.tsx'
+import { DenuncianteHome } from './screens/denuncianteHome.tsx'
+import { CazadorHome } from './screens/cazadorHome.tsx'
 
 function App() {
-  /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
-  import { useAuth } from './auth/AuthContext.tsx'
+  const { token, userRol } = useAuth() // <-- adentro de App()
 
-  const { token, userRol } = useAuth() <-- adentro de App()
- 
-  Adentro de "<Route path="/" element={<RootLayout />}>":
-  {token && userRol == 'operador' && <Route index element={<AdminHome />} />} 
-  {token && userRol == 'cazador' && <Route index element={<CazadorHome />} />}
-  {token && userRol == 'denunciante' && <Route index element={<DenuncianteHome />} />}
-  {!token && <Route index element={<PublicHome />} />}
+  //Adentro de "<Route path="/" element={<RootLayout />}>":
 
-  <ProtectedRoute> </ProtectedRoute>
-*/
+  //{!token && <Route index element={<PublicHome />} />}
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
-        <Route
-          index
-          element={
-            <ProtectedRoute allowedRoles={['operador']}>
-              <AdminHome />
-            </ProtectedRoute>
-          }
-        />
+        {token ? (
+          userRol === 'operador' ? (
+            <Route index element={<AdminHome />} />
+          ) : userRol === 'cazador' ? (
+            <Route index element={<CazadorHome />} />
+          ) : userRol === 'denunciante' ? (
+            <Route index element={<DenuncianteHome />} />
+          ) : null
+        ) : null}
 
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
