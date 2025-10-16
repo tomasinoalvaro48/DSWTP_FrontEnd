@@ -14,6 +14,9 @@ export function MainNavbar() {
         <NavDropdown.Item onClick={() => navigate('/change-password')}>
           Cambiar Contraseña
         </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => navigate('/update-profile')}>
+          Editar perfil
+        </NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item
           onClick={() => {
