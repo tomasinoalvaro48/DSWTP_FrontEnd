@@ -49,18 +49,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [token])
 
-  // Interceptor para manejar respuestas 401 o 400 y refrescar token si es necesario
+  // Interceptor para manejar respuestas y error 401 (token inválido/expirado)
   useLayoutEffect(() => {
     const refreshInterceptor = axios.interceptors.response.use(
       (response) => response,
       async (error) => {
-        if (error.response.status === 401 || error.response.status === 400) {
+        // error 401 (Unauthorized)
+        if (error.response?.status === 401) {
           // podemos implementar la lógica para refrescar el token
           console.error('Token inválido o expirado, por favor inicia sesión de nuevo.')
           setShowTokenExpiredAlert(true)
           logout() // hacemos logout directamente
-          return
+          return Promise.reject(error)
         }
+        // otros errores
+        return Promise.reject(error)
       }
     )
 
