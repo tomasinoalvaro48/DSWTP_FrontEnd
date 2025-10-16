@@ -2,18 +2,20 @@ import { get, patch, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
 import { Accordion, Spinner, Alert } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react' // <-- Agregado useEffect
+import { useState, useEffect } from 'react'
 
 export function ShowMisPedidos() {
+  const navigate = useNavigate()
+
   const { data: localidades, loading: loadingLoc, error: errorLoc } = get<Localidad>('localidad')
+
   const handleCambioLocalidad = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const loc_id = event.target.value
     const loc = localidades.find((l) => l.id === loc_id)
     setLocalidadSeleccionada(loc)
   }
-  const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
 
-  const navigate = useNavigate()
+  const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
 
   const [dificultadFilter, setDificultadFilter] = useState(0)
   const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter)
@@ -93,7 +95,15 @@ export function ShowMisPedidos() {
 
   const haddleResolucionAnomalia = async (id: string) => {
     try {
-      await patch(`anomalia/resolver_anomalia/${id}`, {})
+      await patch(
+        `anomalia/resolver_anomalia/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       alert('Anomalía resuelta correctamente.')
       location.reload()
     } catch (err: any) {

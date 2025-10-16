@@ -35,6 +35,8 @@ import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedid
 import { NavMapPage } from './navigation/NavMapPage.tsx'
 import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
 import { ChangePassword } from './components/Auth/ChangePassword.tsx'
+import { ShowMisPedidosDenunciante } from './components/PedidoResolucion/ShowMisPedidosDen.tsx'
+import { ShowMisPedidosResueltosDenunciante } from './components/PedidoResolucion/ShowMisPedidosResueltosDen.tsx'
 
 function App() {
   /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
@@ -219,6 +221,25 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="show-mis-pedidos-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+                <ShowMisPedidosDenunciante />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="show-mis-pedidos-resueltos-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+                <ShowMisPedidosResueltosDenunciante />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/generar-pedido-paso-1"
             element={
