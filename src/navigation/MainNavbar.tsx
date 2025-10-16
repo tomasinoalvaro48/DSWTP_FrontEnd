@@ -9,9 +9,7 @@ export function MainNavbar() {
   const MoreOptions = () => {
     return (
       <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
-        <NavDropdown.Item onClick={() => navigate('/nav-map')}>
-          Mapa de Navegación
-        </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => navigate('/nav-map')}>Mapa de Navegación</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
         <NavDropdown.Item onClick={() => navigate('/change-password')}>
           Cambiar Contraseña
@@ -34,13 +32,7 @@ export function MainNavbar() {
       <Navbar expand="lg" className="bg-body-secondary border">
         <Container fluid className="align-items-center">
           <NavLink to="/" className="d-flex align-items-center text-decoration-none">
-            <img
-              src="/logo.png"
-              alt="Logo"
-              width="70"
-              height="70"
-              className="me-3"
-            />
+            <img src="/logo.png" alt="Logo" width="70" height="70" className="me-3" />
             <h4 className="" id="navbarBrand">
               Resolución de Anomalías
             </h4>
@@ -63,6 +55,9 @@ export function MainNavbar() {
                 </NavLink>
                 <NavLink to="/show-usuario" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Usuarios</div>
+                </NavLink>
+                <NavLink to="/approve-usuario" className="nav-link m-3 p-0">
+                  <div className="navbarOptionTipos">Aprobar Cazadores</div>
                 </NavLink>
                 <NavLink to="/show-pedido" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos</div>
