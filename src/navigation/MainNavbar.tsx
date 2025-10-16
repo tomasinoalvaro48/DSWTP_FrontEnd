@@ -89,9 +89,12 @@ export function MainNavbar() {
             )}
             {token && userRol == 'denunciante' && (
               <>
+                {/*
+
                 <NavLink to="/show-pedido" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos</div>
                 </NavLink>
+                */}
 
                 <NavLink to="/show-mis-pedidos-denunciante" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Mis Pedidos</div>
@@ -102,7 +105,7 @@ export function MainNavbar() {
             {token && userRol == 'cazador' && (
               <>
                 <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos</div>
+                  <div className="navbarOptionTipos">Posibles Pedidos</div>
                 </NavLink>
                 <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
                   <div className="navbarOptionTipos">Pedidos de Agregacion</div>
