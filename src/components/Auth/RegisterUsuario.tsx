@@ -12,6 +12,9 @@ export function RegisterUsuario() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [zona, setZona] = useState<Zona>()
+  const [message, setMessage] = useState<string | null>(null)
+  const [messageType, setMessageType] = useState<'success' | 'danger' | 'warning' | null>(null)
+  const [showModal, setShowModal] = useState(false)
 
   const form = {
     nombre_usuario: nombre,
@@ -21,84 +24,137 @@ export function RegisterUsuario() {
     zona: zona?.id,
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const showMessage = (text: string, type: 'success' | 'danger' | 'warning') => {
+    setMessage(text)
+    setMessageType(type)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (form.password_usuario !== form.confirm_password) {
-      alert('Las contraseñas no coinciden')
+    if (!nombre || !email || !password || !confirmPassword || !zona) {
+      showMessage('Debe completar todos los campos', 'warning')
       return
     }
 
-    post('auth/register-usuario', form)
-    alert('Registro exitoso como usuario, ahora podés iniciar sesión')
+    if (password !== confirmPassword) {
+      showMessage('Las contraseñas no coinciden', 'warning')
+      return
+    }
+
+    if (password.length < 6) {
+      showMessage('La contraseña debe tener mínimo 6 caracteres', 'warning')
+      return
+    }
+
+    try {
+      await post('auth/register-usuario', form)
+      showMessage('Se ha registrado como usuario.', 'success')
+      setShowModal(true)
+    } catch (err: any) {
+      showMessage('Error al registrarse', 'danger')
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
     navigate('/login')
   }
 
   return (
-    <div className="d-flex flex-column bg-light">
-      <form className="d-flex flex-column p-4 border rounded bg-light" onSubmit={handleSubmit}>
-        <h2>Registro</h2>
+    <div className="container mt-4" style={{ maxWidth: '500px' }}>
+      <h3 className="mb-3 text-center">Registro de Usuario</h3>
 
-        <label htmlFor="nombre" className="form-label">
-          Nombre y Apellido
-        </label>
-        <input
-          required
-          type="text"
-          className="form-control mb-2"
-          placeholder="Nombre y Apellido"
-          value={form.nombre_usuario}
-          onChange={(e) => setNombre(e.target.value)}
-          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
-          title="El nombre no puede tener números"
-        />
+      {message && messageType !== 'success' && (
+        <div className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`} role="alert">
+          {message}
+          <button type="button" className="btn-close" onClick={() => setMessage(null)} aria-label="Cerrar"></button>
+        </div>
+      )}
 
-        <label htmlFor="email" className="form-label">
-          Email
-        </label>
-        <input
-          required
-          type="email"
-          className="form-control mb-2"
-          placeholder="Email"
-          value={form.email_usuario}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <form onSubmit={handleSubmit} className="p-4 border rounded bg-light shadow-sm">
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Nombre y Apellido</label>
+          <input
+            required
+            type="text"
+            className="form-control"
+            placeholder="Ej: Juana Perez"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+            title="El nombre no puede tener números"
+          />
+        </div>
 
-        <label htmlFor="password" className="form-label">
-          Contraseña
-        </label>
-        <input
-          required
-          type="password"
-          className="form-control mb-2"
-          placeholder="Contraseña"
-          value={form.password_usuario}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength={6}
-          title="La contraseña debe tener al menos 6 caracteres"
-        />
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Correo electrónico</label>
+          <input
+            required
+            type="email"
+            className="form-control"
+            placeholder="Ej: usuario@mail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-        <label htmlFor="confir_password" className="form-label">
-          Repetir contraseña
-        </label>
-        <input
-          required
-          type="password"
-          className="form-control mb-2"
-          placeholder="Repetir contraseña"
-          value={form.confirm_password}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          minLength={6}
-          title="Repetí la misma contraseña"
-        />
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Contraseña</label>
+          <input
+            required
+            type="password"
+            className="form-control"
+            placeholder="******"
+            minLength={6}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-        <ZonaByLocalidadSelection setZona={setZona} />
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Repetir contraseña</label>
+          <input
+            required
+            type="password"
+            className="form-control"
+            placeholder="******"
+            minLength={6}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
 
-        <button className="btn btn-success" type="submit">
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Zona</label>
+          <ZonaByLocalidadSelection setZona={setZona} />
+        </div>
+
+        <button className="btn btn-success w-100" type="submit">
           Registrarse
         </button>
       </form>
+
+      {showModal && (
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header bg-success text-white">
+                <h5 className="modal-title">Registro exitoso</h5>
+                <button type="button" className="btn-close btn-close-white" onClick={handleCloseModal}></button>
+              </div>
+              <div className="modal-body text-center">
+                <p className="fw-semibold mb-0">{message}</p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-success" onClick={handleCloseModal}>
+                  Iniciar sesión
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
