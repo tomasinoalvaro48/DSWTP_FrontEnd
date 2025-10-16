@@ -1,6 +1,6 @@
 import { get, patch, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
-import { Accordion, Spinner, Alert } from 'react-bootstrap'
+import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
@@ -243,12 +243,26 @@ export function ShowMisPedidos() {
                                           <strong>Dificultad: </strong>
                                           {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                         </div>
-                                        <div className="col-md-3">
-                                          <strong>Resultado: </strong>
-                                          {anomalia.resultado_anomalia}
+                                        <div className="col-md-3 d-flex align-items-center">
+                                          <strong className="me-2">Resultado:</strong>
+                                          <Badge
+                                            bg={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'warning'
+                                                : 'success'
+                                            }
+                                            text={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'dark'
+                                                : 'light'
+                                            }
+                                          >
+                                            {anomalia.resultado_anomalia.toUpperCase()}
+                                          </Badge>
                                         </div>
+
                                         <div className="col-md-3">
-                                          {anomalia.resultado_anomalia === 'pendiente' && (
+                                          {anomalia.resultado_anomalia === 'inconcluso' && (
                                             <button
                                               className="btn btn-success"
                                               onClick={() => haddleResolucionAnomalia(anomalia.id)}
@@ -540,28 +554,30 @@ export function ShowMisPedidos() {
                                         key={anomalia.id}
                                         className="row border-bottom py-1 text-center"
                                       >
-                                        <div className="col-md-3">
-                                          <strong>
-                                            {anomalia.tipo_anomalia.nombre_tipo_anomalia}
-                                          </strong>
+                                        <div className="col-md-4">
+                                          <strong>Nombre: </strong>
+                                          {anomalia.tipo_anomalia.nombre_tipo_anomalia}
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-4">
                                           <strong>Dificultad: </strong>
                                           {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                         </div>
-                                        <div className="col-md-3">
-                                          <strong>Resultado: </strong>
-                                          {anomalia.resultado_anomalia}
-                                        </div>
-                                        <div className="col-md-3">
-                                          {anomalia.resultado_anomalia === 'pendiente' && (
-                                            <button
-                                              className="btn btn-success"
-                                              onClick={() => haddleResolucionAnomalia(anomalia.id)}
-                                            >
-                                              Resolver
-                                            </button>
-                                          )}
+                                        <div className="col-md-4 d-flex align-items-center">
+                                          <strong className="me-2">Resultado:</strong>
+                                          <Badge
+                                            bg={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'warning'
+                                                : 'success'
+                                            }
+                                            text={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'dark'
+                                                : 'light'
+                                            }
+                                          >
+                                            {anomalia.resultado_anomalia.toUpperCase()}
+                                          </Badge>
                                         </div>
                                       </div>
                                     ))}
@@ -635,17 +651,6 @@ export function ShowMisPedidos() {
                               </Accordion.Item>
                             )}
                           </Accordion>
-                        </div>
-
-                        <div className="row mb-4 justify-content-center">
-                          <div className="col-md-2">
-                            <button
-                              className="btn btn-success w-100"
-                              onClick={() => haddleAgregarInspeccion(unPedido.id)}
-                            >
-                              Agregar Inspección
-                            </button>
-                          </div>
                         </div>
                       </div>
                     </Accordion.Body>
