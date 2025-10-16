@@ -23,7 +23,7 @@ export function ShowMisPedidosDenunciante() {
     data: pedido_resolucion_historico,
     loading: pedido_resolucion_loading_historico,
     error: pedido_resolucion_error_historico,
-  } = getFilter<PedidoResolucion>(
+  } = get<PedidoResolucion>(
     `pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'solicitado'}`,
     {
       headers: {
@@ -37,15 +37,20 @@ export function ShowMisPedidosDenunciante() {
       <nav>
         <div className="navbar bg-body-tertiary px-3">
           <h1 className="me-auto">Mis Pedidos</h1>
-          <Link to="/generar-pedido-paso-1" className="btn btn-lg btn-success m-3 mt-0">
-            Generar Pedido
-          </Link>
-          <Link
-            to="/show-mis-pedidos-resueltos-denunciante"
-            className="btn btn-lg btn-secondary m-3 mt-0"
-          >
-            Ver mis pedidos resueltos
-          </Link>
+          <div className="d-flex flex-column flex-md-row gap-3">
+            <Link
+              to="/generar-pedido-paso-1"
+              className="btn btn-outline-dark px-4 py-2 fs-5 rounded-pill shadow-sm"
+            >
+              Realizar una denuncia
+            </Link>
+            <Link
+              to="/show-mis-pedidos-resueltos-denunciante"
+              className="btn btn-outline-secondary px-4 py-2 fs-5 rounded-pill shadow-sm"
+            >
+              Ver mis pedidos resueltos
+            </Link>
+          </div>
         </div>
       </nav>
       <div className="mb-4 border-bottom border-2">

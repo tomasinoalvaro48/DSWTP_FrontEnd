@@ -65,9 +65,11 @@ export function ShowPosiblesPedidos() {
 
   const haddleTakePedido = async (pedido: PedidoResolucion) => {
     setErrorTakePedido(null)
+
     try {
-      patch(`pedido_resolucion/tomar-pedido-resolucion/${pedido.id}`)
-      navigate('/mostrar-posibles-pedidos') // La idea es que dps te dirija a mis pedidos esto es temporal
+      await patch(`pedido_resolucion/tomar-pedido-resolucion/${pedido.id}`)
+
+      navigate('/show-mis-pedidos')
     } catch (err: any) {
       console.error('Error al tomar el pedido:', err)
       setErrorTakePedido(err?.response?.data?.message ?? 'Error al tomar el pedido.')
