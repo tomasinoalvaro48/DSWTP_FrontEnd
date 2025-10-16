@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { BACKEND_URL } from '../../../endpoints.config'
 
 export function RegisterDenunciante() {
@@ -12,6 +12,8 @@ export function RegisterDenunciante() {
     confir_password: '',
   })
 
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [messageType, setMessageType] = useState<'success' | 'danger' | 'warning' | null>(null)
   const [showModal, setShowModal] = useState(false)
@@ -111,10 +113,10 @@ export function RegisterDenunciante() {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label className="form-label fw-semibold">Contraseña</label>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             required
             className="form-control"
             minLength={6}
@@ -122,12 +124,17 @@ export function RegisterDenunciante() {
             value={form.password_denunciante}
             onChange={(e) => setForm({ ...form, password_denunciante: e.target.value })}
           />
+          <i
+            className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'} position-absolute`}
+            style={{ top: '38px', right: '15px', cursor: 'pointer' }}
+            onClick={() => setShowPassword(!showPassword)}
+          ></i>
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label className="form-label fw-semibold">Confirmar contraseña</label>
           <input
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             required
             className="form-control"
             minLength={6}
@@ -135,12 +142,32 @@ export function RegisterDenunciante() {
             value={form.confir_password}
             onChange={(e) => setForm({ ...form, confir_password: e.target.value })}
           />
+          <i
+            className={`bi ${showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'} position-absolute`}
+            style={{ top: '38px', right: '15px', cursor: 'pointer' }}
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          ></i>
         </div>
 
         <button className="btn btn-success w-100" type="submit">
           Registrarse
         </button>
       </form>
+
+      <div className="text-center mt-3">
+        <p className="mb-0 fw-semibold">
+          ¿Ya tenés una cuenta?{' '}
+          <Link to="/login" className="text-primary text-decoration-none fw-semibold">
+            Iniciar sesión
+          </Link>
+        </p>
+        <p className="mb-1 fw-semibold">
+          ¿Deseas ser cazador?{' '}
+          <Link to="/register-usuario" className="text-success text-decoration-none fw-semibold">
+            Registrarse como cazador
+          </Link>
+        </p>
+      </div>
 
       {showModal && (
         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>

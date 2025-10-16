@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
 //import { post } from '../../api/dataManager.ts'
@@ -13,6 +13,8 @@ export function RegisterUsuario() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [zona, setZona] = useState<Zona>()
   const [message, setMessage] = useState<string | null>(null)
   const [messageType, setMessageType] = useState<'success' | 'danger' | 'warning' | null>(null)
@@ -54,7 +56,7 @@ export function RegisterUsuario() {
       //si uso la línea comentada en vez de la línea de abajo, no muestra la validacion de que si email ya está registrado como usuario
       //await post('auth/register-usuario', form)
       await axios.post(`${BACKEND_URL}/api/auth/register-usuario`, form)
-      setMessage('Se ha registrado como usuario.')
+      setMessage('Se ha registrado como cazador.')
       setMessageType('success')
       setShowModal(true)
     } catch (err: any) {
@@ -69,7 +71,7 @@ export function RegisterUsuario() {
 
   return (
     <div className="container mt-4" style={{ maxWidth: '500px' }}>
-      <h3 className="mb-3 text-center">Registro de Usuario</h3>
+      <h3 className="mb-3 text-center">Registro de Cazador</h3>
 
       {message && messageType !== 'success' && (
         <div className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`} role="alert">
@@ -105,30 +107,40 @@ export function RegisterUsuario() {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 position-relative">
           <label className="form-label fw-semibold">Contraseña</label>
           <input
             required
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             className="form-control"
             placeholder="******"
             minLength={6}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <i
+            className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'} position-absolute`}
+            style={{ top: '38px', right: '15px', cursor: 'pointer' }}
+            onClick={() => setShowPassword(!showPassword)}
+          ></i>
         </div>
 
-        <div className="mb-3">
-          <label className="form-label fw-semibold">Repetir contraseña</label>
+        <div className="mb-3 position-relative">
+          <label className="form-label fw-semibold">Confirmar contraseña</label>
           <input
             required
-            type="password"
+            type={showConfirmPassword ? 'text' : 'password'}
             className="form-control"
             placeholder="******"
             minLength={6}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <i
+            className={`bi ${showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'} position-absolute`}
+            style={{ top: '38px', right: '15px', cursor: 'pointer' }}
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          ></i>
         </div>
 
         <div className="mb-3">
@@ -140,6 +152,21 @@ export function RegisterUsuario() {
           Registrarse
         </button>
       </form>
+
+      <div className="text-center mt-3">
+        <p className="mb-0 fw-semibold">
+          ¿Ya tenés una cuenta?{' '}
+          <Link to="/login" className="text-primary text-decoration-none fw-semibold">
+            Iniciar sesión
+          </Link>
+        </p>
+        <p className="mb-1 fw-semibold">
+          ¿Tenés anomalías y querés denunciarlo?{' '}
+          <Link to="/register-denunciante" className="text-success text-decoration-none fw-semibold">
+            Registrarse como denunciante
+          </Link>
+        </p>
+      </div>
 
       {showModal && (
         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>

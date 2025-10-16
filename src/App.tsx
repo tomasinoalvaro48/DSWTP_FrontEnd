@@ -38,6 +38,7 @@ import { ChangePassword } from './components/Auth/ChangePassword.tsx'
 import { ShowMisPedidosDenunciante } from './components/PedidoResolucion/ShowMisPedidosDen.tsx'
 import { ShowMisPedidosResueltosDenunciante } from './components/PedidoResolucion/ShowMisPedidosResueltosDen.tsx'
 import { UpdatePerfil } from './components/Auth/UpdatePerfil.tsx'
+import { DeleteAccount } from './components/Auth/DeleteAccount.tsx'
 import PoliticasDeUso from './footer/PoliticasDeUso.tsx'
 import { useAuth } from './auth/AuthContext.tsx'
 import { DenuncianteHome } from './screens/denuncianteHome.tsx'
@@ -66,6 +67,9 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="register-usuario" element={<RegisterUsuario />} />
+
+        <Route path="politicas" element={<PoliticasDeUso />} />
+
         <Route element={<PrivateRoute />}>
           <Route
             path="nav-map"
@@ -335,10 +339,10 @@ function App() {
           />
 
           <Route
-            path="/politicas"
+            path="/delete-account"
             element={
-              <ProtectedRoute allowedRoles={['denunciante', 'cazador', 'operador']}>
-                <PoliticasDeUso />
+              <ProtectedRoute allowedRoles={['denunciante', 'cazador']}>
+                <DeleteAccount />
               </ProtectedRoute>
             }
           />

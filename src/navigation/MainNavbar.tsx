@@ -17,6 +17,9 @@ export function MainNavbar() {
         <NavDropdown.Item onClick={() => navigate('/update-profile')}>
           Editar perfil
         </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => navigate('/delete-account')}>
+          Eliminar cuenta   {/*ver para que no le aparezca al operador*/}
+        </NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item
           onClick={() => {
@@ -80,10 +83,10 @@ export function MainNavbar() {
                   <div className="navbarOptionTipos">Iniciar Sesión</div>
                 </NavLink>
                 <NavLink to="/register-denunciante" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Registrarse Denunciante</div>
+                  <div className="navbarOptionTipos">Registrarse como Denunciante</div>
                 </NavLink>
                 <NavLink to="/register-usuario" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Registrarse Usuario</div>
+                  <div className="navbarOptionTipos">Registrarse como Cazador</div>
                 </NavLink>
               </>
             )}
