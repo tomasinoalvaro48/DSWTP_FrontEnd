@@ -67,6 +67,9 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="register-usuario" element={<RegisterUsuario />} />
+
+        <Route path="politicas" element={<PoliticasDeUso />} />
+
         <Route element={<PrivateRoute />}>
           <Route
             path="nav-map"
@@ -340,15 +343,6 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['denunciante', 'cazador']}>
                 <DeleteAccount />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/politicas"
-            element={
-              <ProtectedRoute allowedRoles={['denunciante', 'cazador', 'operador']}>
-                <PoliticasDeUso />
               </ProtectedRoute>
             }
           />
