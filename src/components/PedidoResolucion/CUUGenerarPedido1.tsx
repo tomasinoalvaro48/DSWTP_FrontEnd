@@ -24,33 +24,45 @@ export function GenerarPedidoPaso1() {
   }
 
   return (
-    <div className="d-flex flex-column bg-light">
-      <h1>Generar Pedido</h1>
-      <form className="d-flex flex-column p-4 border rounded bg-light" onSubmit={handleSubmit}>
-        <ZonaByLocalidadSelection setZona={setZona} />
+    <div className="container my-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="d-flex flex-column bg-light p-4 border rounded shadow-sm">
+            <h1 className="text-center mb-4">Generar Pedido</h1>
 
-        <label htmlFor="direccion" className="form-label">
-          Dirección aproximada donde ocurrió la anomalía:
-        </label>
-        <input
-          type="text"
-          id="direccion"
-          name="direccion"
-          className="form-control"
-          placeholder="Ingrese una direccion"
-          value={direccion}
-          onChange={(e) => setDireccion(e.target.value)}
-          required
-        />
+            <form className="d-flex flex-column" onSubmit={handleSubmit}>
+              <ZonaByLocalidadSelection setZona={setZona} />
 
-        <button type="submit" className="btn btn-primary">
-          Siguiente
-        </button>
+              <label htmlFor="direccion" className="form-label mt-3">
+                Dirección aproximada donde ocurrió la anomalía:
+              </label>
+              <input
+                type="text"
+                id="direccion"
+                name="direccion"
+                className="form-control mb-3"
+                placeholder="Ingrese una dirección"
+                value={direccion}
+                onChange={(e) => setDireccion(e.target.value)}
+                required
+              />
 
-        <Link className="btn btn-secondary" to="/show-pedido">
-          Cancelar
-        </Link>
-      </form>
+              <div className="row gy-2 justify-content-between mt-3">
+                <div className="col-12 col-md-4">
+                  <Link className="btn btn-secondary w-100" to="/show-pedido">
+                    Cancelar
+                  </Link>
+                </div>
+                <div className="col-12 col-md-4">
+                  <button type="submit" className="btn btn-primary w-100">
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -49,81 +49,124 @@ export function GenerarPedidoPaso2() {
   }
 
   return (
-    <div className="d-flex flex-column bg-light p-4 border rounded">
-      <h1>Generar Pedido - Paso 2</h1>
-      <form className="d-flex flex-column p-4 border rounded bg-light" onSubmit={handleSubmit}>
-        {loading && <p>Cargando tipos de anomalía...</p>}
-        {!loading && error && <p>Error al cargar tipos de anomalías.</p>}
-        {!loading && !error && tipos.length > 0 && (
-          <table className="table table-bordered">
-            <thead>
-              <tr>
-                <th>Anomalia</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {tipos.length === 0 ? (
-                <p>No hay entidades cargadas</p>
-              ) : (
-                tipos.map((t) => (
-                  <tr key={t.id}>
-                    <th>{t.nombre_tipo_anomalia}</th>
-                    <th>
-                      <div className="btn btn-primary" onClick={() => handleAddAnomalia(t)}>
-                        Agregar anomalía
-                      </div>
-                    </th>
-                  </tr>
-                ))
+    <div className="container my-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="d-flex flex-column bg-light p-4 border rounded shadow-sm">
+            <h1 className="text-center mb-4">Generar Pedido - Paso 2</h1>
+
+            <form className="d-flex flex-column" onSubmit={handleSubmit}>
+              {loading && <p>Cargando tipos de anomalía...</p>}
+              {!loading && error && (
+                <p className="text-danger">Error al cargar tipos de anomalías.</p>
               )}
-            </tbody>
-          </table>
-        )}
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Anomalías cargadas:</th>
-            </tr>
-          </thead>
-          <tbody>
-            {anoms.map((a) => (
-              <tr key={a.tipo_anomalia.id}>
-                <th>{a.tipo_anomalia.nombre_tipo_anomalia}</th>
-                <th>
-                  <div
-                    className="btn btn-danger"
-                    onClick={() => handleDeleteAnomalia(a.tipo_anomalia.id)}
-                  >
-                    Eliminar
-                  </div>
-                </th>
-              </tr>
-            ))}
-          </tbody>
-        </table>
 
-        {anoms.length === 0 && (
-          <label htmlFor="descripcion" className="form-label">
-            Descripcion (obligatorio si no agregó anomalías):
-          </label>
-        )}
-        <input
-          type="text"
-          id="descripcion"
-          name="descripcion"
-          className="form-control"
-          placeholder="Ingrese una descripción"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          required={anoms.length === 0}
-        />
+              {!loading && !error && tipos.length > 0 && (
+                <table
+                  className="table table-bordered mt-3"
+                  style={{ tableLayout: 'fixed', width: '100%' }}
+                >
+                  <colgroup>
+                    <col style={{ width: '60%' }} />
+                    <col style={{ width: '40%' }} />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>Anomalía</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tipos.length === 0 ? (
+                      <tr>
+                        <td colSpan={2} className="text-center">
+                          No hay entidades cargadas
+                        </td>
+                      </tr>
+                    ) : (
+                      tipos.map((t) => (
+                        <tr key={t.id}>
+                          <td>{t.nombre_tipo_anomalia}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-primary w-100"
+                              onClick={() => handleAddAnomalia(t)}
+                            >
+                              Agregar anomalía
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              )}
 
-        <button className="btn btn-primary">Realizar Pedido</button>
-        <Link className="btn btn-secondary" to="/show-pedido">
-          Cancelar Pedido
-        </Link>
-      </form>
+              <table
+                className="table table-bordered mt-4"
+                style={{ tableLayout: 'fixed', width: '100%' }}
+              >
+                <colgroup>
+                  <col style={{ width: '60%' }} />
+                  <col style={{ width: '40%' }} />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th colSpan={2}>Anomalías cargadas:</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {anoms.map((a) => (
+                    <tr key={a.tipo_anomalia.id}>
+                      <td>{a.tipo_anomalia.nombre_tipo_anomalia}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-danger w-100"
+                          onClick={() => handleDeleteAnomalia(a.tipo_anomalia.id)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              {anoms.length === 0 && (
+                <label htmlFor="descripcion" className="form-label mt-3">
+                  Descripción (obligatorio si no agregó anomalías):
+                </label>
+              )}
+              <input
+                type="text"
+                id="descripcion"
+                name="descripcion"
+                className="form-control mb-4"
+                placeholder="Ingrese una descripción"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+                required={anoms.length === 0}
+              />
+
+              {/* Botones finales */}
+              <div className="row gy-2 justify-content-between">
+                <div className="col-12 col-md-4">
+                  <Link className="btn btn-secondary w-100" to="/show-pedido">
+                    Cancelar Pedido
+                  </Link>
+                </div>
+                <div className="col-12 col-md-4">
+                  <button type="submit" className="btn btn-primary w-100">
+                    Realizar Pedido
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
