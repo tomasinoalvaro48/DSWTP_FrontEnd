@@ -8,7 +8,7 @@ export function MainNavbar() {
 
   const MoreOptions = () => {
     return (
-      <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
+      <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3" align="end">
         <NavDropdown.Item onClick={() => navigate('/nav-map')}>Mapa de Navegación</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
         <NavDropdown.Item onClick={() => navigate('/change-password')}>
@@ -17,9 +17,11 @@ export function MainNavbar() {
         <NavDropdown.Item onClick={() => navigate('/update-profile')}>
           Editar perfil
         </NavDropdown.Item>
-        <NavDropdown.Item onClick={() => navigate('/delete-account')}>
-          Eliminar cuenta   {/*ver para que no le aparezca al operador*/}
-        </NavDropdown.Item>
+        {userRol !== 'operador' && (
+          <NavDropdown.Item onClick={() => navigate('/delete-account')}>
+            Eliminar cuenta
+          </NavDropdown.Item>
+        )}
         <NavDropdown.Divider />
         <NavDropdown.Item
           onClick={() => {

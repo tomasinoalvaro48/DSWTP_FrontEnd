@@ -42,7 +42,7 @@ export function Login() {
   }
 
   return (
-    <div className="container mt-5" style={{ maxWidth: '420px' }}>
+    <div className="container mt-5 mb-5" style={{ maxWidth: '420px' }}>
       <h3 className="mb-4 text-center">Iniciar Sesión</h3>
 
       {message && (

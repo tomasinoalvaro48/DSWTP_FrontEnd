@@ -62,8 +62,8 @@ export function RegisterDenunciante() {
   }
 
   return (
-    <div className="container mt-4" style={{ maxWidth: '500px' }}>
-      <h3 className="mb-3 text-center">Registro de Denunciante</h3>
+    <div className="container mt-5 mb-5" style={{ maxWidth: '500px' }}>
+      <h3 className="mb-3 text-center">Registrarse como Denunciante</h3>
 
       {message && messageType !== 'success' && (
         <div className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`} role="alert">

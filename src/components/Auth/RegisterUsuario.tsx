@@ -70,8 +70,8 @@ export function RegisterUsuario() {
   }
 
   return (
-    <div className="container mt-4" style={{ maxWidth: '500px' }}>
-      <h3 className="mb-3 text-center">Registro de Cazador</h3>
+    <div className="container mt-5 mb-5" style={{ maxWidth: '500px' }}>
+      <h3 className="mb-3 text-center">Registrarse como Cazador</h3>
 
       {message && messageType !== 'success' && (
         <div className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`} role="alert">
