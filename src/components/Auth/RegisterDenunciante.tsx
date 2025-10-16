@@ -21,6 +21,7 @@ export function RegisterDenunciante() {
   const showMessage = (text: string, type: 'success' | 'danger' | 'warning') => {
     setMessage(text)
     setMessageType(type)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
