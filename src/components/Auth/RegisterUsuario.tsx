@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
-import { post } from '../../api/dataManager.ts'
+//import { post } from '../../api/dataManager.ts'
+import axios from 'axios'
+import { BACKEND_URL } from '../../../endpoints.config'
 
 export function RegisterUsuario() {
   const navigate = useNavigate()
@@ -27,6 +29,7 @@ export function RegisterUsuario() {
   const showMessage = (text: string, type: 'success' | 'danger' | 'warning') => {
     setMessage(text)
     setMessageType(type)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,11 +51,14 @@ export function RegisterUsuario() {
     }
 
     try {
-      await post('auth/register-usuario', form)
-      showMessage('Se ha registrado como usuario.', 'success')
+      //si uso la línea comentada en vez de la línea de abajo, no muestra la validacion de que si email ya está registrado como usuario
+      //await post('auth/register-usuario', form)
+      await axios.post(`${BACKEND_URL}/api/auth/register-usuario`, form)
+      setMessage('Se ha registrado como usuario.')
+      setMessageType('success')
       setShowModal(true)
     } catch (err: any) {
-      showMessage('Error al registrarse', 'danger')
+      showMessage(err.response?.data?.message || 'Error al registrarse', 'danger')
     }
   }
 
