@@ -35,6 +35,7 @@ import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedid
 import { NavMapPage } from './navigation/NavMapPage.tsx'
 import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
 import { ChangePassword } from './components/Auth/ChangePassword.tsx'
+import { UpdatePerfil } from './components/Auth/UpdatePerfil.tsx'
 
 function App() {
   /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
@@ -302,6 +303,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
                 <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/update-profile"
+            element={
+              <ProtectedRoute allowedRoles={['denunciante', 'cazador', 'operador']}>
+                <UpdatePerfil />
               </ProtectedRoute>
             }
           />
