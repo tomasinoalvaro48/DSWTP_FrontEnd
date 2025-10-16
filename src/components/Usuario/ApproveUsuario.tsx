@@ -25,28 +25,26 @@ export function ApproveUsuario() {
   const handleApprove = async (usuario: Usuario) => {
     setActionLoading(true)
     setMessage(null)
-    patch<Usuario>(`usuario/approve/${usuario.id}`, usuario)
+    patch<Usuario>(`usuario/approve/${usuario.id}`)
     setMessage({ type: 'success', text: 'Cuenta de cazador aprobada exitosamente' })
     setShowModal(false)
     setSelectedUser(null)
     setActionLoading(false)
-    location.reload()
   }
 
   const handleReject = async (usuario: Usuario) => {
     setActionLoading(true)
     setMessage(null)
-    patch<Usuario>(`usuario/reject/${usuario.id}`, usuario)
+    patch<Usuario>(`usuario/reject/${usuario.id}`)
     setMessage({ type: 'success', text: 'Cuenta de cazador rechazada' })
     setShowModal(false)
     setSelectedUser(null)
     setActionLoading(false)
-    location.reload()
   }
 
   return (
-    <div className="container mt-4">
-      <h1 className="mb-4">Aprobar Cuentas de Cazadores</h1>
+    <div className="ApproveUsuario">
+      <h1>Aprobar Cuentas de Cazadores</h1>
 
       {/* Mensajes de feedback */}
       {message && (
@@ -66,9 +64,7 @@ export function ApproveUsuario() {
 
       {loading && (
         <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Cargando...</span>
-          </div>
+          <div className="spinner-border" role="status"></div>
         </div>
       )}
 

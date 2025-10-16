@@ -146,7 +146,7 @@ async function post<T>(url: string, data: T) {
 //post funtion + config
 async function post<T>(url: string, data: T, config?: object) {
   try {
-    await axios.post(`${BACKEND_URL}/api/${url}`, data, config)
+    return await axios.post(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
     console.error(err)
   } finally {
@@ -167,10 +167,13 @@ async function patch<T>(url: string, data?: T, config?: object) {
 async function postAuth(email: string, password: string) {
   try {
     const res = await axios.post(`${BACKEND_URL}/api/auth/login`, { email, password })
-    return { token: res.data.token, rol: res.data.rol }
+    return { token: res.data.token, rol: res.data.rol, error: null }
   } catch (err: any) {
-    console.error(err.message)
-    return
+    return {
+      token: null,
+      rol: null,
+      message: err.response.data.message,
+    }
   }
 }
 

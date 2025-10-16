@@ -49,7 +49,7 @@ export function ShowUsuario() {
                     }
                     text={unUsuario.estado_aprobacion === 'pendiente' ? 'dark' : 'light'}
                   >
-                    {unUsuario.estado_aprobacion.toUpperCase()}
+                    {unUsuario.estado_aprobacion}
                   </Badge>
                 </th>
                 <th>
