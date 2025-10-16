@@ -1,10 +1,46 @@
 import { get, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion } from '../../entities/entities.ts'
-import { Accordion, Spinner, Alert } from 'react-bootstrap'
+import { Accordion, Spinner, Alert, Button, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useState } from 'react'
+import { BACKEND_URL } from '../../../endpoints.config'
 
 export function ShowMisPedidosDenunciante() {
   const token = localStorage.getItem('token')
+
+  const [showModal, setShowModal] = useState(false)
+  const [pedidoAEliminar, setPedidoAEliminar] = useState<any>(null)
+  const [mensaje, setMensaje] = useState<string | null>(null)
+
+  const handleShowModal = (pedido: any) => {
+    setPedidoAEliminar(pedido)
+    setShowModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setPedidoAEliminar(null)
+  }
+
+  async function handleEliminarPedido() {
+    if (!pedidoAEliminar) return
+    try {
+      await axios.delete(`${BACKEND_URL}/api/pedido_resolucion/denunciante/${pedidoAEliminar.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: { user: { id: pedidoAEliminar.denunciante?.id } },
+      })
+      setMensaje('Pedido eliminado correctamente.')
+      setShowModal(false)
+
+      pedido_resolucion_historico = pedido_resolucion_historico.filter(
+        (p) => p.id !== pedidoAEliminar.id
+      )
+    } catch (error: any) {
+      console.error('Error al eliminar pedido:', error)
+      setMensaje(error.response?.data?.message || 'Error al eliminar el pedido.')
+    }
+  }
 
   let {
     data: pedido_resolucion_actual,
@@ -340,12 +376,50 @@ export function ShowMisPedidosDenunciante() {
                           </Accordion>
                         </div>
 
-                        <div className="row mb-4 justify-content-center"></div>
+                        <div className="text-center mt-3">
+                          <Button variant="danger" onClick={() => handleShowModal(unPedido)}>
+                            Eliminar pedido
+                          </Button>
+                        </div>
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}
               </Accordion>
+
+              <Modal show={showModal} onHide={handleCloseModal} backdrop="static" centered>
+                <Modal.Header closeButton>
+                  <Modal.Title>Confirmar eliminación</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  {pedidoAEliminar ? (
+                    <>
+                      <p>
+                        ¿Seguro que desea eliminar el pedido en la dirección{' '}
+                        <strong>{pedidoAEliminar.direccion_pedido_resolucion}</strong>?
+                      </p>
+                      <p className="text-danger">Esta acción no se puede deshacer.</p>
+                    </>
+                  ) : (
+                    'Cargando...'
+                  )}
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseModal}>
+                    Cancelar
+                  </Button>
+                  <Button variant="danger" onClick={handleEliminarPedido}>
+                    Sí, eliminar
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+
+              {/* Mensaje de resultado */}
+              {mensaje && (
+                <div className="alert alert-info text-center mt-3 w-75 mx-auto" role="alert">
+                  {mensaje}
+                </div>
+              )}
             </div>
           )}
 
