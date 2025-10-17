@@ -18,6 +18,7 @@ import { UpdateZona } from './components/Zona/UpdateZona.tsx'
 import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
 import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
 import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
+import { ApproveUsuario } from './components/Usuario/ApproveUsuario.tsx'
 import { Login } from './components/Auth/Login.tsx'
 import { RegisterDenunciante } from './components/Auth/RegisterDenunciante.tsx'
 import PrivateRoute from './components/PrivateRoute.tsx'
@@ -44,6 +45,7 @@ import { useAuth } from './auth/AuthContext.tsx'
 import { DenuncianteHome } from './screens/denuncianteHome.tsx'
 import { CazadorHome } from './screens/cazadorHome.tsx'
 import { PublicHome } from './screens/publicHome.tsx'
+import { ModificarPerfil } from './components/Auth/ModificarPerfil.tsx'
 
 function App() {
   const { token, userRol } = useAuth() // <-- adentro de App()
@@ -217,6 +219,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="approve-usuario"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ApproveUsuario />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="show-pedido"
@@ -319,6 +329,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['operador']}>
                 <TomarPedidosAgregacion />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/modificar-perfil"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
+                <ModificarPerfil />
               </ProtectedRoute>
             }
           />

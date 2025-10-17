@@ -1,14 +1,18 @@
 import { useState } from 'react'
+import type { Zona } from '../../entities/entities.ts'
+import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
+import { post } from '../../api/dataManager.ts'
 import { useNavigate, Link } from 'react-router-dom'
+
+/*
 import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
 //import { post } from '../../api/dataManager.ts'
 import axios from 'axios'
 import { BACKEND_URL } from '../../../endpoints.config'
+*/
 
 export function RegisterUsuario() {
-  const navigate = useNavigate()
-
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -19,6 +23,7 @@ export function RegisterUsuario() {
   const [message, setMessage] = useState<string | null>(null)
   const [messageType, setMessageType] = useState<'success' | 'danger' | 'warning' | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const navigate = useNavigate()
 
   const form = {
     nombre_usuario: nombre,
@@ -36,7 +41,6 @@ export function RegisterUsuario() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
     if (!nombre || !email || !password || !confirmPassword || !zona) {
       showMessage('Debe completar todos los campos', 'warning')
       return
@@ -52,15 +56,17 @@ export function RegisterUsuario() {
       return
     }
 
-    try {
-      //si uso la línea comentada en vez de la línea de abajo, no muestra la validacion de que si email ya está registrado como usuario
-      //await post('auth/register-usuario', form)
-      await axios.post(`${BACKEND_URL}/api/auth/register-usuario`, form)
-      setMessage('Se ha registrado como cazador.')
+    //si uso la línea comentada en vez de la línea de abajo, no muestra la validacion de que si email ya está registrado como usuario
+    //await post('auth/register-usuario', form)
+    const res = await post('auth/register-usuario', form)
+    if (res?.status === 201) {
+      setMessage(
+        'Deberás esperar a que un administrador apruebe tu cuenta antes de poder iniciar sesión.'
+      )
       setMessageType('success')
       setShowModal(true)
-    } catch (err: any) {
-      showMessage(err.response?.data?.message || 'Error al registrarse', 'danger')
+    } else {
+      showMessage(res?.data.message || 'Error en el registro', 'warning')
     }
   }
 
@@ -74,9 +80,17 @@ export function RegisterUsuario() {
       <h3 className="mb-3 text-center">Registrarse como Cazador</h3>
 
       {message && messageType !== 'success' && (
-        <div className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`} role="alert">
+        <div
+          className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`}
+          role="alert"
+        >
           {message}
-          <button type="button" className="btn-close" onClick={() => setMessage(null)} aria-label="Cerrar"></button>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setMessage(null)}
+            aria-label="Cerrar"
+          ></button>
         </div>
       )}
 
@@ -162,27 +176,32 @@ export function RegisterUsuario() {
         </p>
         <p className="mb-1 fw-semibold">
           ¿Tenés anomalías y querés denunciarlo?{' '}
-          <Link to="/register-denunciante" className="text-success text-decoration-none fw-semibold">
+          <Link
+            to="/register-denunciante"
+            className="text-success text-decoration-none fw-semibold"
+          >
             Registrarse como denunciante
           </Link>
         </p>
       </div>
 
       {showModal && (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+        <div
+          className="modal fade show"
+          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+        >
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
-              <div className="modal-header bg-success text-white">
-                <h5 className="modal-title">Registro exitoso</h5>
-                <button type="button" className="btn-close btn-close-white" onClick={handleCloseModal}></button>
+              <div className="modal-header bg-warning text-white">
+                <h5 className="modal-title">REGISTRO PENDIENTE DE APROBACIÓN</h5>
+                <button
+                  type="button"
+                  className="btn-close btn-close-white"
+                  onClick={handleCloseModal}
+                ></button>
               </div>
               <div className="modal-body text-center">
                 <p className="fw-semibold mb-0">{message}</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-success" onClick={handleCloseModal}>
-                  Iniciar sesión
-                </button>
               </div>
             </div>
           </div>
