@@ -9,10 +9,10 @@ export function Footer() {
           {/* Mapa */}
           <div className="col-12 col-lg-4">
             <h5 className="mb-3">Ubicación Headquarters</h5>
-            <p>Al lado del Caldero Chorriante - Minas Tirith - Gondor</p>
+            <p>Al lado del Caldero Chorreante - Minas Tirith - Gondor</p>
             <div className="ratio ratio-16x9 rounded shadow-sm">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3150.229204604247!2d-122.41941508468168!3d37.77492927975869!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808c0b0b1b45%3A0x0!2sSan%20Francisco!5e0!3m2!1ses!2sar!4v1618360948292!5m2!1ses!2sar"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29334.557!2d-60.6393!3d-32.9468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95b7ab2f7c2b1b5d%3A0x0!2sRosario%2C%20Santa%20Fe%2C%20Argentina!5e0!3m2!1ses!2sar!4v1618360948292!5m2!1ses!2sar"
                 title="Mapa de ubicación"
                 allowFullScreen
                 loading="lazy"
