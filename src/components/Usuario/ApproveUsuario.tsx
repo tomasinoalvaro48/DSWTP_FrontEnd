@@ -30,6 +30,7 @@ export function ApproveUsuario() {
     setShowModal(false)
     setSelectedUser(null)
     setActionLoading(false)
+    location.reload()
   }
 
   const handleReject = async (usuario: Usuario) => {
@@ -40,6 +41,7 @@ export function ApproveUsuario() {
     setShowModal(false)
     setSelectedUser(null)
     setActionLoading(false)
+    location.reload()
   }
 
   return (
@@ -78,10 +80,8 @@ export function ApproveUsuario() {
         <Table striped bordered hover responsive>
           <thead className="table-dark">
             <tr>
-              <th>Id</th>
               <th>Nombre</th>
               <th>Email</th>
-              <th>Zona Asignada</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
@@ -89,12 +89,8 @@ export function ApproveUsuario() {
           <tbody>
             {usuarios.map((usuario) => (
               <tr key={usuario.id}>
-                <td>{usuario.id}</td>
                 <td>{usuario.nombre_usuario}</td>
                 <td>{usuario.email_usuario}</td>
-                <td>
-                  {usuario.zona.nombre_zona} ({usuario.zona.localidad.nombre_localidad})
-                </td>
                 <td>
                   <Badge bg="warning" text="dark">
                     {usuario.estado_aprobacion.toUpperCase()}
@@ -138,22 +134,12 @@ export function ApproveUsuario() {
             <div>
               <div className="row mb-3">
                 <div className="col-md-6">
-                  <strong>ID:</strong>
-                  <p>{selectedUser.id}</p>
-                </div>
-                <div className="col-md-6">
                   <strong>Nombre:</strong>
                   <p>{selectedUser.nombre_usuario}</p>
                 </div>
-              </div>
-              <div className="row mb-3">
                 <div className="col-md-6">
                   <strong>Email:</strong>
                   <p>{selectedUser.email_usuario}</p>
-                </div>
-                <div className="col-md-6">
-                  <strong>Tipo de Usuario:</strong>
-                  <p>{selectedUser.tipo_usuario}</p>
                 </div>
               </div>
               <div className="row mb-3">
