@@ -55,13 +55,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       (response) => response,
       async (error) => {
         // error 401 (Unauthorized) o 403 (Forbidden)
-        if (error.response?.status === 401 || error.response?.status === 403) {
+        if (error.response?.status === 401) {
           const backendMessage = error.response.data.message
           console.error('Error de autenticación:', backendMessage)
           setAlertMessage(backendMessage)
           setShowModalAlert(true)
           logout() // hacemos logout directamente
           return Promise.reject(error)
+        }
+        if (error.response?.status === 403) {
+          console.error('Acceso prohibido')
+          logout()
         }
         return Promise.reject(error)
       }

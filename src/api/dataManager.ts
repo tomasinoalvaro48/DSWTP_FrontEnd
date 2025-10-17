@@ -149,6 +149,7 @@ async function post<T>(url: string, data: T, config?: object) {
     return await axios.post(`${BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
     console.error(err)
+    return err.response
   } finally {
     console.log('Post request completed')
   }
@@ -167,7 +168,7 @@ async function patch<T>(url: string, data?: T, config?: object) {
 async function postAuth(email: string, password: string) {
   try {
     const res = await axios.post(`${BACKEND_URL}/api/auth/login`, { email, password })
-    return { token: res.data.token, rol: res.data.rol, error: null }
+    return { token: res.data.token, rol: res.data.rol, message: null }
   } catch (err: any) {
     return {
       token: null,
@@ -189,6 +190,7 @@ async function remove(url: string) {
 }
 
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar
+// 2do parámetro: config?: object
 function getFilter<T>(url: string) {
   const [data, setData] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
@@ -196,7 +198,7 @@ function getFilter<T>(url: string) {
 
   useEffect(() => {
     const fetchAll = async () => {
-      setLoading(true) // 👈 importante: para que marque loading cuando cambie url
+      setLoading(true)
       setError(null)
       try {
         const response = await axios.get(`${BACKEND_URL}/api/${url}`)

@@ -1,19 +1,21 @@
 import { get, patch, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
-import { Accordion, Spinner, Alert } from 'react-bootstrap'
+import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react' // <-- Agregado useEffect
+import { useState, useEffect } from 'react'
 
 export function ShowMisPedidos() {
+  const navigate = useNavigate()
+
   const { data: localidades, loading: loadingLoc, error: errorLoc } = get<Localidad>('localidad')
+
   const handleCambioLocalidad = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const loc_id = event.target.value
     const loc = localidades.find((l) => l.id === loc_id)
     setLocalidadSeleccionada(loc)
   }
-  const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
 
-  const navigate = useNavigate()
+  const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
 
   const [dificultadFilter, setDificultadFilter] = useState(0)
   const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter)
@@ -50,17 +52,58 @@ export function ShowMisPedidos() {
     data: pedido_resolucion_historico,
     loading: pedido_resolucion_loading_historico,
     error: pedido_resolucion_error_historico,
-  } = get<PedidoResolucion>(queryHistorico, {
+  } = getFilter<PedidoResolucion>(queryHistorico, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
 
-  const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {}
+  const haddleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault()
+
+      const params = new URLSearchParams()
+
+      // Estado del pedido
+      const estado_pedido_resolucion = 'resuelto'
+      if (estado_pedido_resolucion) {
+        params.append('estado_pedido_resolucion', estado_pedido_resolucion)
+      }
+
+      // Dificultad
+      if (dificultadFilter > 0) {
+        params.append('dificultad_pedido_resolucion', dificultadFilter.toString())
+      }
+
+      // Zonas
+      if (localidadSeleccionada?.zonas) {
+        localidadSeleccionada.zonas.forEach((zona: any) => {
+          params.append('zonas', zona.id.toString())
+        })
+      }
+
+      // Construir nueva URL
+      const nuevaUrl = `pedido_resolucion/mis_pedidos?${params.toString()}`
+
+      // Actualizar estado en React
+      setQueryHistorico(nuevaUrl)
+    } catch (err: any) {
+      console.error(err)
+      alert(err?.response?.data?.message ?? 'Error al realizar la busqueda.')
+    }
+  }
 
   const haddleResolucionAnomalia = async (id: string) => {
     try {
-      await patch(`anomalia/resolver_anomalia/${id}`, {})
+      await patch(
+        `anomalia/resolver_anomalia/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       alert('Anomalía resuelta correctamente.')
       location.reload()
     } catch (err: any) {
@@ -74,71 +117,18 @@ export function ShowMisPedidos() {
   }
 
   const haddleFinalizarPedido = (idPedidoResolcion: string) => {
-    navigate(`/finalizar-pedido/${idPedidoResolcion}`)
+    try {
+      navigate(`/finalizar-pedido/${idPedidoResolcion}`)
+    } catch (err: any) {
+      console.error('Error al resolver anomalía:', err)
+      alert(err?.response?.data?.message ?? 'Hay anomalias pendientes')
+    }
   }
   return (
     <div className="ShowPosiblesPedidos">
-      {loadingLoc && (
-        <div className="d-flex align-items-center">
-          <Spinner animation="border" role="status" size="sm" className="me-2" />
-          <span>Cargando localidades...</span>
-        </div>
-      )}
-      {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
-
-      {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
-        <nav className="navbar bg-body-tertiary px-3">
-          <h1 className="me-auto">Posibles Pedidos Resolucion</h1>
-
-          <form className="d-flex align-items-center gap-3" onSubmit={haddleSearch}>
-            {/* Slider de dificultad */}
-            <div className="d-flex align-items-center">
-              <label htmlFor="dificultad" className="me-2 mb-0 strong">
-                <strong> Dificultad: </strong>
-              </label>
-              <span className="ms-2" style={{ minWidth: '100px', display: 'inline-block' }}>
-                {dificultadMostrada === 0 ? 'No seleccionada' : dificultadMostrada}
-              </span>
-              <input
-                id="dificultad"
-                type="range"
-                min="0"
-                max="10"
-                step="1"
-                value={dificultadFilter}
-                onChange={(e) => setDificultadFilter(parseInt(e.target.value))}
-                className="form-range dificultad-slider"
-                style={{
-                  width: '120px',
-                  height: '4px',
-                  accentColor: '#0d6efd',
-                }}
-              />
-            </div>
-
-            {/* Selector de localidad */}
-            <select
-              className="form-select"
-              id="localidad"
-              name="localidad"
-              value={localidadSeleccionada?.id}
-              onChange={handleCambioLocalidad}
-            >
-              <option value="">Seleccionar localidad</option>
-              {localidades?.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.nombre_localidad}
-                </option>
-              ))}
-            </select>
-
-            {/* Botón buscar */}
-            <button className="btn btn-success" type="submit">
-              Search
-            </button>
-          </form>
-        </nav>
-      )}
+      <div className="navbar bg-body-tertiary px-3">
+        <h1 className="me-auto">Mis Pedidos</h1>
+      </div>
 
       <div className="mb-4 border-bottom border-2">
         {pedido_resolucion_loading_actual && (
@@ -155,7 +145,10 @@ export function ShowMisPedidos() {
           !pedido_resolucion_error_actual &&
           pedido_resolucion_actual && (
             <div className="accordion my-3 mx-4">
-              <Accordion>
+              <Accordion
+                alwaysOpen
+                defaultActiveKey={pedido_resolucion_actual?.map((p) => p.id.toString())}
+              >
                 {pedido_resolucion_actual?.map((unPedido) => (
                   <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
                     <Accordion.Header>
@@ -250,12 +243,26 @@ export function ShowMisPedidos() {
                                           <strong>Dificultad: </strong>
                                           {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                         </div>
-                                        <div className="col-md-3">
-                                          <strong>Resultado: </strong>
-                                          {anomalia.resultado_anomalia}
+                                        <div className="col-md-3 d-flex align-items-center">
+                                          <strong className="me-2">Resultado:</strong>
+                                          <Badge
+                                            bg={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'warning'
+                                                : 'success'
+                                            }
+                                            text={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'dark'
+                                                : 'light'
+                                            }
+                                          >
+                                            {anomalia.resultado_anomalia.toUpperCase()}
+                                          </Badge>
                                         </div>
+
                                         <div className="col-md-3">
-                                          {anomalia.resultado_anomalia === 'pendiente' && (
+                                          {anomalia.resultado_anomalia === 'inconcluso' && (
                                             <button
                                               className="btn btn-success"
                                               onClick={() => haddleResolucionAnomalia(anomalia.id)}
@@ -369,6 +376,82 @@ export function ShowMisPedidos() {
       </div>
 
       <div>
+        {loadingLoc && (
+          <div className="d-flex align-items-center">
+            <Spinner animation="border" role="status" size="sm" className="me-2" />
+            <span>Cargando localidades...</span>
+          </div>
+        )}
+        {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
+
+        {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
+          <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
+            {/* Título */}
+            <h2 className="m-0 flex-shrink-0">Pedidos Históricos</h2>
+
+            {/* Filtros */}
+            <form
+              className="d-flex align-items-center gap-5 flex-nowrap"
+              onSubmit={haddleSearch}
+              style={{ flexGrow: 1, justifyContent: 'flex-end' }}
+            >
+              {/* Dificultad */}
+              <div className="d-flex align-items-center gap-3">
+                <label htmlFor="dificultad" className="mb-0">
+                  <strong>Dificultad:</strong>
+                </label>
+                <span style={{ minWidth: '40px', textAlign: 'center' }}>
+                  {dificultadMostrada === 0 ? '0' : dificultadMostrada}
+                </span>
+                <input
+                  id="dificultad"
+                  type="range"
+                  min="0"
+                  max="10"
+                  step="1"
+                  value={dificultadFilter}
+                  onChange={(e) => setDificultadFilter(parseInt(e.target.value))}
+                  className="form-range"
+                  style={{
+                    width: '150px',
+                    height: '6px',
+                    accentColor: '#0d6efd',
+                  }}
+                />
+              </div>
+
+              {/* Localidad */}
+              <div className="d-flex align-items-center gap-3">
+                <label htmlFor="localidad" className="mb-0">
+                  <strong>Localidad:</strong>
+                </label>
+                <select
+                  className="form-select"
+                  id="localidad"
+                  name="localidad"
+                  value={localidadSeleccionada?.id}
+                  onChange={handleCambioLocalidad}
+                  style={{ width: '220px' }}
+                >
+                  <option value="">Seleccionar localidad</option>
+                  {localidades?.map((loc) => (
+                    <option key={loc.id} value={loc.id}>
+                      {loc.nombre_localidad}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Botón */}
+              <button className="btn btn-success px-4" type="submit">
+                Buscar
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
+
+      <div>
         {pedido_resolucion_loading_historico && (
           <div className="d-flex align-items-center">
             <Spinner animation="border" role="status" size="sm" className="me-2" />
@@ -471,28 +554,30 @@ export function ShowMisPedidos() {
                                         key={anomalia.id}
                                         className="row border-bottom py-1 text-center"
                                       >
-                                        <div className="col-md-3">
-                                          <strong>
-                                            {anomalia.tipo_anomalia.nombre_tipo_anomalia}
-                                          </strong>
+                                        <div className="col-md-4">
+                                          <strong>Nombre: </strong>
+                                          {anomalia.tipo_anomalia.nombre_tipo_anomalia}
                                         </div>
-                                        <div className="col-md-3">
+                                        <div className="col-md-4">
                                           <strong>Dificultad: </strong>
                                           {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                         </div>
-                                        <div className="col-md-3">
-                                          <strong>Resultado: </strong>
-                                          {anomalia.resultado_anomalia}
-                                        </div>
-                                        <div className="col-md-3">
-                                          {anomalia.resultado_anomalia === 'pendiente' && (
-                                            <button
-                                              className="btn btn-success"
-                                              onClick={() => haddleResolucionAnomalia(anomalia.id)}
-                                            >
-                                              Resolver
-                                            </button>
-                                          )}
+                                        <div className="col-md-4 d-flex align-items-center">
+                                          <strong className="me-2">Resultado:</strong>
+                                          <Badge
+                                            bg={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'warning'
+                                                : 'success'
+                                            }
+                                            text={
+                                              anomalia.resultado_anomalia === 'inconcluso'
+                                                ? 'dark'
+                                                : 'light'
+                                            }
+                                          >
+                                            {anomalia.resultado_anomalia.toUpperCase()}
+                                          </Badge>
                                         </div>
                                       </div>
                                     ))}
@@ -566,17 +651,6 @@ export function ShowMisPedidos() {
                               </Accordion.Item>
                             )}
                           </Accordion>
-                        </div>
-
-                        <div className="row mb-4 justify-content-center">
-                          <div className="col-md-2">
-                            <button
-                              className="btn btn-success w-100"
-                              onClick={() => haddleAgregarInspeccion(unPedido.id)}
-                            >
-                              Agregar Inspección
-                            </button>
-                          </div>
                         </div>
                       </div>
                     </Accordion.Body>

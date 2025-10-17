@@ -36,37 +36,44 @@ import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedid
 import { NavMapPage } from './navigation/NavMapPage.tsx'
 import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
 import { ChangePassword } from './components/Auth/ChangePassword.tsx'
+import { ShowMisPedidosDenunciante } from './components/PedidoResolucion/ShowMisPedidosDen.tsx'
+import { ShowMisPedidosResueltosDenunciante } from './components/PedidoResolucion/ShowMisPedidosResueltosDen.tsx'
+import { UpdatePerfil } from './components/Auth/UpdatePerfil.tsx'
+import { DeleteAccount } from './components/Auth/DeleteAccount.tsx'
+import PoliticasDeUso from './footer/PoliticasDeUso.tsx'
+import { useAuth } from './auth/AuthContext.tsx'
+import { DenuncianteHome } from './screens/denuncianteHome.tsx'
+import { CazadorHome } from './screens/cazadorHome.tsx'
+import { PublicHome } from './screens/publicHome.tsx'
 
 function App() {
-  /* ------------ AGREGAR CUANDO ESTÉN LOS HOMES HECHOS  
-  import { useAuth } from './auth/AuthContext.tsx'
+  const { token, userRol } = useAuth() // <-- adentro de App()
 
-  const { token, userRol } = useAuth() <-- adentro de App()
- 
-  Adentro de "<Route path="/" element={<RootLayout />}>":
-  {token && userRol == 'operador' && <Route index element={<AdminHome />} />} 
-  {token && userRol == 'cazador' && <Route index element={<CazadorHome />} />}
-  {token && userRol == 'denunciante' && <Route index element={<DenuncianteHome />} />}
-  {!token && <Route index element={<PublicHome />} />}
+  //Adentro de "<Route path="/" element={<RootLayout />}>":
 
-  <ProtectedRoute> </ProtectedRoute>
-*/
+  //{!token && <Route index element={<PublicHome />} />}
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
-        <Route
-          index
-          element={
-            <ProtectedRoute allowedRoles={['operador']}>
-              <AdminHome />
-            </ProtectedRoute>
-          }
-        />
+        {token ? (
+          userRol === 'operador' ? (
+            <Route index element={<AdminHome />} />
+          ) : userRol === 'cazador' ? (
+            <Route index element={<CazadorHome />} />
+          ) : userRol === 'denunciante' ? (
+            <Route index element={<DenuncianteHome />} />
+          ) : null
+        ) : (
+          <Route index element={<PublicHome />} />
+        )}
 
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="register-usuario" element={<RegisterUsuario />} />
+
+        <Route path="politicas" element={<PoliticasDeUso />} />
+
         <Route element={<PrivateRoute />}>
           <Route
             path="nav-map"
@@ -228,6 +235,25 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="show-mis-pedidos-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+                <ShowMisPedidosDenunciante />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="show-mis-pedidos-resueltos-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+                <ShowMisPedidosResueltosDenunciante />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/generar-pedido-paso-1"
             element={
@@ -311,6 +337,24 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
                 <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/update-profile"
+            element={
+              <ProtectedRoute allowedRoles={['denunciante', 'cazador', 'operador']}>
+                <UpdatePerfil />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/delete-account"
+            element={
+              <ProtectedRoute allowedRoles={['denunciante', 'cazador']}>
+                <DeleteAccount />
               </ProtectedRoute>
             }
           />

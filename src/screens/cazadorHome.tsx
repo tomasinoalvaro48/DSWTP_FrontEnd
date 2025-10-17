@@ -3,28 +3,20 @@ import TheMysteryMachine from '../imagenes/The_Mystery_Machine.jpg'
 import Cazafantasmas from '../imagenes/cazafantasmas.jpg'
 import CasosWarren from '../imagenes/casos-warren.jpg'
 
-export function AdminHome() {
+export function CazadorHome() {
   return (
     <div className="container mt-5 mb-5">
-      <div className="position-relative mb-4" style={{ height: '60px' }}>
-        <Link
-          to="/show-pedido"
-          className="btn btn-outline-dark px-3 py-2 fs-6 rounded shadow-sm position-absolute start-0 top-50 translate-middle-y"
-          style={{ minWidth: '220px' }}
-        >
-          Ver pedidos de resolución
-        </Link>
-
-        <h2 className="fw-bold position-absolute top-50 start-50 translate-middle mb-0" style={{ fontSize: '2rem' }}>
-          ¡Bienvenido, Operador!
-        </h2>
+      <div className="position-relative mb-4" style={{ height: '50px' }}>
+        <h3 className="fw-bold position-absolute top-50 start-50 translate-middle mb-0" style={{ fontSize: '1.8rem' }}>
+          ¡Bienvenido, Cazador!
+        </h3>
 
         <Link
-          to="/tomar-pedidos-agregacion"
-          className="btn btn-outline-success px-3 py-2 fs-6 rounded shadow-sm position-absolute end-0 top-50 translate-middle-y"
+          to="/show-mis-pedidos"
+          className="btn btn-outline-dark px-4 py-2 fs-6 rounded shadow-sm position-absolute top-50 end-0 translate-middle-y"
           style={{ minWidth: '220px' }}
         >
-          Ver pedidos de agregación pendientes
+          Ver mi pedido en curso
         </Link>
       </div>
 
@@ -71,40 +63,19 @@ export function AdminHome() {
         </button>
       </div>
 
-      <div className="mb-4">
-        <h5 className="fw-semibold mb-3 text-center">Administrar entidades:</h5>
-        <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
-          <Link
-            to="/show-tipo-anomalia"
-            className="btn btn-outline-primary px-3 py-3 fs-6 rounded shadow-sm flex-fill"
-          >
-            Tipo de anomalía
-          </Link>
-          <Link
-            to="/show-denunciante"
-            className="btn btn-outline-secondary px-3 py-3 fs-6 rounded shadow-sm flex-fill"
-          >
-            Denunciantes
-          </Link>
-          <Link
-            to="/show-localidad"
-            className="btn btn-outline-info px-3 py-3 fs-6 rounded shadow-sm flex-fill"
-          >
-            Localidades
-          </Link>
-          <Link
-            to="/show-zona"
-            className="btn btn-outline-warning px-3 py-3 fs-6 rounded shadow-sm flex-fill"
-          >
-            Zonas
-          </Link>
-          <Link
-            to="/show-usuario"
-            className="btn btn-outline-success px-3 py-3 fs-6 rounded shadow-sm flex-fill"
-          >
-            Usuarios
-          </Link>
-        </div>
+      <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
+        <Link
+          to="/mostrar-posibles-pedidos"
+          className="btn btn-outline-primary px-3 py-3 fs-6 rounded shadow-sm flex-fill"
+        >
+          Ver pedidos disponibles para tomar
+        </Link>
+        <Link
+          to="/generar-pedido-agregacion-1"
+          className="btn btn-outline-success px-3 py-3 fs-6 rounded shadow-sm flex-fill"
+        >
+          Solicitar agregar una nueva anomalía
+        </Link>
       </div>
     </div>
   )

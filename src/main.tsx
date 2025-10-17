@@ -5,6 +5,12 @@ import '../endpoints.config.ts'
 import App from './App.tsx'
 import { AuthProvider } from './auth/AuthContext.tsx'
 
+// Importar estilos Bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+// Importar scripts Bootstrap (necesarios para el carrusel)
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
 const rootElement = document.getElementById('root')
 if (rootElement) {
   createRoot(rootElement).render(

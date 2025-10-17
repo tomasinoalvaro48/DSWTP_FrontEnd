@@ -1,4 +1,4 @@
-import { Container, Navbar, NavDropdown } from 'react-bootstrap'
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.tsx'
 
@@ -6,112 +6,103 @@ export function MainNavbar() {
   const { token, logout, userRol } = useAuth()
   const navigate = useNavigate()
 
-  const MoreOptions = () => {
-    return (
-      <NavDropdown title="Más Opciones" id="nav-dropdown" className="ms-auto m-3">
-        <NavDropdown.Item onClick={() => navigate('/nav-map')}>Mapa de Navegación</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
-        <NavDropdown.Item onClick={() => navigate('/change-password')}>
-          Cambiar Contraseña
+  const MoreOptions = () => (
+    <NavDropdown title="Más Opciones" id="nav-dropdown" align="end">
+      <NavDropdown.Item onClick={() => navigate('/nav-map')}>
+        Mapa de Navegación
+      </NavDropdown.Item>
+      <NavDropdown.Item onClick={() => navigate('/change-password')}>
+        Cambiar Contraseña
+      </NavDropdown.Item>
+      <NavDropdown.Item onClick={() => navigate('/update-profile')}>
+        Editar perfil
+      </NavDropdown.Item>
+      {userRol !== 'operador' && (
+        <NavDropdown.Item onClick={() => navigate('/delete-account')}>
+          Eliminar cuenta
         </NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item
-          onClick={() => {
-            logout()
-            navigate('/')
-          }}
-        >
-          Cerrar Sesión
-        </NavDropdown.Item>
-      </NavDropdown>
-    )
+      )}
+      <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
+      <NavDropdown.Divider />
+      <NavDropdown.Item
+        onClick={() => {
+          logout()
+          navigate('/')
+        }}
+      >
+        Cerrar Sesión
+      </NavDropdown.Item>
+    </NavDropdown>
+  )
+
+  const renderNavLinks = () => {
+    if (!token) {
+      return (
+        <>
+          <Nav.Link as={NavLink} to="/login">
+            Iniciar Sesión
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/register-denunciante">
+            Registrarse como Denunciante
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/register-usuario">
+            Registrarse como Cazador
+          </Nav.Link>
+        </>
+      )
+    }
+
+    if (userRol === 'operador') {
+      return (
+        <>
+          <Nav.Link as={NavLink} to="/show-tipo-anomalia">Tipos de Anomalías</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-denunciante">Denunciantes</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-localidad">Localidades</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-zona">Zonas</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-usuario">Usuarios</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-pedido">Pedidos</Nav.Link>
+          <Nav.Link as={NavLink} to="/approve-usuario">Aprobar Cazadores</Nav.Link>
+          <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">Pedidos para Cazador</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-pedidos-agregacion">Pedidos de Agregación</Nav.Link>
+          <Nav.Link as={NavLink} to="/tomar-pedidos-agregacion">Aceptar/Rechazar Pedidos</Nav.Link>
+          <MoreOptions />
+        </>
+      )
+    }
+
+    if (userRol === 'denunciante') {
+      return (
+        <>
+          <Nav.Link as={NavLink} to="/show-mis-pedidos-denunciante">Mis Pedidos</Nav.Link>
+          <MoreOptions />
+        </>
+      )
+    }
+
+    if (userRol === 'cazador') {
+      return (
+        <>
+          <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">Posibles Pedidos</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-pedidos-agregacion">Pedidos de Agregación</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-mis-pedidos">Mis Pedidos</Nav.Link>
+          <MoreOptions />
+        </>
+      )
+    }
   }
 
   return (
-    <>
-      <Navbar expand="lg" className="bg-body-secondary border">
-        <Container fluid className="align-items-center">
-          <NavLink to="/" className="d-flex align-items-center text-decoration-none">
-            <img src="/logo.png" alt="Logo" width="70" height="70" className="me-3" />
-            <h4 className="" id="navbarBrand">
-              Resolución de Anomalías
-            </h4>
-          </NavLink>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            {token && userRol == 'operador' && (
-              <>
-                <NavLink to="/show-tipo-anomalia" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Tipos de Anomalías</div>
-                </NavLink>
-                <NavLink to="/show-denunciante" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Denunciantes</div>
-                </NavLink>
-                <NavLink to="/show-localidad" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Localidades</div>
-                </NavLink>
-                <NavLink to="/show-zona" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Zonas</div>
-                </NavLink>
-                <NavLink to="/show-usuario" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Usuarios</div>
-                </NavLink>
-                <NavLink to="/approve-usuario" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Aprobar Cazadores</div>
-                </NavLink>
-                <NavLink to="/show-pedido" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos</div>
-                </NavLink>
-                <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos para Cazador</div>
-                </NavLink>
-                <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos de Agregacion</div>
-                </NavLink>
-                <NavLink to="/tomar-pedidos-agregacion" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Aceptar/Rechazar Pedidos de Agregacion</div>
-                </NavLink>
-                <MoreOptions />
-              </>
-            )}
-            {!token && (
-              <>
-                <NavLink to="/login" className="nav-link ms-auto m-3 p-0">
-                  <div className="navbarOptionTipos">Iniciar Sesión</div>
-                </NavLink>
-                <NavLink to="/register-denunciante" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Registrarse Denunciante</div>
-                </NavLink>
-                <NavLink to="/register-usuario" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Registrarse Usuario</div>
-                </NavLink>
-              </>
-            )}
-            {token && userRol == 'denunciante' && (
-              <>
-                <NavLink to="/show-pedido" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos</div>
-                </NavLink>
-                <MoreOptions />
-              </>
-            )}
-            {token && userRol == 'cazador' && (
-              <>
-                <NavLink to="/mostrar-posibles-pedidos" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos</div>
-                </NavLink>
-                <NavLink to="/show-pedidos-agregacion" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Pedidos de Agregacion</div>
-                </NavLink>
-                <NavLink to="/show-mis-pedidos" className="nav-link m-3 p-0">
-                  <div className="navbarOptionTipos">Mis Pedidos</div>
-                </NavLink>
-                <MoreOptions />
-              </>
-            )}
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </>
+    <Navbar expand="lg" className="bg-light shadow-sm sticky-top">
+      <Container fluid className="align-items-center">
+        <NavLink to="/" className="d-flex align-items-center text-decoration-none me-3">
+          <img src="/logo.png" alt="Logo" width="60" height="60" className="me-2" />
+          <span className="fw-bold fs-5 text-dark">Resolución de Anomalías</span>
+        </NavLink>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto align-items-center gap-3">{renderNavLinks()}</Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   )
 }
