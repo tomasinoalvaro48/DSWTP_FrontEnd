@@ -9,59 +9,85 @@ export function ShowTiposAnomalias() {
   const { data, loading, error } = get<TipoAnomalia>('tipo_anomalia')
 
   return (
-    <div className="ShowTiposAnomalias">
-      <h1>Tipos de Anomalias</h1>
+    <div className="ShowTiposAnomalias container mt-4 mb-5">
+      <h1
+        className="mb-4"
+        style={{
+          color: '#333',
+          fontWeight: 600,
+        }}
+      >
+        Tipos de Anomalías
+      </h1>
 
       {!loading && !error && data?.length === 0 && (
         <div className="alert alert-info">No hay tipos de anomalía cargados.</div>
       )}
 
       {!loading && !error && data?.length > 0 && (
-        <Table className="table table-bordered ">
-          <thead className="table-secondary text-center">
-            <tr>
-              <th>Id</th>
-              <th>Nombre</th>
-              <th>Nivel de Dificultad</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody className="">
-            {data.length === 0 ? (
+        <div
+          style={{
+            borderRadius: '0.5rem',
+            overflow: 'hidden',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+          }}
+        >
+          <Table
+            striped
+            hover
+            bordered
+            responsive
+            className="align-middle mb-0"
+            style={{
+              backgroundColor: '#f8f9fa', // gris claro
+            }}
+          >
+            <thead
+              className="text-center"
+              style={{
+                backgroundColor: '#dee2e6', // gris medio
+              }}
+            >
               <tr>
-                <th>No hay entidades cargadas</th>
+                <th>Nombre</th>
+                <th>Nivel de Dificultad</th>
+                <th>Acción</th>
               </tr>
-            ) : (
-              data?.map((unTipo) => (
+            </thead>
+            <tbody>
+              {data.map((unTipo) => (
                 <tr key={unTipo.id}>
-                  <th>{unTipo.id}</th>
-                  <th>{unTipo.nombre_tipo_anomalia}</th>
-                  <th>{'Nivel ' + unTipo.dificultad_tipo_anomalia}</th>
-                  <th className="fit-content text-center">
+                  <td>{unTipo.nombre_tipo_anomalia}</td>
+                  <td>{`Nivel ${unTipo.dificultad_tipo_anomalia}`}</td>
+                  <td className="text-center">
                     <Link
                       to={`/update-tipo-anomalia/${unTipo.id}`}
-                      className="btn btn-sm btn-primary me-2"
+                      className="btn btn-sm btn-outline-secondary me-2"
                     >
                       Editar
                     </Link>
                     <DeleteEntityButton
                       idToDelete={unTipo.id}
                       nameToDelete={unTipo.nombre_tipo_anomalia}
-                      route={'tipo_anomalia'}
+                      route="tipo_anomalia"
                     />
-                  </th>
+                  </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </Table>
+              ))}
+            </tbody>
+          </Table>
+        </div>
       )}
 
       {loading && <div>Cargando...</div>}
-      {error && <div>{error}</div>}
-      <Link to="/add-tipo-anomalia" className="btn btn-lg btn-success m-3 mt-0">
-        + Agregar Tipo de Anomalía
-      </Link>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <div className="row justify-content-center mt-3">
+        <div className="col-12 col-md-4">
+          <Link to="/add-tipo-anomalia" className="btn btn-lg btn-outline-primary w-100">
+            + Agregar Tipo de Anomalía
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

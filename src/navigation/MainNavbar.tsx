@@ -8,15 +8,11 @@ export function MainNavbar() {
 
   const MoreOptions = () => (
     <NavDropdown title="Más Opciones" id="nav-dropdown" align="end">
-      <NavDropdown.Item onClick={() => navigate('/nav-map')}>
-        Mapa de Navegación
-      </NavDropdown.Item>
+      <NavDropdown.Item onClick={() => navigate('/nav-map')}>Mapa de Navegación</NavDropdown.Item>
       <NavDropdown.Item onClick={() => navigate('/change-password')}>
         Cambiar Contraseña
       </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => navigate('/update-profile')}>
-        Editar perfil
-      </NavDropdown.Item>
+      <NavDropdown.Item onClick={() => navigate('/update-profile')}>Editar perfil</NavDropdown.Item>
       {userRol !== 'operador' && (
         <NavDropdown.Item onClick={() => navigate('/delete-account')}>
           Eliminar cuenta
@@ -55,15 +51,27 @@ export function MainNavbar() {
     if (userRol === 'operador') {
       return (
         <>
-          <Nav.Link as={NavLink} to="/show-tipo-anomalia">Tipos de Anomalías</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-denunciante">Denunciantes</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-localidad">Localidades</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-zona">Zonas</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-usuario">Usuarios</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-pedido">Pedidos</Nav.Link>
-          <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">Pedidos para Cazador</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-pedidos-agregacion">Pedidos de Agregación</Nav.Link>
-          <Nav.Link as={NavLink} to="/tomar-pedidos-agregacion">Aceptar/Rechazar Pedidos</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-tipo-anomalia">
+            Tipos de Anomalías
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-denunciante">
+            Denunciantes
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-localidad">
+            Localidades
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-zona">
+            Zonas
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-usuario">
+            Usuarios
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-pedido">
+            Pedidos
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/tomar-pedidos-agregacion">
+            Aceptar/Rechazar Tipos de Anomalias
+          </Nav.Link>
           <MoreOptions />
         </>
       )
@@ -72,7 +80,9 @@ export function MainNavbar() {
     if (userRol === 'denunciante') {
       return (
         <>
-          <Nav.Link as={NavLink} to="/show-mis-pedidos-denunciante">Mis Pedidos</Nav.Link>
+          <Nav.Link as={NavLink} to="/show-mis-pedidos-denunciante">
+            Mis Pedidos
+          </Nav.Link>
           <MoreOptions />
         </>
       )
@@ -81,9 +91,15 @@ export function MainNavbar() {
     if (userRol === 'cazador') {
       return (
         <>
-          <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">Posibles Pedidos</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-pedidos-agregacion">Pedidos de Agregación</Nav.Link>
-          <Nav.Link as={NavLink} to="/show-mis-pedidos">Mis Pedidos</Nav.Link>
+          <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">
+            Posibles Pedidos
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-pedidos-agregacion">
+            Pedidos de Agregación
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-mis-pedidos">
+            Mis Pedidos
+          </Nav.Link>
           <MoreOptions />
         </>
       )

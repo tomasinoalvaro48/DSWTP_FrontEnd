@@ -23,7 +23,7 @@ const DeleteEntityButton = ({ idToDelete, nameToDelete, route }: Props) => {
 
   return (
     <>
-      <button className="btn btn-sm btn-danger" onClick={handleShow}>
+      <button className="btn btn-sm btn-outline-danger" onClick={handleShow}>
         Eliminar
       </button>
 
