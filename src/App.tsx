@@ -43,6 +43,7 @@ import PoliticasDeUso from './footer/PoliticasDeUso.tsx'
 import { useAuth } from './auth/AuthContext.tsx'
 import { DenuncianteHome } from './screens/denuncianteHome.tsx'
 import { CazadorHome } from './screens/cazadorHome.tsx'
+import { PublicHome } from './screens/publicHome.tsx'
 
 function App() {
   const { token, userRol } = useAuth() // <-- adentro de App()
@@ -62,7 +63,9 @@ function App() {
           ) : userRol === 'denunciante' ? (
             <Route index element={<DenuncianteHome />} />
           ) : null
-        ) : null}
+        ) : (
+          <Route index element={<PublicHome />} />
+        )}
 
         <Route path="login" element={<Login />} />
         <Route path="register-denunciante" element={<RegisterDenunciante />} />
