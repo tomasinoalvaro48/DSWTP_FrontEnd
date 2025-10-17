@@ -45,7 +45,7 @@ export function GenerarPedidoPaso2() {
         Authorization: `Bearer ${token}`,
       },
     })
-    navigate('/show-pedido')
+    navigate('/show-mis-pedidos-denunciante')
   }
 
   return (
