@@ -44,6 +44,7 @@ import { useAuth } from './auth/AuthContext.tsx'
 import { DenuncianteHome } from './screens/denuncianteHome.tsx'
 import { CazadorHome } from './screens/cazadorHome.tsx'
 import { PublicHome } from './screens/publicHome.tsx'
+import { ModificarPerfil } from './components/Auth/ModificarPerfil.tsx'
 
 function App() {
   const { token, userRol } = useAuth() // <-- adentro de App()
@@ -319,6 +320,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['operador']}>
                 <TomarPedidosAgregacion />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/modificar-perfil"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
+                <ModificarPerfil />
               </ProtectedRoute>
             }
           />

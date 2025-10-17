@@ -11,18 +11,9 @@ export function MainNavbar() {
       <NavDropdown.Item onClick={() => navigate('/nav-map')}>
         Mapa de Navegación
       </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => navigate('/change-password')}>
-        Cambiar Contraseña
+      <NavDropdown.Item onClick={() => navigate('/modificar-perfil')}>
+        Modificar Perfil
       </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => navigate('/update-profile')}>
-        Editar perfil
-      </NavDropdown.Item>
-      {userRol !== 'operador' && (
-        <NavDropdown.Item onClick={() => navigate('/delete-account')}>
-          Eliminar cuenta
-        </NavDropdown.Item>
-      )}
-      <NavDropdown.Item href="#action/3.1">Configuración</NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item
         onClick={() => {
