@@ -18,6 +18,14 @@ export function ShowMisPedidos() {
   const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
   const [dificultadFilter, setDificultadFilter] = useState(0)
   const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter)
+  const [message, setMessage] = useState<string | null>(null)
+  const [messageType, setMessageType] = useState<'success' | 'danger' | 'warning' | null>(null)
+
+  const showMessage = (text: string, type: 'success' | 'danger' | 'warning') => {
+    setMessage(text)
+    setMessageType(type)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -115,15 +123,28 @@ export function ShowMisPedidos() {
     navigate(`/add-inspeccion/${idPedidoResolcion}`)
   }
 
-  const haddleFinalizarPedido = (idPedidoResolcion: string) => {
+  const haddleFinalizarPedido = async (idPedidoResolucion: string) => {
     try {
-      navigate(`/finalizar-pedido/${idPedidoResolcion}`)
+      const response = await patch(
+        `pedido_resolucion/finalizar-pedido-resolucion/${idPedidoResolucion}`, {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+
+      if (response.status === 200) {
+        showMessage('Pedido finalizado correctamente.', 'success')
+        navigate(`/finalizar-pedido/${idPedidoResolucion}`)
+      }
     } catch (err: any) {
-      console.error('Error al resolver anomalía:', err)
-      alert(err?.response?.data?.message ?? 'Hay anomalias pendientes')
+      console.error('Error al finalizar pedido:', err)
+
+      if (err.response?.status === 400) {
+        showMessage(err.response.data.message, 'danger')
+      } else {
+        showMessage('Ocurrió un error al intentar finalizar el pedido.', 'danger')
+      }
     }
   }
-  
+
   return (
     <div className="ShowPosiblesPedidos">
       <div className="navbar bg-body-tertiary px-3">
@@ -139,6 +160,21 @@ export function ShowMisPedidos() {
         )}
         {pedido_resolucion_error_actual && (
           <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error_actual}</Alert>
+        )}
+
+        {message && (
+          <div
+            className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`}
+            role="alert"
+          >
+            {message}
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => setMessage(null)}
+              aria-label="Cerrar"
+            ></button>
+          </div>
         )}
 
         {!pedido_resolucion_loading_actual &&
