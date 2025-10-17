@@ -6,9 +6,12 @@ import { Link } from 'react-router-dom'
 export function DenuncianteHome() {
   return (
     <div className="container text-center mt-5">
-      <h2 className="mb-4 fw-normal">¡Bienvenido! - Cazadores de Anomalias</h2>
-      <h3 className="mb-4 fw-normal">No solo Cazamos Fantasmas</h3>
-
+      <div className="text-center mb-4">
+        <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>
+          ¡Bienvenido a Cazadores de Anomalías!
+        </h1>
+        <h4 className="text-muted mb-3">No solo cazamos fantasmas</h4>
+      </div>
       {/* Contenedor del carrusel */}
       <div
         id="carouselDenunciante"
