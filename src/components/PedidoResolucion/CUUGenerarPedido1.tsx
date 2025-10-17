@@ -28,7 +28,7 @@ export function GenerarPedidoPaso1() {
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-6">
           <div className="d-flex flex-column bg-light p-4 border rounded shadow-sm">
-            <h1 className="text-center mb-4">Generar Pedido</h1>
+            <h1 className="text-center mb-4">Generar Pedido - Paso 1</h1>
 
             <form className="d-flex flex-column" onSubmit={handleSubmit}>
               <ZonaByLocalidadSelection setZona={setZona} />
@@ -55,7 +55,7 @@ export function GenerarPedidoPaso1() {
                 </div>
                 <div className="col-12 col-md-4">
                   <button type="submit" className="btn btn-primary w-100">
-                    Siguiente
+                    Siguiente ➜
                   </button>
                 </div>
               </div>

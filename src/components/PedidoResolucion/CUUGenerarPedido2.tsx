@@ -53,7 +53,15 @@ export function GenerarPedidoPaso2() {
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-6">
           <div className="d-flex flex-column bg-light p-4 border rounded shadow-sm">
-            <h1 className="text-center mb-4">Generar Pedido - Paso 2</h1>
+            <div className="text-center mb-2">
+              <h2 className="mb-0">Generar Pedido - Paso 2</h2>
+            </div>
+
+            <div className="mb-4 text-end">
+              <Link to="/generar-pedido-paso-1" className="btn btn-outline-secondary">
+                Volver
+              </Link>
+            </div>
 
             <form className="d-flex flex-column" onSubmit={handleSubmit}>
               {loading && <p>Cargando tipos de anomalía...</p>}
