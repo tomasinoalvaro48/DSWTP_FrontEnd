@@ -52,6 +52,7 @@ export function MainNavbar() {
           <Nav.Link as={NavLink} to="/show-zona">Zonas</Nav.Link>
           <Nav.Link as={NavLink} to="/show-usuario">Usuarios</Nav.Link>
           <Nav.Link as={NavLink} to="/show-pedido">Pedidos</Nav.Link>
+          <Nav.Link as={NavLink} to="/approve-usuario">Aprobar Cazadores</Nav.Link>
           <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">Pedidos para Cazador</Nav.Link>
           <Nav.Link as={NavLink} to="/show-pedidos-agregacion">Pedidos de Agregación</Nav.Link>
           <Nav.Link as={NavLink} to="/tomar-pedidos-agregacion">Aceptar/Rechazar Pedidos</Nav.Link>

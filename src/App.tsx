@@ -18,6 +18,7 @@ import { UpdateZona } from './components/Zona/UpdateZona.tsx'
 import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
 import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
 import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
+import { ApproveUsuario } from './components/Usuario/ApproveUsuario.tsx'
 import { Login } from './components/Auth/Login.tsx'
 import { RegisterDenunciante } from './components/Auth/RegisterDenunciante.tsx'
 import PrivateRoute from './components/PrivateRoute.tsx'
@@ -215,6 +216,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['operador']}>
                 <UpdateUsuario />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="approve-usuario"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ApproveUsuario />
               </ProtectedRoute>
             }
           />

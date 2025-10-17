@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useLayoutEffect } from 'react'
 import axios from 'axios'
-import TokenExpiredAlert from '../components/TokenExpiredAlert.tsx'
+import ModalAlert from '../components/ModalAlert.tsx'
 
 interface AuthContextType {
   token: string | null
@@ -15,7 +15,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Estado para el token y el usuario actual
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
   const [currentUserRol, setCurrentUserRol] = useState<string | null>(localStorage.getItem('rol'))
-  const [showTokenExpiredAlert, setShowTokenExpiredAlert] = useState(false)
+  const [showModalAlert, setShowModalAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState<string>('')
 
   // Función login: guarda token y usuario en estado y localStorage
   const login = (newToken: string, newUserRol: string) => {
@@ -43,7 +44,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       config.headers.Authorization = token ? `Bearer ${token}` : config.headers.Authorization
       return config
     })
-
     return () => {
       axios.interceptors.request.eject(authInterceptor)
     }
@@ -54,19 +54,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const refreshInterceptor = axios.interceptors.response.use(
       (response) => response,
       async (error) => {
-        // error 401 (Unauthorized)
+        // error 401 (Unauthorized) o 403 (Forbidden)
         if (error.response?.status === 401) {
-          // podemos implementar la lógica para refrescar el token
-          console.error('Token inválido o expirado, por favor inicia sesión de nuevo.')
-          setShowTokenExpiredAlert(true)
+          const backendMessage = error.response.data.message
+          console.error('Error de autenticación:', backendMessage)
+          setAlertMessage(backendMessage)
+          setShowModalAlert(true)
           logout() // hacemos logout directamente
           return Promise.reject(error)
         }
-        // otros errores
+        if (error.response?.status === 403) {
+          console.error('Acceso prohibido')
+          logout()
+        }
         return Promise.reject(error)
       }
     )
-
     return () => {
       axios.interceptors.response.eject(refreshInterceptor)
     }
@@ -75,8 +78,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider value={{ token, userRol: currentUserRol, login, logout }}>
       {children}
-      {showTokenExpiredAlert && (
-        <TokenExpiredAlert setShowTokenExpiredAlert={setShowTokenExpiredAlert} />
+      {showModalAlert && (
+        <ModalAlert
+          setShowModalAlert={setShowModalAlert}
+          title="Error en la sesión"
+          body={alertMessage}
+        />
       )}
     </AuthContext.Provider>
   )

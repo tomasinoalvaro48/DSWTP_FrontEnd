@@ -21,24 +21,29 @@ export function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
+    /*
+    const response = await postAuth(email, password)
+    if (response.token && response.rol) {
+      login(response.token, response.rol)
+      navigate('/')
+    }
+    if (
+      response.message !== 'Acceso denegado. Cazador pendiente de aprobación.' &&
+      response.message !== 'Acceso denegado. Cazador rechazado.'
+    ) {
+      setAlertMessage(response.message)
+      setModalAlert(true)
+*/
     if (!email || !password) {
       showMessage('Debe completar todos los campos', 'warning')
       return
     }
-
-    try {
-      const response = await postAuth(email, password)
-
-      if (response) {
-        login(response.token, response.rol)
-        navigate('/')
-      } else {
-        showMessage('Email o contraseña incorrectos', 'danger')
-      }
-    } catch (err: any) {
-      showMessage('Error al intentar iniciar sesión', 'danger')
+    const response = await postAuth(email, password)
+    if (response.token && response.rol) {
+      login(response.token, response.rol)
+      navigate('/')
     }
+    showMessage(response.message, 'danger')
   }
 
   return (
@@ -62,7 +67,9 @@ export function Login() {
 
       <form onSubmit={handleSubmit} className="p-4 border rounded bg-light shadow-sm">
         <div className="mb-3">
-          <label htmlFor="email" className="form-label fw-semibold">Correo electrónico</label>
+          <label htmlFor="email" className="form-label fw-semibold">
+            Correo electrónico
+          </label>
           <input
             required
             type="email"
@@ -74,7 +81,9 @@ export function Login() {
         </div>
 
         <div className="mb-3 position-relative">
-          <label htmlFor="password" className="form-label fw-semibold">Contraseña</label>
+          <label htmlFor="password" className="form-label fw-semibold">
+            Contraseña
+          </label>
           <input
             required
             type={showPassword ? 'text' : 'password'}
@@ -98,7 +107,10 @@ export function Login() {
       <div className="text-center mt-3">
         <p className="mb-1 fw-semibold">¿No tenés una cuenta?</p>
         <p className="mb-1 fw-semibold">
-          <Link to="/register-denunciante" className="text-success text-decoration-none fw-semibold">
+          <Link
+            to="/register-denunciante"
+            className="text-success text-decoration-none fw-semibold"
+          >
             Registrarse como denunciante
           </Link>
         </p>

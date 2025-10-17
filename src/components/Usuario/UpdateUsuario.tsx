@@ -19,6 +19,7 @@ export function UpdateUsuario() {
         password_usuario: data.password_usuario,
         tipo_usuario: data.tipo_usuario,
         zona: data.zona,
+        estado_aprobacion: data.estado_aprobacion,
       })
     }
   }, [data])
@@ -29,8 +30,8 @@ export function UpdateUsuario() {
       await patch('usuario/' + id, usuarioToUpdate)
       navigate('/show-usuario')
     } catch (err: any) {
-      console.error("Error al actualizar usuario:", err);
-      alert(err?.response?.data?.message ?? "No se pudo actualizar el usuario.");
+      console.error('Error al actualizar usuario:', err)
+      alert(err?.response?.data?.message ?? 'No se pudo actualizar el usuario.')
     }
   }
 

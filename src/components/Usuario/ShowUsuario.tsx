@@ -1,5 +1,5 @@
 import { get } from '../../api/dataManager.ts'
-import { Table } from 'react-bootstrap'
+import { Table, Badge } from 'react-bootstrap'
 import type { Usuario } from '../../entities/entities.ts'
 import { Link } from 'react-router-dom'
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
@@ -25,6 +25,7 @@ export function ShowUsuario() {
               <th>Tipo</th>
               <th>Localidad</th>
               <th>Zona</th>
+              <th>Estado</th>
               <th>Acción</th>
             </tr>
           </thead>
@@ -37,6 +38,20 @@ export function ShowUsuario() {
                 <th>{unUsuario.tipo_usuario}</th>
                 <th>{unUsuario.zona.localidad.nombre_localidad}</th>
                 <th>{unUsuario.zona.nombre_zona}</th>
+                <th>
+                  <Badge
+                    bg={
+                      unUsuario.estado_aprobacion === 'pendiente'
+                        ? 'warning'
+                        : unUsuario.estado_aprobacion === 'aprobado'
+                          ? 'success'
+                          : 'danger'
+                    }
+                    text={unUsuario.estado_aprobacion === 'pendiente' ? 'dark' : 'light'}
+                  >
+                    {unUsuario.estado_aprobacion}
+                  </Badge>
+                </th>
                 <th>
                   <Link
                     to={`/update-usuario/${unUsuario.id}`}

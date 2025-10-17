@@ -32,8 +32,9 @@ interface Usuario extends BaseDTO {
   email_usuario: string
   password_usuario: string
   tipo_usuario: string
+  estado_aprobacion: 'pendiente' | 'aprobado' | 'rechazado'
   zona: Zona
-  //faltan atributos
+  //falta -> nivel_cazador: number
 }
 
 interface PedidoResolucion extends BaseDTO {
