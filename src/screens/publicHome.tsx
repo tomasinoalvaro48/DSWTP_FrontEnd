@@ -27,7 +27,7 @@ export function PublicHome() {
           to="/register-denunciante"
           className="btn btn-outline-secondary w-100 py-3 fs-6 rounded shadow-sm"
         >
-          Quiero registrar y hacer una denuncia
+          Quiero registrarme y hacer una denuncia
         </Link>
         <div className="text-end w-100 mt-2">
           <Link to="/register-usuario" className="text-success text-decoration-none fw-semibold">

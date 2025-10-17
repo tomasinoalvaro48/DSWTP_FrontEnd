@@ -65,7 +65,10 @@ export function MainNavbar() {
             Pedidos
           </Nav.Link>
           <Nav.Link as={NavLink} to="/tomar-pedidos-agregacion">
-            Aceptar/Rechazar Tipos de Anomalias
+            Aprobar Tipos de Anomalías
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/approve-usuario">
+            Aprobar Cazadores
           </Nav.Link>
           <MoreOptions />
         </>

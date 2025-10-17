@@ -10,8 +10,26 @@ export function DenuncianteHome() {
         <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>
           ¡Bienvenido a Cazadores de Anomalías!
         </h1>
-        <h4 className="text-muted mb-3">No solo cazamos fantasmas</h4>
+        <h4 className="text-muted mb-4">No solo cazamos fantasmas</h4>
+
+        {/* Botón de acción */}
+        <Link
+          to="/generar-pedido-paso-1"
+          className="btn btn-lg px-5 py-3 mb-4 shadow-sm"
+          style={{
+            borderRadius: '50px',
+            background:
+              'linear-gradient(135deg, rgba(154, 205, 50, 0.9) 0%, rgba(154, 205, 50, 0.7) 100%)',
+            color: 'white',
+            border: '1.5px solid #000',
+            boxShadow: '0 1px 5px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          <i className="bi bi-exclamation-triangle-fill me-2"></i>
+          Realizar una Denuncia
+        </Link>
       </div>
+
       {/* Contenedor del carrusel */}
       <div
         id="carouselDenunciante"
@@ -66,14 +84,6 @@ export function DenuncianteHome() {
           <span className="visually-hidden">Siguiente</span>
         </button>
       </div>
-
-      {/* Botón de acción */}
-      <Link
-        to="/generar-pedido-paso-1"
-        className="btn btn-outline-dark px-4 py-2 fs-5 rounded-pill shadow-sm"
-      >
-        Realizar una denuncia
-      </Link>
     </div>
   )
 }
