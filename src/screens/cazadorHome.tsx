@@ -79,7 +79,7 @@ export function CazadorHome() {
           to="/show-mis-pedidos"
           className="btn btn-outline-primary px-3 py-3 fs-6 rounded shadow-sm flex-fill"
         >
-          Ver pedidos disponibles para tomar
+          Ver mis pedidos
         </Link>
       </div>
     </div>
