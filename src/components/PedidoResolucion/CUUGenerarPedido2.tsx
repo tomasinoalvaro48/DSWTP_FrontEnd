@@ -8,6 +8,9 @@ export function GenerarPedidoPaso2() {
 
   const [anoms, setAnoms] = useState<Anomalia[]>([])
   const [descripcion, setDescripcion] = useState('')
+  const [mensaje, setMensaje] = useState<string | null>(null)
+  const [tipoMensaje, setTipoMensaje] = useState<'danger' | 'success' | null>(null)
+
   const { data: tipos, loading, error } = get<TipoAnomalia>('tipo_anomalia')
 
   // Datos del paso 1
@@ -17,7 +20,7 @@ export function GenerarPedidoPaso2() {
   const pedidoRes = {
     ...location.state,
     anomalias: anoms,
-    descripcion_pedido_resolucion: descripcion,
+    descripcion_pedido_resolucion: descripcion.trim() || null,
   }
 
   const handleAddAnomalia = (t: TipoAnomalia) => {
@@ -40,12 +43,22 @@ export function GenerarPedidoPaso2() {
     event.preventDefault()
     const token = localStorage.getItem('token')
 
-    post<PedidoResolucion>('pedido_resolucion', pedidoRes, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    navigate('/show-mis-pedidos-denunciante')
+    if (anoms.length === 0) {
+      setMensaje('Debe agregar al menos una anomalía.')
+      setTipoMensaje('danger')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
+    try {
+      post<PedidoResolucion>('pedido_resolucion', pedidoRes, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      navigate('/show-mis-pedidos-denunciante')
+    } catch (err: any) {
+      setMensaje('Error al generar el pedido. Intente nuevamente.')
+      setTipoMensaje('danger')
+    }
   }
 
   return (
@@ -62,6 +75,18 @@ export function GenerarPedidoPaso2() {
                 Volver
               </Link>
             </div>
+
+            {mensaje && (
+              <div className={`alert alert-${tipoMensaje} text-center fw-semibold`} role="alert">
+                {mensaje}
+                <button
+                  type="button"
+                  className="btn-close ms-2"
+                  onClick={() => setMensaje(null)}
+                  aria-label="Cerrar"
+                ></button>
+              </div>
+            )}
 
             <form className="d-flex flex-column" onSubmit={handleSubmit}>
               {loading && <p>Cargando tipos de anomalía...</p>}
@@ -142,11 +167,10 @@ export function GenerarPedidoPaso2() {
                 </tbody>
               </table>
 
-              {anoms.length === 0 && (
-                <label htmlFor="descripcion" className="form-label mt-3">
-                  Descripción (obligatorio si no agregó anomalías):
-                </label>
-              )}
+              <label htmlFor="descripcion" className="form-label mt-3">
+                Descripción (opcional):
+              </label>
+
               <input
                 type="text"
                 id="descripcion"
@@ -155,7 +179,6 @@ export function GenerarPedidoPaso2() {
                 placeholder="Ingrese una descripción"
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
-                required={anoms.length === 0}
               />
 
               {/* Botones finales */}
