@@ -16,7 +16,6 @@ export function ShowMisPedidos() {
   }
 
   const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
-
   const [dificultadFilter, setDificultadFilter] = useState(0)
   const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter)
 
@@ -124,6 +123,7 @@ export function ShowMisPedidos() {
       alert(err?.response?.data?.message ?? 'Hay anomalias pendientes')
     }
   }
+  
   return (
     <div className="ShowPosiblesPedidos">
       <div className="navbar bg-body-tertiary px-3">
@@ -185,15 +185,6 @@ export function ShowMisPedidos() {
                             <div className="col-3 md">
                               <strong>Nombre y Apellido: </strong>
                               {unPedido.denunciante.nombre_apellido_denunciante}
-                            </div>
-
-                            <div className="col-md-2">
-                              <strong>Tipo Documento: </strong>
-                              {unPedido.denunciante.tipo_documento_denunciante}
-                            </div>
-                            <div className="col-md-2">
-                              <strong>Numero Documento: </strong>
-                              {unPedido.denunciante.numero_documento_denunciante}
                             </div>
 
                             <div className="col-md-2">
@@ -505,15 +496,6 @@ export function ShowMisPedidos() {
                             <div className="col-3 md">
                               <strong>Nombre y Apellido: </strong>
                               {unPedido.denunciante.nombre_apellido_denunciante}
-                            </div>
-
-                            <div className="col-md-2">
-                              <strong>Tipo Documento: </strong>
-                              {unPedido.denunciante.tipo_documento_denunciante}
-                            </div>
-                            <div className="col-md-2">
-                              <strong>Numero Documento: </strong>
-                              {unPedido.denunciante.numero_documento_denunciante}
                             </div>
 
                             <div className="col-md-2">
