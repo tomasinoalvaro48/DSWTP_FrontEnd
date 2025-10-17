@@ -191,7 +191,7 @@ async function remove(url: string) {
 
 //Para los filter, de manera que cuando se actualice lo vuelve a cargar
 // 2do parámetro: config?: object
-function getFilter<T>(url: string) {
+function getFilter<T>(url: string, config?: object) {
   const [data, setData] = useState<T[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -201,7 +201,7 @@ function getFilter<T>(url: string) {
       setLoading(true)
       setError(null)
       try {
-        const response = await axios.get(`${BACKEND_URL}/api/${url}`)
+        const response = await axios.get(`${BACKEND_URL}/api/${url}`, config)
         setData(response.data.data)
       } catch (err: any) {
         setError(err.message)
