@@ -161,7 +161,7 @@ export function GenerarPedidoPaso2() {
               {/* Botones finales */}
               <div className="row gy-2 justify-content-between">
                 <div className="col-12 col-md-4">
-                  <Link className="btn btn-secondary w-100" to="/show-pedido">
+                  <Link className="btn btn-secondary w-100" to="/show-mis-pedidos-denunciante">
                     Cancelar Pedido
                   </Link>
                 </div>

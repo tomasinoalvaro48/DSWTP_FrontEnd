@@ -49,7 +49,7 @@ export function GenerarPedidoPaso1() {
 
               <div className="row gy-2 justify-content-between mt-3">
                 <div className="col-12 col-md-4">
-                  <Link className="btn btn-secondary w-100" to="/show-pedido">
+                  <Link className="btn btn-secondary w-100" to="/show-mis-pedidos-denunciante">
                     Cancelar
                   </Link>
                 </div>

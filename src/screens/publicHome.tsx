@@ -4,36 +4,36 @@ export function PublicHome() {
   return (
     <div className="container text-center mt-5 mb-5">
       <div className="text-center mb-4">
-        <h2 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>
+        <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>
           ¡Bienvenido a Cazadores de Anomalías!
-        </h2>
+        </h1>
         <h4 className="text-muted mb-3">No solo cazamos fantasmas</h4>
       </div>
 
-      <img src="/logo.png" alt="Logo" width="300" height="300" className="me-5 mb-4" />
-      <p className="mb-4">
-        Registrate o iniciá sesión para empezar a denunciar o resolver anomalías.
-      </p>
-      
-      <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
-        <Link
-          to="/login"
-          className="btn btn-outline-primary px-4 py-3 fs-6 rounded shadow-sm flex-fill"
-        >
+      <img src="/logo.png" alt="Logo" width="250" height="250" className="mb-4" />
+
+      <p className="mb-4">Iniciá sesión para empezar a denunciar o resolver anomalías.</p>
+
+      {/* Botones y link */}
+      <div
+        className="d-flex flex-column align-items-center gap-3 w-100"
+        style={{ maxWidth: '400px', margin: '0 auto' }}
+      >
+        <Link to="/login" className="btn btn-outline-primary w-100 py-3 fs-6 rounded shadow-sm">
           Iniciar sesión
         </Link>
+
         <Link
           to="/register-denunciante"
-          className="btn btn-outline-success px-4 py-3 fs-6 rounded shadow-sm flex-fill"
+          className="btn btn-outline-secondary w-100 py-3 fs-6 rounded shadow-sm"
         >
-          Quiero hacer una denuncia
+          Quiero registrar y hacer una denuncia
         </Link>
-        <Link
-          to="/register-usuario"
-          className="btn btn-outline-dark px-4 py-3 fs-6 rounded shadow-sm flex-fill"
-        >
-          Quiero ser cazador
-        </Link>
+        <div className="text-end w-100 mt-2">
+          <Link to="/register-usuario" className="text-success text-decoration-none fw-semibold">
+            Quiero ser cazador
+          </Link>
+        </div>
       </div>
     </div>
   )
