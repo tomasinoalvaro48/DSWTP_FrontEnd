@@ -29,11 +29,6 @@ export function Footer() {
                 Políticas de uso
               </Link>
             </p>
-            <p className="mb-1">
-              <Link to="/sobre-nosotros" className="text-decoration-none text-dark">
-                Sobre nosotros
-              </Link>
-            </p>
           </div>
 
           {/* Redes sociales */}
