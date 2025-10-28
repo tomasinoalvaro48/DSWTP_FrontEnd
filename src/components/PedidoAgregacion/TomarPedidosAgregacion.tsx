@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Accordion, Spinner, Alert, Badge } from "react-bootstrap";
 import { get, patch } from "../../api/dataManager.ts";
 import type { PedidoAgregacion } from "../../entities/entities.ts";
+import { Link } from "react-router-dom";
 
 export function TomarPedidosAgregacion() {
   const token = localStorage.getItem('token')
@@ -35,7 +36,16 @@ export function TomarPedidosAgregacion() {
 
   return (
     <div className="TomarPedidosAgregacion mx-3 my-3 mb-5">
-      <h1 className="mb-3">Pedidos de Agregación de Anomalías Pendientes</h1>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h1 className="m-0">Pedidos de Agregación de Anomalías Pendientes</h1>
+
+        <Link
+          to="/show-pedidos-agregacion-operador"
+          className="btn btn-outline-secondary px-4 py-2 fs-5 rounded-pill shadow-sm"
+        >
+          Ver histórico de pedidos de agregación
+        </Link>
+      </div>
 
       {loading && (
         <div className="d-flex align-items-center">

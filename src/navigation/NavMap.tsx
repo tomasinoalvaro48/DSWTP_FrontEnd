@@ -8,7 +8,8 @@ export const NavMap = {
     { path: '/show-denunciante', label: 'Ver Denunciantes registrados' },
     { path: '/show-usuario', label: 'Ver Usuarios registrados (cazadores y operador)' },
     { path: '/show-pedido', label: 'Ver Pedidos de Resolución de Anomalías' },
-    { path: '/tomar-pedidos-agregacion', label: 'Aprobar Pedidos de Agregación de Anomalías' },
+    { path: '/tomar-pedidos-agregacion', label: 'Aprobar Pedidos de Agregación de Anomalías pendientes' },
+    { path: '/show-pedidos-agregacion-operador', label: 'Ver histórico de Pedidos de Agregación' },
     { path: '/approve-usuario', label: 'Aprobar Cuentas de Cazadores' },
   ],
   denunciante: [

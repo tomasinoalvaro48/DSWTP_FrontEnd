@@ -28,11 +28,12 @@ import { GenerarPedidoPaso2 } from './components/PedidoResolucion/CUUGenerarPedi
 import { ShowPosiblesPedidos } from './components/PedidoResolucion/ShowPosiblesPedidos.tsx'
 import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
 import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
+import { ShowPedidosAgregacionOperador } from './components/PedidoAgregacion/ShowPedidosAgregacionOperador.tsx'
 import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarPedidoAgregacion1.tsx'
 import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
+import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
 import { ShowMisPedidos } from './components/PedidoResolucion/ShowMisPedidos.tsx'
 import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
-import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
 import { NavMapPage } from './navigation/NavMapPage.tsx'
 import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
 import { ChangePassword } from './components/Auth/ChangePassword.tsx'
@@ -300,10 +301,18 @@ function App() {
           />
 
           <Route
-            path="show-pedidos-agregacion" //ver si agregar el operador para el histórico
+            path="show-pedidos-agregacion"
             element={
               <ProtectedRoute allowedRoles={['cazador']}>
                 <ShowPedidosAgregacion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="show-pedidos-agregacion-operador"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowPedidosAgregacionOperador />
               </ProtectedRoute>
             }
           />
@@ -323,7 +332,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/tomar-pedidos-agregacion"
             element={
