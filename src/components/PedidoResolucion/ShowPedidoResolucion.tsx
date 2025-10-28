@@ -139,49 +139,108 @@ export function ShowPedidosResolucion() {
                       </>
                     )}
 
-                    {/* Anomalías */}
-                    {unPedido.anomalias?.length > 0 && (
-                      <Accordion className="mb-4">
-                        <Accordion.Item eventKey={`${unPedido.id}-anomalias`}>
-                          <Accordion.Header>Ver Anomalías</Accordion.Header>
-                          <Accordion.Body>
-                            <div className="row justify-content-center w-100 align-items-center">
-                              {unPedido.anomalias.map((anomalia) => (
-                                <div
-                                  key={anomalia.id}
-                                  className="row border-bottom py-2 text-center"
-                                >
-                                  <div className="col-md-4">
-                                    <strong>{anomalia.tipo_anomalia.nombre_tipo_anomalia}</strong>
+                    <div className="mb-4">
+                      {/* Ver anomalías */}
+                      <Accordion>
+                        {/* La primera anomalía (la de mayor dificultad) */}
+                        {unPedido.anomalias.length > 0 && (
+                          <Accordion.Item eventKey={`${unPedido.id}-top`}>
+                            <Accordion.Header>
+                              <div className="row justify-content-center w-100 align-items-center">
+                                Ver Anomalías
+                              </div>
+                            </Accordion.Header>
+                            <Accordion.Body>
+                              {/* Cuando se despliega muestro TODAS las anomalías */}
+                              <div className="row justify-content-center w-100 align-items-center">
+                                {unPedido.anomalias.map((anomalia) => (
+                                  <div
+                                    key={anomalia.id}
+                                    className="row border-bottom py-1 text-center"
+                                  >
+                                    <div className="col-md-4">
+                                      <strong>{anomalia.tipo_anomalia.nombre_tipo_anomalia}</strong>
+                                    </div>
+                                    <div className="col-md-4">
+                                      <strong>Dificultad: </strong>
+                                      {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
+                                    </div>
+                                    <div className="col-md-4">
+                                      <strong>Resultado: </strong>
+                                      {anomalia.resultado_anomalia}
+                                    </div>
                                   </div>
-                                  <div className="col-md-4">
-                                    <strong>Dificultad:</strong>{' '}
-                                    {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
-                                  </div>
-                                  <div className="col-md-4 d-flex align-items-center justify-content-center">
-                                    <strong className="me-2">Resultado:</strong>
-                                    <Badge
-                                      bg={
-                                        anomalia.resultado_anomalia === 'inconcluso'
-                                          ? 'warning'
-                                          : 'success'
-                                      }
-                                      text={
-                                        anomalia.resultado_anomalia === 'inconcluso'
-                                          ? 'dark'
-                                          : 'light'
-                                      }
-                                    >
-                                      {anomalia.resultado_anomalia.toUpperCase()}
-                                    </Badge>
+                                ))}
+                              </div>
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        )}
+                      </Accordion>
+                    </div>
+                    <div className="mb-4">
+                      <Accordion>
+                        {/* Inspecciones) */}
+
+                        {unPedido.inspecciones.length > 0 && (
+                          <Accordion.Item eventKey={`${unPedido.id}-top`}>
+                            {' '}
+                            {/*ver que onda con el pedidoId */}
+                            <Accordion.Header>
+                              <div className="row justify-content-center w-100 align-items-center">
+                                <div className="row justify-content-center w-100 align-items-center">
+                                  <div className="col-md-12">
+                                    <h2>Inspecciones</h2>
                                   </div>
                                 </div>
-                              ))}
-                            </div>
-                          </Accordion.Body>
-                        </Accordion.Item>
+
+                                <div className="row justify-content-between w-100 align-items-left">
+                                  <div className="col-md-2">
+                                    <strong>Inspeccion Número: </strong>{' '}
+                                    {unPedido.inspecciones[0].numero_inspeccion}
+                                  </div>
+                                  <div className="col-md-2">
+                                    <strong>Fecha: </strong>
+                                    {new Date(
+                                      unPedido.inspecciones[0].fecha_inspeccion
+                                    ).toLocaleDateString('es-AR')}
+                                  </div>
+                                  <div className="col-md-8 text-">
+                                    <strong>Comentario de avance: </strong>
+                                    {unPedido.inspecciones[0].comentario_inspeccion}
+                                  </div>
+                                </div>
+                              </div>
+                            </Accordion.Header>
+                            <Accordion.Body>
+                              {/* Cuando se despliega muestro TODAS las anomalías */}
+                              <div className="row justify-content-center w-100 align-items-left">
+                                {unPedido.inspecciones.map((inspeccion) => (
+                                  <div
+                                    key={inspeccion.id}
+                                    className="row border-bottom py-1 text-left"
+                                  >
+                                    <div className="col-md-2">
+                                      <strong>Inspeccion Número: </strong>{' '}
+                                      {inspeccion.numero_inspeccion}
+                                    </div>
+                                    <div className="col-md-2">
+                                      <strong>Fecha: </strong>
+                                      {new Date(inspeccion.fecha_inspeccion).toLocaleDateString(
+                                        'es-AR'
+                                      )}
+                                    </div>
+                                    <div className="col-md-8">
+                                      <strong>Comentario de avance: </strong>{' '}
+                                      {inspeccion.comentario_inspeccion}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        )}
                       </Accordion>
-                    )}
+                    </div>
 
                     {/* Acción */}
                     <div className="d-flex justify-content-end">
