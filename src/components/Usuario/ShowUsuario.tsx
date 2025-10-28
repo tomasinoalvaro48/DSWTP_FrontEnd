@@ -46,7 +46,6 @@ export function ShowUsuario() {
               }}
             >
               <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Tipo</th>
@@ -58,7 +57,6 @@ export function ShowUsuario() {
             <tbody>
               {data?.map((unUsuario) => (
                 <tr key={unUsuario.id}>
-                  <td>{unUsuario.id}</td>
                   <td>{unUsuario.nombre_usuario}</td>
                   <td>{unUsuario.email_usuario}</td>
                   <td>{unUsuario.tipo_usuario}</td>
