@@ -1,6 +1,8 @@
 import { get } from '../../api/dataManager.ts'
 import { Table } from 'react-bootstrap'
 import type { Denunciante } from '../../entities/entities.ts'
+import { Link } from 'react-router-dom'
+import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowDenunciantes() {
   const { data, loading, error } = get<Denunciante>('denunciantes')
@@ -14,7 +16,7 @@ export function ShowDenunciantes() {
           fontWeight: 600,
         }}
       >
-        Denunciantes
+        Denunciantes registrados
       </h1>
 
       {!loading && !error && data?.length === 0 && (
@@ -49,6 +51,7 @@ export function ShowDenunciantes() {
                 <th>Nombre y Apellido</th>
                 <th>Teléfono</th>
                 <th>Email</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -57,6 +60,19 @@ export function ShowDenunciantes() {
                   <td>{unDenunciante.nombre_apellido_denunciante}</td>
                   <td>{unDenunciante.telefono_denunciante}</td>
                   <td>{unDenunciante.email_denunciante}</td>
+                  <td className="text-center">
+                    <Link
+                      to={`/update-denunciante/${unDenunciante.id}`}
+                      className="btn btn-sm btn-outline-secondary me-2"
+                    >
+                      Editar
+                    </Link>
+                    <DeleteEntityButton
+                      idToDelete={unDenunciante.id}
+                      nameToDelete={unDenunciante.nombre_apellido_denunciante}
+                      route="denunciantes"
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -66,6 +82,14 @@ export function ShowDenunciantes() {
 
       {loading && <div>Cargando...</div>}
       {error && <div className="alert alert-danger">{error}</div>}
+
+      <div className="row justify-content-center mt-3">
+        <div className="col-12 col-md-4">
+          <Link to="/add-denunciante" className="btn btn-lg btn-outline-primary w-100">
+            + Agregar Denunciante
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }
