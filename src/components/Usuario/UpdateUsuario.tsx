@@ -1,4 +1,5 @@
-import { useNavigate, useParams, Link } from 'react-router-dom'
+//ELIMINAR ESTE ARCHIVO
+/*import { useNavigate, useParams, Link } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { Usuario } from '../../entities/entities.ts'
@@ -141,4 +142,4 @@ export function UpdateUsuario() {
       </form>
     </div>
   )
-}
+}*/

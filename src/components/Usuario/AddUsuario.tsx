@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+//ELIMINAR ESTE ARCHIVO
+/*import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { post } from '../../api/dataManager.ts'
 import { Link } from 'react-router-dom'
@@ -129,4 +130,4 @@ export function AddUsuario() {
       </form>
     </div>
   )
-}
+}*/

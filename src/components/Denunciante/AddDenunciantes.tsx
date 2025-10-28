@@ -1,4 +1,5 @@
-import { useState } from 'react'
+//ELIMINAR ESTE ARCHIVO
+/*import { useState } from 'react'
 import axios from 'axios'
 import { BACKEND_URL } from '../../../endpoints.config'
 import { useNavigate } from 'react-router-dom'
@@ -76,4 +77,4 @@ export function AddDenunciantes() {
       <button className="btn btn-success">Registrarse</button>
     </form>
   )
-}
+}*/
