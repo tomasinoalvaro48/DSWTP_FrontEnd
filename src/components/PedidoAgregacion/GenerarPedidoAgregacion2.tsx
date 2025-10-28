@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { post } from '../../api/dataManager'
+import ModalAlert from '../ModalAlert.tsx'
 
 export function GenerarPedidoAgregacion2() {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ export function GenerarPedidoAgregacion2() {
   const [url, setUrl] = useState('')
   const [archivo, setArchivo] = useState<File | null>(null)
   const [error, setError] = useState('')
+  const [showModalAlert, setShowModalAlert] = useState(false)
 
   const handleAddEvidencia = (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,7 +34,7 @@ export function GenerarPedidoAgregacion2() {
 
   const handleSubmit = async () => {
     if (evidencias.length === 0) {
-      alert('Debes cargar al menos una evidencia.')
+      setShowModalAlert(true)
       return
     }
 
@@ -76,6 +78,14 @@ export function GenerarPedidoAgregacion2() {
             <div className="text-center mb-2">
               <h2 className="mb-0">Generar Pedido de Agregación - Paso 2</h2>
             </div>
+
+            {showModalAlert && (
+              <ModalAlert
+                setShowModalAlert={setShowModalAlert}
+                title="Debes cargar al menos una evidencia"
+                body="Para generar un pedido de agregación, es necesario agregar al menos una evidencia."
+              />
+            )}
 
             <div className="mb-4 text-end">
               <Link to="/show-pedidos-agregacion" className="btn btn-outline-secondary">

@@ -3,6 +3,7 @@ import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import ModalAlert from '../ModalAlert.tsx'
 
 export function ShowMisPedidos() {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ export function ShowMisPedidos() {
     setLocalidadSeleccionada(loc)
   }
 
+  const [showModalAlert, setShowModalAlert] = useState(false)
   const [localidadSeleccionada, setLocalidadSeleccionada] = useState<Localidad>()
   const [dificultadFilter, setDificultadFilter] = useState(0)
   const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter)
@@ -111,7 +113,7 @@ export function ShowMisPedidos() {
           },
         }
       )
-      alert('Anomalía resuelta correctamente.')
+      setShowModalAlert(true)
       location.reload()
     } catch (err: any) {
       console.error('Error al resolver anomalía:', err)
@@ -126,7 +128,8 @@ export function ShowMisPedidos() {
   const haddleFinalizarPedido = async (idPedidoResolucion: string) => {
     try {
       const response = await patch(
-        `pedido_resolucion/finalizar-pedido-resolucion/${idPedidoResolucion}`, {},
+        `pedido_resolucion/finalizar-pedido-resolucion/${idPedidoResolucion}`,
+        {},
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
@@ -150,6 +153,14 @@ export function ShowMisPedidos() {
       <div className="navbar bg-body-tertiary px-3">
         <h1 className="me-auto">Mis Pedidos</h1>
       </div>
+
+      {showModalAlert && (
+        <ModalAlert
+          setShowModalAlert={setShowModalAlert}
+          title="Anomalía resuelta correctamente."
+          body="La anomalía ha sido resuelta exitosamente."
+        />
+      )}
 
       <div className="mb-4 border-bottom border-2">
         {pedido_resolucion_loading_actual && (

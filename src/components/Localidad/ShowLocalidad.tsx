@@ -48,7 +48,6 @@ export function ShowLocalidad() {
               }}
             >
               <tr>
-                <th>Id</th>
                 <th>Código</th>
                 <th>Nombre</th>
                 <th>Zonas</th>
@@ -58,7 +57,6 @@ export function ShowLocalidad() {
             <tbody>
               {data?.map((unaLocalidad) => (
                 <tr key={unaLocalidad.id}>
-                  <td>{unaLocalidad.id}</td>
                   <td>{unaLocalidad.codigo_localidad}</td>
                   <td>{unaLocalidad.nombre_localidad}</td>
                   <td>

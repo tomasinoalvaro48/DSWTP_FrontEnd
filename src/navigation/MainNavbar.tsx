@@ -1,6 +1,7 @@
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.tsx'
+import { NivelCazadorProgress } from '../components/NivelCazadorProgress.tsx'
 
 export function MainNavbar() {
   const { token, logout, userRol } = useAuth()
@@ -98,6 +99,10 @@ export function MainNavbar() {
           <Nav.Link as={NavLink} to="/show-mis-pedidos">
             Mis Pedidos
           </Nav.Link>
+          
+
+          <NivelCazadorProgress />
+          
           <MoreOptions />
         </>
       )

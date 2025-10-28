@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react'
+//ELIMINAR ESTE ARCHIVO
+/*import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { post } from '../../api/dataManager.ts'
 import { Link } from 'react-router-dom'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
 import type { Zona } from '../../entities/entities.ts'
+import ModalAlert from '../ModalAlert.tsx'
 
 export function AddUsuario() {
   const navigate = useNavigate()
-
+  const [showModalAlert, setShowModalAlert] = useState(false)
   const [zona, setZona] = useState<Zona>()
   const [newUsuario, setnNewUsuario] = useState({
     id: '',
@@ -32,7 +34,7 @@ export function AddUsuario() {
     if (form.checkValidity() === false) {
       event.stopPropagation()
     } else if (newUsuario.password_usuario !== newUsuario.confirm_password) {
-      alert('Las contraseñas no coinciden')
+      setShowModalAlert(true)
       return
     } else {
       post('auth/register-usuario', newUsuario)
@@ -45,6 +47,14 @@ export function AddUsuario() {
       <form className="d-flex flex-column p-4 border rounded bg-light" onSubmit={handleSubmit}>
         <h1>Agregar Nuevo Usuario</h1>
         <div className="mb-3">
+          {showModalAlert && (
+            <ModalAlert
+              setShowModalAlert={setShowModalAlert}
+              title="Las contraseñas no coinciden"
+              body="Las contraseñas no coinciden. Por favor, verifícalas e intenta nuevamente."
+            />
+          )}
+
           <label htmlFor="nombre" className="form-label">
             Nombre
           </label>
@@ -129,4 +139,4 @@ export function AddUsuario() {
       </form>
     </div>
   )
-}
+}*/

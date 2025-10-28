@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useLocation, Link, useNavigate } from 'react-router-dom'
 import type { TipoAnomalia, PedidoResolucion, Anomalia } from '../../entities/entities.ts'
 import { get, post } from '../../api/dataManager.ts'
+import ModalAlert from '../ModalAlert.tsx'
 
 export function GenerarPedidoPaso2() {
   const navigate = useNavigate()
@@ -10,6 +11,7 @@ export function GenerarPedidoPaso2() {
   const [descripcion, setDescripcion] = useState('')
   const [mensaje, setMensaje] = useState<string | null>(null)
   const [tipoMensaje, setTipoMensaje] = useState<'danger' | 'success' | null>(null)
+  const [showModalAlert, setShowModalAlert] = useState(false)
 
   const { data: tipos, loading, error } = get<TipoAnomalia>('tipo_anomalia')
 
@@ -25,7 +27,8 @@ export function GenerarPedidoPaso2() {
 
   const handleAddAnomalia = (t: TipoAnomalia) => {
     if (anoms.map((a) => a.tipo_anomalia.id).includes(t.id)) {
-      return alert('Anomalía ya agregada')
+      setShowModalAlert(true)
+      return
     }
     const nuevaAnomalia: Anomalia = {
       id: '',
@@ -69,6 +72,14 @@ export function GenerarPedidoPaso2() {
             <div className="text-center mb-2">
               <h2 className="mb-0">Generar Pedido - Paso 2</h2>
             </div>
+
+            {showModalAlert && (
+              <ModalAlert
+                setShowModalAlert={setShowModalAlert}
+                title="Anomalía duplicada"
+                body={'La anomalía ya fue agregada anteriormente.'}
+              />
+            )}
 
             <div className="mb-4 text-end">
               <Link to="/generar-pedido-paso-1" className="btn btn-outline-secondary">

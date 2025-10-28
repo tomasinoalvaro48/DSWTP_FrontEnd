@@ -3,171 +3,89 @@ import { useState, useEffect } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { Localidad } from '../../entities/entities.ts'
 
-/*
-export function UpdateLocalidad(){
-    const {id} = useParams()
-    const {data} = getOne<Localidad>('localidad/'+id)
-    
-    const [localidadToUpdate, setLocalidadToUpdate] = useState<Localidad>({
-        id: '',
-        codigo_localidad: '',
-        nombre_localidad: '',
-        zonas: []
-    }) 
-
-    const navigate = useNavigate()
-
-    const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        patch('localidad/'+id, localidadToUpdate)
-        navigate('/show-localidad')
-    }
-
-    return(
-        <div className="d-flex flex-column align-items-center justify-content-center bg-light">
-            <h1>Localidad a Editar</h1>
-            <div className="container mb-3 border rounded bg-light p-2">
-                <div>Id: {data?.id ?? 'error'}</div>
-                <div>Codigo: {data?.codigo_localidad ?? 'error'}</div>
-                <div>Nombre: {data?.nombre_localidad ?? 'error'}</div>
-            </div>
-            <form 
-                className="d-flex flex-column align-items-center justify-content-center p-4 border rounded bg-light"
-                onSubmit={handleUpdate}
-            >
-                <div className='mb-3'>
-                    <label htmlFor="codigo" className="form-label">
-                        Codigo
-                    </label>
-                    <input 
-                        required
-                        type="text" 
-                        id="codigo"
-                        className="form-control"
-                        placeholder="Ingrese Codigo"
-                        defaultValue={data?.codigo_localidad}
-                        onChange={(e)=>
-                            setLocalidadToUpdate({
-                                ...localidadToUpdate,
-                                codigo_localidad: e.target.value,
-                            })
-                        }
-                    />
-                    <label htmlFor="nombre" className="form-label">
-                        Nombre
-                    </label>
-                    <input 
-                        required
-                        type="text" 
-                        id="nombre"
-                        className="form-control"
-                        placeholder="Nombre"
-                        defaultValue={data?.nombre_localidad}
-                        onChange={(e)=>
-                            setLocalidadToUpdate({
-                                ...localidadToUpdate,
-                                nombre_localidad: e.target.value,
-                            })
-                        }
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary">
-                Enviar
-                </button>
-                <Link className="btn btn-secondary" to="/show-tipo-anomalia">
-                Cancelar
-                </Link>
-            </form>
-        </div>
-    )   
-}*/
-
-
 export function UpdateLocalidad() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const { data } = getOne<Localidad>('localidad/' + id)
 
-  const [localidadToUpdate, setLocalidadToUpdate] = useState<Localidad | null>(null)
-  const navigate = useNavigate()
+  const [localidadToUpdate, setLocalidadToUpdate] = useState<Localidad>({
+    id: '',
+    codigo_localidad: '',
+    nombre_localidad: '',
+    zonas: []
+  })
 
   useEffect(() => {
     if (data) {
       setLocalidadToUpdate({
-        id: data.id ?? '',
-        codigo_localidad: data.codigo_localidad ?? '',
-        nombre_localidad: data.nombre_localidad ?? '',
+        id: data.id,
+        codigo_localidad: data.codigo_localidad,
+        nombre_localidad: data.nombre_localidad,
         zonas: data.zonas ?? []
       })
     }
   }, [data])
 
   const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      await patch('localidad/' + id, localidadToUpdate);
-      navigate('/show-localidad');
-    } catch (err: any) {
-      console.error("Error al actualizar localidad:", err);
-      alert(err?.response?.data?.message ?? "No se pudo actualizar la localidad.");
-    }
+    event.preventDefault()
+    await patch('localidad/' + id, localidadToUpdate)
+    navigate('/show-localidad')
   }
 
-  if (!localidadToUpdate) return <div>Cargando localidad...</div>
-
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center bg-light">
-      <h1>Localidad a Editar</h1>
-      <div className="container mb-3 border rounded bg-light p-2">
-        <div>Id: {data?.id ?? 'error'}</div>
-        <div>Codigo: {data?.codigo_localidad ?? 'error'}</div>
-        <div>Nombre: {data?.nombre_localidad ?? 'error'}</div>
-      </div>
+    <div className="container my-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="d-flex flex-column bg-light p-4 border rounded shadow-sm">
+            <h1 className="text-center mb-4">Editar Localidad</h1>
 
-      <form
-        className="d-flex flex-column align-items-center justify-content-center p-4 border rounded bg-light"
-        onSubmit={handleUpdate}
-      >
-        <div className="mb-3">
-          <label htmlFor="codigo" className="form-label">Codigo</label>
-          <input
-            required
-            type="text"
-            id="codigo"
-            className="form-control"
-            placeholder="Ingrese Codigo"
-            value={localidadToUpdate.codigo_localidad}
-            pattern="^[0-9]+$"
-            title="El código no puede tener letras"
-            onChange={(e) =>
-              setLocalidadToUpdate({
-                ...localidadToUpdate,
-                codigo_localidad: e.target.value
-              })
-            }
-          />
+            <form className="d-flex flex-column" onSubmit={handleUpdate}>
+              <label htmlFor="codigo" className="form-label">Código:</label>
+              <input
+                required
+                type="text"
+                id="codigo"
+                className="form-control mb-3"
+                placeholder="Ingrese el código"
+                pattern="^[0-9]+$"
+                title="El código no puede tener letras"
+                value={localidadToUpdate.codigo_localidad}
+                onChange={(e) =>
+                  setLocalidadToUpdate({ ...localidadToUpdate, codigo_localidad: e.target.value })
+                }
+              />
 
-          <label htmlFor="nombre" className="form-label mt-2">Nombre</label>
-          <input
-            required
-            type="text"
-            id="nombre"
-            className="form-control"
-            placeholder="Nombre"
-            value={localidadToUpdate.nombre_localidad}
-            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
-            title="El nombre no puede tener números"
-            onChange={(e) =>
-              setLocalidadToUpdate({
-                ...localidadToUpdate,
-                nombre_localidad: e.target.value
-              })
-            }
-          />
+              <label htmlFor="nombre" className="form-label">Nombre:</label>
+              <input
+                required
+                type="text"
+                id="nombre"
+                className="form-control mb-4"
+                placeholder="Ingrese el nombre"
+                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+                title="El nombre no puede tener números"
+                value={localidadToUpdate.nombre_localidad}
+                onChange={(e) =>
+                  setLocalidadToUpdate({ ...localidadToUpdate, nombre_localidad: e.target.value })
+                }
+              />
+
+              <div className="row gy-2 justify-content-between">
+                <div className="col-12 col-md-5">
+                  <Link className="btn btn-secondary w-100" to="/show-localidad">
+                    Cancelar
+                  </Link>
+                </div>
+                <div className="col-12 col-md-5">
+                  <button type="submit" className="btn btn-primary w-100">
+                    Guardar Cambios
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <button type="submit" className="btn btn-primary">Enviar</button>
-        <Link className="btn btn-secondary" to="/show-localidad">Cancelar</Link>
-      </form>
+      </div>
     </div>
   )
 }

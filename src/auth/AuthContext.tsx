@@ -26,6 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setCurrentUserRol(newUserRol)
       localStorage.setItem('rol', newUserRol)
     } catch {
+      console.error('Error during login process')
       logout()
     }
   }

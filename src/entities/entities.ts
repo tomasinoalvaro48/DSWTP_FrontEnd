@@ -32,7 +32,7 @@ interface Usuario extends BaseDTO {
   tipo_usuario: string
   estado_aprobacion: 'pendiente' | 'aprobado' | 'rechazado'
   zona: Zona
-  //falta -> nivel_cazador: number
+  nivel_cazador: number
 }
 
 interface PedidoResolucion extends BaseDTO {

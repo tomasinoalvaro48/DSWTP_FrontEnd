@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { TipoAnomalia } from '../../entities/entities.ts'
 
-// Componente para actualizar un Tipo de Anomalía
 export function UpdateTiposAnomalias() {
   const { id } = useParams()
-
+  const navigate = useNavigate()
   const { data } = getOne<TipoAnomalia>('tipo_anomalia/' + id)
 
   const [tipoToUpdate, setTipoToUpdate] = useState<TipoAnomalia>({
@@ -14,6 +13,7 @@ export function UpdateTiposAnomalias() {
     nombre_tipo_anomalia: '',
     dificultad_tipo_anomalia: 0,
   })
+
   useEffect(() => {
     if (data) {
       setTipoToUpdate({
@@ -24,114 +24,88 @@ export function UpdateTiposAnomalias() {
     }
   }, [data])
 
-  const navigate = useNavigate()
-
   const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
       await patch('tipo_anomalia/' + id, tipoToUpdate)
-      navigate('/show-tipo-anomalia') // Moverse a la ruta "show-tipo-anomalia" después del patch
+      navigate('/show-tipo-anomalia')
     } catch (err: any) {
-      console.error("Error al actualizar tipo de anomalía:", err);
-      alert(err?.response?.data?.message ?? "No se pudo actualizar el tipo de anomalía.");
+      console.error('Error al actualizar tipo de anomalía:', err)
+      alert(
+        err?.response?.data?.message ??
+          'No se pudo actualizar el tipo de anomalía.'
+      )
     }
   }
 
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center bg-light">
-      <h1>Anomalia a Editar:</h1>
-      <div className="container mb-3 border rounded bg-light p-2">
-        <div>Id: {data?.id ?? 'error'}</div>
-        <div>Nombre: {data?.nombre_tipo_anomalia ?? 'error'}</div>
-        <div>Dificultad: {data?.dificultad_tipo_anomalia ?? 'error'}</div>
+    <div className="container my-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="d-flex flex-column bg-light p-4 border rounded shadow-sm">
+            <h1 className="text-center mb-4">Editar Tipo de Anomalía</h1>
+
+            <form className="d-flex flex-column" onSubmit={handleUpdate}>
+              <label htmlFor="nombre" className="form-label">
+                Nombre del tipo:
+              </label>
+              <input
+                required
+                type="text"
+                id="nombre"
+                className="form-control mb-3"
+                placeholder="Ingrese el nombre"
+                value={tipoToUpdate.nombre_tipo_anomalia}
+                pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+                title="El nombre no puede tener números"
+                onChange={(e) =>
+                  setTipoToUpdate({
+                    ...tipoToUpdate,
+                    nombre_tipo_anomalia: e.target.value,
+                  })
+                }
+              />
+
+              <label htmlFor="dificultad" className="form-label">
+                Dificultad:
+              </label>
+              <select
+                id="dificultad"
+                className="form-select mb-4"
+                required
+                value={tipoToUpdate.dificultad_tipo_anomalia}
+                onChange={(e) =>
+                  setTipoToUpdate({
+                    ...tipoToUpdate,
+                    dificultad_tipo_anomalia: Number(e.target.value),
+                  })
+                }
+              >
+                <option value="">Seleccione nivel...</option>
+                <option value={1}>Nivel 1</option>
+                <option value={2}>Nivel 2</option>
+                <option value={3}>Nivel 3</option>
+              </select>
+
+              <div className="row gy-2 justify-content-between">
+                <div className="col-12 col-md-5">
+                  <Link
+                    className="btn btn-secondary w-100"
+                    to="/show-tipo-anomalia"
+                  >
+                    Cancelar
+                  </Link>
+                </div>
+                <div className="col-12 col-md-5">
+                  <button type="submit" className="btn btn-primary w-100">
+                    Guardar Cambios
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <form
-        className="d-flex flex-column align-items-center justify-content-center p-4 border rounded bg-light"
-        onSubmit={handleUpdate}
-      >
-        <div className="mb-3">
-          <label htmlFor="nombre" className="form-label">
-            Nombre
-          </label>
-          <input
-            required
-            type="text"
-            id="nombre"
-            className="form-control"
-            placeholder="Ingrese Nombre"
-            defaultValue={data?.nombre_tipo_anomalia}
-            pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
-            title="El nombre no puede tener números"
-            onChange={(e) =>
-              setTipoToUpdate({
-                ...tipoToUpdate,
-                nombre_tipo_anomalia: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Dificultad</label>
-          <div className="form-check">
-            <input
-              required
-              className="form-check-input"
-              type="radio"
-              name="dificultad"
-              id="n1"
-              onChange={() =>
-                setTipoToUpdate({
-                  ...tipoToUpdate,
-                  dificultad_tipo_anomalia: 1,
-                })
-              }
-            />
-            <label className="form-check-label" htmlFor="n1">
-              Nivel 1
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="dificultad"
-              id="n2"
-              onChange={() =>
-                setTipoToUpdate({
-                  ...tipoToUpdate,
-                  dificultad_tipo_anomalia: 2,
-                })
-              }
-            />
-            <label className="form-check-label" htmlFor="n2">
-              Nivel 2
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="dificultad"
-              id="n3"
-              onChange={() =>
-                setTipoToUpdate({
-                  ...tipoToUpdate,
-                  dificultad_tipo_anomalia: 3,
-                })
-              }
-            />
-            <label className="form-check-label" htmlFor="n3">
-              Nivel 3
-            </label>
-          </div>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Enviar
-        </button>
-        <Link className="btn btn-secondary" to="/show-tipo-anomalia">
-          Cancelar
-        </Link>
-      </form>
     </div>
   )
 }
