@@ -1,3 +1,4 @@
+//ELIMINAR ESTE ARCHIVO
 import { useState } from 'react'
 import axios from 'axios'
 import { BACKEND_URL } from '../../../endpoints.config'

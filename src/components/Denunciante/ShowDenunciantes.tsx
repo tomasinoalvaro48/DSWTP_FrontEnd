@@ -16,7 +16,7 @@ export function ShowDenunciantes() {
           fontWeight: 600,
         }}
       >
-        Denunciantes
+        Denunciantes registrados
       </h1>
 
       {!loading && !error && data?.length === 0 && (

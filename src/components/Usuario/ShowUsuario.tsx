@@ -16,7 +16,7 @@ export function ShowUsuario() {
           fontWeight: 600,
         }}
       >
-        Usuarios
+        Usuarios registrados
       </h1>
 
       {!loading && !error && data?.length === 0 && (
@@ -103,6 +103,7 @@ export function ShowUsuario() {
 
       {loading && <div>Cargando...</div>}
       {error && <div className="alert alert-danger">{error}</div>}
+
       <div className="row justify-content-center mt-3">
         <div className="col-12 col-md-4">
           <Link to="/add-usuario" className="btn btn-lg btn-outline-primary w-100">

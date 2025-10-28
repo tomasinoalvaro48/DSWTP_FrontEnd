@@ -1,3 +1,4 @@
+//ELIMINAR ESTE ARCHIVO
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
@@ -13,8 +14,6 @@ export function UpdateDenunciantes() {
     telefono_denunciante: '',
     email_denunciante: '',
     password_denunciante: '',
-    tipo_documento_denunciante: '',
-    numero_documento_denunciante: '',
   })
   useEffect(() => {
     if (data) {
@@ -24,8 +23,6 @@ export function UpdateDenunciantes() {
         telefono_denunciante: data.telefono_denunciante,
         email_denunciante: data.email_denunciante,
         password_denunciante: data.password_denunciante,
-        tipo_documento_denunciante: data.tipo_documento_denunciante,
-        numero_documento_denunciante: data.numero_documento_denunciante,
       })
     }
   }, [data])
