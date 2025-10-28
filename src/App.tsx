@@ -7,8 +7,8 @@ import { ShowTiposAnomalias } from './components/TipoAnomalia/ShowTiposAnomalias
 import { AddTiposAnomalias } from './components/TipoAnomalia/AddTiposAnomalias.tsx'
 import { UpdateTiposAnomalias } from './components/TipoAnomalia/UpdateTiposAnomalias.tsx'
 import { ShowDenunciantes } from './components/Denunciante/ShowDenunciantes.tsx'
-import { AddDenunciantes } from './components/Denunciante/AddDenunciantes.tsx'
-import { UpdateDenunciantes } from './components/Denunciante/UpdateDenunciantes.tsx'
+//import { AddDenunciantes } from './components/Denunciante/AddDenunciantes.tsx'
+//import { UpdateDenunciantes } from './components/Denunciante/UpdateDenunciantes.tsx'
 import { ShowLocalidad } from './components/Localidad/ShowLocalidad.tsx'
 import { AddLocalidad } from './components/Localidad/AddLocalidad.tsx'
 import { UpdateLocalidad } from './components/Localidad/UpdateLocalidad.tsx'
@@ -16,8 +16,8 @@ import { ShowZonas } from './components/Zona/ShowZonas.tsx'
 import { AddZona } from './components/Zona/AddZona.tsx'
 import { UpdateZona } from './components/Zona/UpdateZona.tsx'
 import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
-import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
-import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
+//import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
+//import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
 import { ApproveUsuario } from './components/Usuario/ApproveUsuario.tsx'
 import { Login } from './components/Auth/Login.tsx'
 import { RegisterDenunciante } from './components/Auth/RegisterDenunciante.tsx'
@@ -128,7 +128,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/*<Route
             path="add-denunciante"
             element={
               <ProtectedRoute allowedRoles={['operador']}>
@@ -143,7 +143,7 @@ function App() {
                 <UpdateDenunciantes />
               </ProtectedRoute>
             }
-          />
+          />*/}
 
           <Route
             path="show-localidad"
@@ -203,7 +203,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/*<Route
             path="add-usuario"
             element={
               <ProtectedRoute allowedRoles={['operador']}>
@@ -218,7 +218,7 @@ function App() {
                 <UpdateUsuario />
               </ProtectedRoute>
             }
-          />
+          />*/}
           <Route
             path="approve-usuario"
             element={
