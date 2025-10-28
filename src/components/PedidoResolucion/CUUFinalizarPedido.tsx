@@ -18,8 +18,10 @@ export function FinalizarPedido() {
     if (form.checkValidity() === false) {
       event.stopPropagation()
     } else {
-      patch(`pedido_resolucion/finalizar-pedido-resolucion/${id}`, pedido_resolucion)
+      patch(`pedido_resolucion/finalizar-pedido-rsolucion/${id}`, pedido_resolucion)
       navigate('/show-mis-pedidos')
+      // recargamos la página entera para actualizar el nivel del cazador en el navbar
+      window.location.reload()
     }
   }
 

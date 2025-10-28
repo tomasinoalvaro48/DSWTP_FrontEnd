@@ -20,6 +20,7 @@ export function UpdateUsuario() {
         tipo_usuario: data.tipo_usuario,
         zona: data.zona,
         estado_aprobacion: data.estado_aprobacion,
+        nivel_cazador: data.nivel_cazador,
       })
     }
   }, [data])
@@ -47,6 +48,8 @@ export function UpdateUsuario() {
         <div>Password: {data?.password_usuario ?? 'error'}</div>
         <div>Tipo: {data?.tipo_usuario ?? 'error'}</div>
         <div>Zona: {data?.zona.nombre_zona ?? 'error'}</div>
+        <div>Nivel de Usuario: {data?.nivel_cazador ?? 'error'}</div>
+        <div>Estado de Aprobación: {data?.estado_aprobacion ?? 'error'}</div>
       </div>
 
       <form
