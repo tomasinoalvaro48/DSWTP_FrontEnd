@@ -4,7 +4,7 @@ import { Accordion, Spinner, Alert, Button, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
-import { BACKEND_URL } from '../../../endpoints.config'
+import { BACKEND_URL } from '../../../endpoints.config.ts'
 
 export function ShowMisPedidosDenunciante() {
   const token = localStorage.getItem('token')
