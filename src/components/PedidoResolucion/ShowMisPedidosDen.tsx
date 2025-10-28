@@ -46,27 +46,21 @@ export function ShowMisPedidosDenunciante() {
     data: pedido_resolucion_actual,
     loading: pedido_resolucion_loading_actual,
     error: pedido_resolucion_error_actual,
-  } = get<PedidoResolucion>(
-    `pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'aceptado'}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
+  } = get<PedidoResolucion>(`pedido_resolucion?estado_pedido_resolucion=${'aceptado'}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
   let {
     data: pedido_resolucion_historico,
     loading: pedido_resolucion_loading_historico,
     error: pedido_resolucion_error_historico,
-  } = get<PedidoResolucion>(
-    `pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'solicitado'}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
+  } = get<PedidoResolucion>(`pedido_resolucion?estado_pedido_resolucion=${'solicitado'}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
   return (
     <div className="ShowPosiblesPedidos">

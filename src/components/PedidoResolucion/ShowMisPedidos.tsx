@@ -40,7 +40,7 @@ export function ShowMisPedidos() {
   const token = localStorage.getItem('token')
 
   const [queryActual, setQueryActual] = useState(
-    `pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'aceptado'}`
+    `pedido_resolucion?estado_pedido_resolucion=${'aceptado'}`
   )
 
   let {
@@ -54,7 +54,7 @@ export function ShowMisPedidos() {
   })
 
   const [queryHistorico, setQueryHistorico] = useState(
-    `pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'resuelto'}`
+    `pedido_resolucion?estado_pedido_resolucion=${'resuelto'}`
   )
 
   let {
@@ -92,7 +92,7 @@ export function ShowMisPedidos() {
       }
 
       // Construir nueva URL
-      const nuevaUrl = `pedido_resolucion/mis_pedidos?${params.toString()}`
+      const nuevaUrl = `pedido_resolucion?${params.toString()}`
 
       // Actualizar estado en React
       setQueryHistorico(nuevaUrl)
