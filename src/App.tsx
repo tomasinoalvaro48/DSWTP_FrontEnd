@@ -231,7 +231,7 @@ function App() {
           <Route
             path="show-pedido"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+              <ProtectedRoute allowedRoles={['operador']}>
                 <ShowPedidosResolucion />
               </ProtectedRoute>
             }
@@ -240,7 +240,7 @@ function App() {
           <Route
             path="show-mis-pedidos-denunciante"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+              <ProtectedRoute allowedRoles={['denunciante']}>
                 <ShowMisPedidosDenunciante />
               </ProtectedRoute>
             }
@@ -249,7 +249,7 @@ function App() {
           <Route
             path="show-mis-pedidos-resueltos-denunciante"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+              <ProtectedRoute allowedRoles={['denunciante']}>
                 <ShowMisPedidosResueltosDenunciante />
               </ProtectedRoute>
             }
@@ -266,7 +266,7 @@ function App() {
           <Route
             path="/generar-pedido-paso-2"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+              <ProtectedRoute allowedRoles={['denunciante']}>
                 <GenerarPedidoPaso2 />
               </ProtectedRoute>
             }
@@ -293,16 +293,16 @@ function App() {
           <Route
             path="/mostrar-posibles-pedidos"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+              <ProtectedRoute allowedRoles={['cazador']}>
                 <ShowPosiblesPedidos />
               </ProtectedRoute>
             }
           />
 
           <Route
-            path="show-pedidos-agregacion"
+            path="show-pedidos-agregacion" //ver si agregar el operador para el histórico
             element={
-              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+              <ProtectedRoute allowedRoles={['cazador']}>
                 <ShowPedidosAgregacion />
               </ProtectedRoute>
             }
@@ -310,7 +310,7 @@ function App() {
           <Route
             path="/generar-pedido-agregacion-1"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+              <ProtectedRoute allowedRoles={['cazador']}>
                 <GenerarPedidoAgregacion1 />
               </ProtectedRoute>
             }
@@ -318,7 +318,7 @@ function App() {
           <Route
             path="/generar-pedido-agregacion-2"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'cazador']}>
+              <ProtectedRoute allowedRoles={['cazador']}>
                 <GenerarPedidoAgregacion2 />
               </ProtectedRoute>
             }
