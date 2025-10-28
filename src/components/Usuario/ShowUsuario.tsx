@@ -1,8 +1,6 @@
 import { get } from '../../api/dataManager.ts'
 import { Table, Badge } from 'react-bootstrap'
 import type { Usuario } from '../../entities/entities.ts'
-import { Link } from 'react-router-dom'
-import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowUsuario() {
   const { data, loading, error } = get<Usuario>('usuario')
@@ -48,20 +46,17 @@ export function ShowUsuario() {
               }}
             >
               <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Tipo</th>
                 <th>Localidad</th>
                 <th>Zona</th>
                 <th>Estado</th>
-                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
               {data?.map((unUsuario) => (
                 <tr key={unUsuario.id}>
-                  <td>{unUsuario.id}</td>
                   <td>{unUsuario.nombre_usuario}</td>
                   <td>{unUsuario.email_usuario}</td>
                   <td>{unUsuario.tipo_usuario}</td>
@@ -81,19 +76,6 @@ export function ShowUsuario() {
                       {unUsuario.estado_aprobacion}
                     </Badge>
                   </td>
-                  <td className="text-center">
-                    <Link
-                      to={`/update-usuario/${unUsuario.id}`}
-                      className="btn btn-sm btn-outline-secondary me-2"
-                    >
-                      Editar
-                    </Link>
-                    <DeleteEntityButton
-                      idToDelete={unUsuario.id}
-                      nameToDelete={unUsuario.nombre_usuario}
-                      route={'usuario'}
-                    />
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -103,14 +85,6 @@ export function ShowUsuario() {
 
       {loading && <div>Cargando...</div>}
       {error && <div className="alert alert-danger">{error}</div>}
-
-      <div className="row justify-content-center mt-3">
-        <div className="col-12 col-md-4">
-          <Link to="/add-usuario" className="btn btn-lg btn-outline-primary w-100">
-            + Agregar Usuario
-          </Link>
-        </div>
-      </div>
     </div>
   )
 }

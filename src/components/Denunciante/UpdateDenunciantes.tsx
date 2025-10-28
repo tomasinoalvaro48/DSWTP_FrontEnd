@@ -1,5 +1,5 @@
 //ELIMINAR ESTE ARCHIVO
-import { useNavigate, useParams, Link } from 'react-router-dom'
+/*import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { Denunciante } from '../../entities/entities.ts'
@@ -124,4 +124,4 @@ export function UpdateDenunciantes() {
       </form>
     </div>
   )
-}
+}*/
