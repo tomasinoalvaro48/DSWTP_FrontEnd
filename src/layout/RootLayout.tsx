@@ -23,9 +23,11 @@ export function RootLayout() {
     location.pathname === '/approve-usuario'
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <MainNavbar />
-      <Outlet />
+      <main style={{ minHeight: '100vh', flex: '1' }}>
+        <Outlet />
+      </main>
       {mostrarFooter && <Footer />}
     </div>
   )
