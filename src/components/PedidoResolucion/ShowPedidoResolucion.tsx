@@ -257,12 +257,6 @@ export function ShowPedidosResolucion() {
           </Accordion>
         </div>
       )}
-
-      <div className="text-end m-3 mt-0">
-        <Link to="/generar-pedido-paso-1" className="btn btn-lg btn-success">
-          + Generar Pedido
-        </Link>
-      </div>
     </div>
   )
 }

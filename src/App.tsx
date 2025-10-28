@@ -258,7 +258,7 @@ function App() {
           <Route
             path="/generar-pedido-paso-1"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'denunciante']}>
+              <ProtectedRoute allowedRoles={['denunciante']}>
                 <GenerarPedidoPaso1 />
               </ProtectedRoute>
             }
