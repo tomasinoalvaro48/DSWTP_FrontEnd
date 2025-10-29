@@ -1,6 +1,5 @@
 import { get } from '../../api/dataManager.ts'
 import { Accordion, Alert, Spinner, Badge } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import type { PedidoResolucion } from '../../entities/entities.ts'
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
