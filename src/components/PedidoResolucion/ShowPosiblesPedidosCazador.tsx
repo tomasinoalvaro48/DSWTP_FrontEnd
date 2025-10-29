@@ -33,7 +33,7 @@ export function ShowPosiblesPedidos() {
 
   // estado inicial: pedidos con estado solicitado
   const [query, setQuery] = useState(
-    `pedido_resolucion?estado_pedido_resolucion=${estado_pedido_resolucion}`
+    `pedido_resolucion/posibles_pedidos?estado_pedido_resolucion=${estado_pedido_resolucion}`
   )
 
   let {
@@ -59,7 +59,7 @@ export function ShowPosiblesPedidos() {
       })
     }
 
-    setQuery(`pedido_resolucion?${params.toString()}`)
+    setQuery(`pedido_resolucion/posibles_pedidos?${params.toString()}`)
     console.log('Query generada:', `pedido_resolucion?${params.toString()}`)
   }
 

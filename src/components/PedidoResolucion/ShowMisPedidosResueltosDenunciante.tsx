@@ -27,9 +27,7 @@ export function ShowMisPedidosResueltosDenunciante() {
     return () => clearTimeout(timer)
   }, [dificultadFilter])
 
-  const [query, setQuery] = useState(
-    `pedido_resolucion/mis_pedidos?estado_pedido_resolucion=${'resuelto'}`
-  )
+  const [query, setQuery] = useState(`pedido_resolucion?estado_pedido_resolucion=${'resuelto'}`)
   let {
     data: pedido_resolucion_actual,
     loading: pedido_resolucion_loading_actual,
@@ -65,7 +63,7 @@ export function ShowMisPedidosResueltosDenunciante() {
       }
 
       // Construir nueva URL
-      const nuevaUrl = `pedido_resolucion/mis_pedidos?${params.toString()}`
+      const nuevaUrl = `pedido_resolucion?${params.toString()}`
 
       // Actualizar estado en React
       setQuery(nuevaUrl)
