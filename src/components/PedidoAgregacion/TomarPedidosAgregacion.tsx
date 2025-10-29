@@ -1,9 +1,9 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, patch } from '../../api/dataManager.ts'
-import type { PedidoAgregacion } from '../../entities/entities.ts'
-import { Link } from 'react-router-dom'
 import { BACKEND_URL } from '../../../endpoints.config.ts'
+import type { PedidoAgregacion } from '../../entities/entities.ts'
 
 export function TomarPedidosAgregacion() {
   const token = localStorage.getItem('token')

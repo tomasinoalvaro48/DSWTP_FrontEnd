@@ -1,5 +1,5 @@
-import { get } from '../../api/dataManager.ts'
 import { Accordion, Alert, Spinner, Badge } from 'react-bootstrap'
+import { get } from '../../api/dataManager.ts'
 import type { PedidoResolucion } from '../../entities/entities.ts'
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
@@ -183,7 +183,6 @@ export function ShowPedidosResolucion() {
                         {unPedido.inspecciones.length > 0 && (
                           <Accordion.Item eventKey={`${unPedido.id}-top`}>
                             {' '}
-                            {/*ver que onda con el pedidoId */}
                             <Accordion.Header>
                               <div className="row justify-content-center w-100 align-items-center">
                                 <div className="row justify-content-center w-100 align-items-center">

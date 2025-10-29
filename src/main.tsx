@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../endpoints.config.ts'
-import App from './App.tsx'
 import { AuthProvider } from './auth/AuthContext.tsx'
+import App from './App.tsx'
+import '../endpoints.config.ts'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 // Importar estilos Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'

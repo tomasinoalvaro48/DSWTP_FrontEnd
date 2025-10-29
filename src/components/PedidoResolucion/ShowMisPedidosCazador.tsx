@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, patch, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
-import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import ModalAlert from '../ModalAlert.tsx'
 
 export function ShowMisPedidos() {
@@ -32,16 +32,14 @@ export function ShowMisPedidos() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDificultadMostrada(dificultadFilter)
-    }, 200) // 300 ms de delay
+    }, 200) // 200 ms de delay
 
     return () => clearTimeout(timer)
   }, [dificultadFilter])
 
   const token = localStorage.getItem('token')
 
-  const [queryActual, setQueryActual] = useState(
-    `pedido_resolucion?estado_pedido_resolucion=${'aceptado'}`
-  )
+  const queryActual = `pedido_resolucion?estado_pedido_resolucion=${'aceptado'}`
 
   let {
     data: pedido_resolucion_actual,

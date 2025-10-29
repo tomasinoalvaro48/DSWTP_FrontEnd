@@ -15,42 +15,6 @@ let reloadListeners: (() => void)[] = [];
 export function triggerReload() {
   reloadListeners.forEach(listener => listener());
 }
-
-
-function get<T>(url: string, config?: object) {
-  const [data, setData] = useState<T[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  const fetchAll = async () => {
-    setLoading(true)
-    try {
-      const response = await axios.get(`${BACKEND_URL}/api/${url}`, config)
-      setData(response.data.data)
-      setError(null)
-    } catch (err: any) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-      console.log('Data request completed')
-    }
-  }
-
-  useEffect(() => {
-    fetchAll()
-
-    // suscribirse a las recargas globales
-    const listener = () => fetchAll()
-    reloadListeners.push(listener)
-
-    // limpieza al desmontar
-    return () => {
-      reloadListeners = reloadListeners.filter(l => l !== listener)
-    }
-  }, [url]) // se recarga también si cambia la URL
-
-  return { data, loading, error }
-}
 */
 
 // get function:
@@ -93,81 +57,6 @@ function getOne<T>(url: string) {
   }
   return { data }
 }
-/*
-
-async function patch<T>(url: string, data: T, config?: object) {
-  try {
-    await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
-    triggerReload() // 🔄 notifica a todos los get()
-  } catch (err: any) {
-    console.error(err)
-  } finally {
-    console.log('Patch request completed')
-  }
-}
-
-async function post<T>(url: string, data: T, config?: object) {
-  try {
-    await axios.post(`${BACKEND_URL}/api/${url}`, data, config)
-    triggerReload() // 🔄
-  } catch (err: any) {
-    console.error(err)
-  } finally {
-    console.log('Post request completed')
-  }
-}
-
-async function remove(url: string) {
-  try {
-    await axios.delete(`${BACKEND_URL}/api/${url}`)
-    triggerReload() // 🔄
-  } catch (err: any) {
-    console.error(err)
-  } finally {
-    console.log('Delete request completed')
-  }
-}
-
-
-*/
-
-// post function:
-/*
-async function post<T>(url: string, data: T) {
-  try {
-    await axios.post(`${BACKEND_URL}/api/${url}`, data)
-  } catch (err: any) {
-  } finally {
-    console.log('Post request completed')
-  }
-}
-*/
-
-/*
-//POST IMPLEMENTANDO MULTER
-async function post<T>(url: string, data: T | FormData, config: Record<string, any> = {}) {
-  try {
-    const isFormData = data instanceof FormData
-
-    const headers = {
-      ...(config.headers || {}),
-      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-    }
-
-    const response = await axios.post(`${BACKEND_URL}/api/${url}`, data, {
-      ...config,
-      headers,
-    })
-
-    return response
-  } catch (err: any) {
-    console.error(err)
-    return err.response
-  } finally {
-    console.log('Post request completed')
-  }
-}
-*/
 
 //post funtion + config
 async function post<T>(url: string, data: T, config?: object) {

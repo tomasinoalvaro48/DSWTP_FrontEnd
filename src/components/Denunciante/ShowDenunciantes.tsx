@@ -1,5 +1,5 @@
-import { get } from '../../api/dataManager.ts'
 import { Table } from 'react-bootstrap'
+import { get } from '../../api/dataManager.ts'
 import type { Denunciante } from '../../entities/entities.ts'
 
 export function ShowDenunciantes() {

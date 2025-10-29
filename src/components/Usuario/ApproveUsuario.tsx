@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react'
+import { Table, Badge } from 'react-bootstrap'
 import { get, patch } from '../../api/dataManager.ts'
-import { Table, Badge, Modal, Button } from 'react-bootstrap'
 import type { Usuario } from '../../entities/entities.ts'
 
 export function ApproveUsuario() {
   const { data, loading, error } = get<Usuario>('usuario/pending-cazadores')
-  //const [selectedUser, setSelectedUser] = useState<Usuario | null>(null)
-  //const [showModal, setShowModal] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
   const [usuarios, setUsuarios] = useState<Usuario[]>([])
@@ -16,19 +14,12 @@ export function ApproveUsuario() {
       setUsuarios(data)
     }
   }, [data])
-  /*
-  const handleShowDetails = (usuario: Usuario) => {
-    setSelectedUser(usuario)
-    setShowModal(true)
-  }*/
 
   const handleApprove = async (usuario: Usuario) => {
     setActionLoading(true)
     setMessage(null)
     patch<Usuario>(`usuario/approve/${usuario.id}`)
     setMessage({ type: 'success', text: 'Cuenta de cazador aprobada exitosamente' })
-    //setShowModal(false)
-    // setSelectedUser(null)
     setActionLoading(false)
     location.reload()
   }
@@ -38,8 +29,6 @@ export function ApproveUsuario() {
     setMessage(null)
     patch<Usuario>(`usuario/reject/${usuario.id}`)
     setMessage({ type: 'success', text: 'Cuenta de cazador rechazada' })
-    // setShowModal(false)
-    //setSelectedUser(null)
     setActionLoading(false)
     location.reload()
   }

@@ -1,6 +1,6 @@
+import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import axios from 'axios'
 import { BACKEND_URL } from '../../../endpoints.config'
 
 export function RegisterDenunciante() {

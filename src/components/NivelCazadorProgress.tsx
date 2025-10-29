@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { BACKEND_URL } from '../../endpoints.config'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../auth/AuthContext.tsx'
+import { BACKEND_URL } from '../../endpoints.config'
 
 export const NivelCazadorProgress = () => {
-  // Obtener nivel del usuario autenticado cuando esté disponible en AuthContext
-  // const { nivelUser } = useAuth()
-  // const nivelCazador = currentUser.nivel_cazador
-
   const [nivel, setNivel] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState<string | null>(null)

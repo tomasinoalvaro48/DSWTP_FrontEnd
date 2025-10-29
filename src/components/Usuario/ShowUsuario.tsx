@@ -1,5 +1,5 @@
-import { get } from '../../api/dataManager.ts'
 import { Table, Badge } from 'react-bootstrap'
+import { get } from '../../api/dataManager.ts'
 import type { Usuario } from '../../entities/entities.ts'
 
 export function ShowUsuario() {

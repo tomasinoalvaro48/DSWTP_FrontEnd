@@ -1,10 +1,10 @@
-import { get, getFilter } from '../../api/dataManager.ts'
-import type { PedidoResolucion } from '../../entities/entities.ts'
-import { Accordion, Spinner, Alert, Button, Modal } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Accordion, Spinner, Alert, Button, Modal } from 'react-bootstrap'
+import { get } from '../../api/dataManager.ts'
 import { BACKEND_URL } from '../../../endpoints.config.ts'
+import type { PedidoResolucion } from '../../entities/entities.ts'
 
 export function ShowMisPedidosDenunciante() {
   const token = localStorage.getItem('token')
@@ -207,7 +207,6 @@ export function ShowMisPedidosDenunciante() {
                             {unPedido.inspecciones.length > 0 && (
                               <Accordion.Item eventKey={`${unPedido.id}-top`}>
                                 {' '}
-                                {/*ver que onda con el pedidoId */}
                                 <Accordion.Header>
                                   <div className="row justify-content-center w-100 align-items-center">
                                     <div className="row justify-content-center w-100 align-items-center">

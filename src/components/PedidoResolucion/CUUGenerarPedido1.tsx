@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
 

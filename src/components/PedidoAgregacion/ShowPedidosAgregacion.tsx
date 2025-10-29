@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
-import { Link } from 'react-router-dom'
+import { BACKEND_URL } from '../../../endpoints.config.ts'
 import type { PedidoAgregacion } from '../../entities/entities.ts'
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
-import { BACKEND_URL } from '../../../endpoints.config.ts'
 
 export function ShowPedidosAgregacion() {
   const token = localStorage.getItem('token')

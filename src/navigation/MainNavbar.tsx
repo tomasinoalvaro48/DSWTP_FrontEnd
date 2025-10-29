@@ -1,5 +1,5 @@
-import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { useAuth } from '../auth/AuthContext.tsx'
 import { NivelCazadorProgress } from '../components/NivelCazadorProgress.tsx'
 
@@ -50,9 +50,6 @@ export function MainNavbar() {
           <Nav.Link as={NavLink} to="/show-tipo-anomalia">
             Tipos de Anomalías
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/show-denunciante">
-            Denunciantes
-          </Nav.Link>
           <Nav.Link as={NavLink} to="/show-localidad">
             Localidades
           </Nav.Link>
@@ -62,8 +59,11 @@ export function MainNavbar() {
           <Nav.Link as={NavLink} to="/show-usuario">
             Usuarios
           </Nav.Link>
+          <Nav.Link as={NavLink} to="/show-denunciante">
+            Denunciantes
+          </Nav.Link>
           <Nav.Link as={NavLink} to="/show-pedido">
-            Pedidos
+            Pedidos de Resolución
           </Nav.Link>
           <Nav.Link as={NavLink} to="/tomar-pedidos-agregacion">
             Aprobar Tipos de Anomalías
@@ -90,17 +90,16 @@ export function MainNavbar() {
     if (userRol === 'cazador') {
       return (
         <>
+          <Nav.Link as={NavLink} to="/show-mis-pedidos">
+            Mis Pedidos
+          </Nav.Link>
           <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">
-            Posibles Pedidos
+            Posibles Pedidos para tomar
           </Nav.Link>
           <Nav.Link as={NavLink} to="/show-pedidos-agregacion">
             Pedidos de Agregación
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/show-mis-pedidos">
-            Mis Pedidos
-          </Nav.Link>
           
-
           <NivelCazadorProgress />
           
           <MoreOptions />

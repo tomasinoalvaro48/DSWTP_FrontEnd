@@ -1,5 +1,5 @@
-import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { getOne, patch } from '../../api/dataManager.ts'
 import type { TipoAnomalia } from '../../entities/entities.ts'
 

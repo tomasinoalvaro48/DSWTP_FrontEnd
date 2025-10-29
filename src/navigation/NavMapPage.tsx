@@ -1,5 +1,5 @@
-import { useAuth } from '../auth/AuthContext.tsx'
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../auth/AuthContext.tsx'
 import { NavMap } from './NavMap.tsx'
 import type { Rol } from './NavMap.tsx'
 
@@ -23,7 +23,6 @@ export function NavMapPage() {
               }
             >
               <div className="card-body d-flex align-items-center">
-                {/* Puedes agregar ícono aquí si quieres */}
                 <span className="card-text">{item.label}</span>
               </div>
             </NavLink>

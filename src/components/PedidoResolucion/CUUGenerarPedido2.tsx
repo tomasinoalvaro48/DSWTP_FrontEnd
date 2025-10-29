@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useLocation, Link, useNavigate } from 'react-router-dom'
-import type { TipoAnomalia, PedidoResolucion, Anomalia } from '../../entities/entities.ts'
 import { get, post } from '../../api/dataManager.ts'
+import type { TipoAnomalia, PedidoResolucion, Anomalia } from '../../entities/entities.ts'
 import ModalAlert from '../ModalAlert.tsx'
 
 export function GenerarPedidoPaso2() {

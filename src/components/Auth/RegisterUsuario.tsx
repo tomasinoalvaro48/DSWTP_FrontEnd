@@ -1,16 +1,8 @@
 import { useState } from 'react'
-import type { Zona } from '../../entities/entities.ts'
-import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
-import { post } from '../../api/dataManager.ts'
 import { useNavigate, Link } from 'react-router-dom'
-
-/*
+import { post } from '../../api/dataManager.ts'
 import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
-//import { post } from '../../api/dataManager.ts'
-import axios from 'axios'
-import { BACKEND_URL } from '../../../endpoints.config'
-*/
 
 export function RegisterUsuario() {
   const [nombre, setNombre] = useState('')
@@ -56,8 +48,6 @@ export function RegisterUsuario() {
       return
     }
 
-    //si uso la línea comentada en vez de la línea de abajo, no muestra la validacion de que si email ya está registrado como usuario
-    //await post('auth/register-usuario', form)
     const res = await post('auth/register-usuario', form)
     if (res?.status === 201) {
       setMessage(

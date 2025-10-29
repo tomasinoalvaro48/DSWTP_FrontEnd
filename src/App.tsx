@@ -1,55 +1,59 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
-import ProtectedRoute from './auth/ProtectedRoute.tsx'
-import { RouterProvider } from 'react-router-dom'
-import { AdminHome } from './screens/adminHome.tsx'
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+import { useAuth } from './auth/AuthContext.tsx'
 import { RootLayout } from './layout/RootLayout.tsx'
-import { ShowTiposAnomalias } from './components/TipoAnomalia/ShowTiposAnomalias.tsx'
+import PrivateRoute from './components/PrivateRoute.tsx'
+import ProtectedRoute from './auth/ProtectedRoute.tsx'
+import PoliticasDeUso from './footer/PoliticasDeUso.tsx'
+import { NavMapPage } from './navigation/NavMapPage.tsx'
+import { PublicHome } from './screens/publicHome.tsx'
+import { AdminHome } from './screens/adminHome.tsx'
+import { CazadorHome } from './screens/cazadorHome.tsx'
+import { DenuncianteHome } from './screens/denuncianteHome.tsx'
+//---------------------------------------------------------------------------------------------------
+import { Login } from './components/Auth/Login.tsx'
+import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
+import { RegisterDenunciante } from './components/Auth/RegisterDenunciante.tsx'
+import { ModificarPerfil } from './components/Auth/ModificarPerfil.tsx'
+import { ChangePassword } from './components/Auth/ChangePassword.tsx'
+import { UpdatePerfil } from './components/Auth/UpdatePerfil.tsx'
+import { DeleteAccount } from './components/Auth/DeleteAccount.tsx'
+//---------------------------------------------------------------------------------------------------
 import { AddTiposAnomalias } from './components/TipoAnomalia/AddTiposAnomalias.tsx'
 import { UpdateTiposAnomalias } from './components/TipoAnomalia/UpdateTiposAnomalias.tsx'
-import { ShowDenunciantes } from './components/Denunciante/ShowDenunciantes.tsx'
-//import { AddDenunciantes } from './components/Denunciante/AddDenunciantes.tsx'
-//import { UpdateDenunciantes } from './components/Denunciante/UpdateDenunciantes.tsx'
-import { ShowLocalidad } from './components/Localidad/ShowLocalidad.tsx'
+import { ShowTiposAnomalias } from './components/TipoAnomalia/ShowTiposAnomalias.tsx'
+//---------------------------------------------------------------------------------------------------
 import { AddLocalidad } from './components/Localidad/AddLocalidad.tsx'
 import { UpdateLocalidad } from './components/Localidad/UpdateLocalidad.tsx'
-import { ShowZonas } from './components/Zona/ShowZonas.tsx'
+import { ShowLocalidad } from './components/Localidad/ShowLocalidad.tsx'
+//---------------------------------------------------------------------------------------------------
 import { AddZona } from './components/Zona/AddZona.tsx'
 import { UpdateZona } from './components/Zona/UpdateZona.tsx'
-import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
-//import { AddUsuario } from './components/Usuario/AddUsuario.tsx'
-//import { UpdateUsuario } from './components/Usuario/UpdateUsuario.tsx'
+import { ShowZonas } from './components/Zona/ShowZonas.tsx'
+//---------------------------------------------------------------------------------------------------
 import { ApproveUsuario } from './components/Usuario/ApproveUsuario.tsx'
-import { Login } from './components/Auth/Login.tsx'
-import { RegisterDenunciante } from './components/Auth/RegisterDenunciante.tsx'
-import PrivateRoute from './components/PrivateRoute.tsx'
-import { ShowPedidosResolucion } from './components/PedidoResolucion/ShowPedidoResolucionOperador.tsx'
+import { ShowUsuario } from './components/Usuario/ShowUsuario.tsx'
+//---------------------------------------------------------------------------------------------------
+import { ShowDenunciantes } from './components/Denunciante/ShowDenunciantes.tsx'
+//---------------------------------------------------------------------------------------------------
 import { GenerarPedidoPaso1 } from './components/PedidoResolucion/CUUGenerarPedido1.tsx'
 import { GenerarPedidoPaso2 } from './components/PedidoResolucion/CUUGenerarPedido2.tsx'
+import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
+import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
+import { ShowMisPedidosDenunciante } from './components/PedidoResolucion/ShowMisPedidosDenunciante.tsx'
+import { ShowMisPedidosResueltosDenunciante } from './components/PedidoResolucion/ShowMisPedidosResueltosDenunciante.tsx'
+import { ShowMisPedidos } from './components/PedidoResolucion/ShowMisPedidosCazador.tsx'
 import { ShowPosiblesPedidos } from './components/PedidoResolucion/ShowPosiblesPedidosCazador.tsx'
-import { RegisterUsuario } from './components/Auth/RegisterUsuario.tsx'
-import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
-import { ShowPedidosAgregacionOperador } from './components/PedidoAgregacion/ShowPedidosAgregacionOperador.tsx'
+import { ShowPedidosResolucion } from './components/PedidoResolucion/ShowPedidoResolucionOperador.tsx'
+//---------------------------------------------------------------------------------------------------
 import { GenerarPedidoAgregacion1 } from './components/PedidoAgregacion/GenerarPedidoAgregacion1.tsx'
 import { GenerarPedidoAgregacion2 } from './components/PedidoAgregacion/GenerarPedidoAgregacion2.tsx'
 import { TomarPedidosAgregacion } from './components/PedidoAgregacion/TomarPedidosAgregacion.tsx'
-import { ShowMisPedidos } from './components/PedidoResolucion/ShowMisPedidosCazador.tsx'
-import { AddInspeccion } from './components/PedidoResolucion/AddInspeccion.tsx'
-import { NavMapPage } from './navigation/NavMapPage.tsx'
-import { FinalizarPedido } from './components/PedidoResolucion/CUUFinalizarPedido.tsx'
-import { ChangePassword } from './components/Auth/ChangePassword.tsx'
-import { ShowMisPedidosDenunciante } from './components/PedidoResolucion/ShowMisPedidosDenunciante.tsx'
-import { ShowMisPedidosResueltosDenunciante } from './components/PedidoResolucion/ShowMisPedidosResueltosDenunciante.tsx'
-import { UpdatePerfil } from './components/Auth/UpdatePerfil.tsx'
-import { DeleteAccount } from './components/Auth/DeleteAccount.tsx'
-import PoliticasDeUso from './footer/PoliticasDeUso.tsx'
-import { useAuth } from './auth/AuthContext.tsx'
-import { DenuncianteHome } from './screens/denuncianteHome.tsx'
-import { CazadorHome } from './screens/cazadorHome.tsx'
-import { PublicHome } from './screens/publicHome.tsx'
-import { ModificarPerfil } from './components/Auth/ModificarPerfil.tsx'
+import { ShowPedidosAgregacion } from './components/PedidoAgregacion/ShowPedidosAgregacion.tsx'
+import { ShowPedidosAgregacionOperador } from './components/PedidoAgregacion/ShowPedidosAgregacionOperador.tsx'
+
 
 function App() {
-  const { token, userRol } = useAuth() // <-- adentro de App()
+  const { token, userRol } = useAuth()
 
   //Adentro de "<Route path="/" element={<RootLayout />}>":
 
@@ -71,9 +75,8 @@ function App() {
         )}
 
         <Route path="login" element={<Login />} />
-        <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="register-usuario" element={<RegisterUsuario />} />
-
+        <Route path="register-denunciante" element={<RegisterDenunciante />} />
         <Route path="politicas" element={<PoliticasDeUso />} />
 
         <Route element={<PrivateRoute />}>
@@ -87,23 +90,48 @@ function App() {
           />
 
           <Route
-            path="show-tipo-anomalia"
+            path="/modificar-perfil"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
+                <ModificarPerfil />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
+                <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/update-profile"
+            element={
+              <ProtectedRoute allowedRoles={['denunciante', 'cazador', 'operador']}>
+                <UpdatePerfil />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/delete-account"
+            element={
+              <ProtectedRoute allowedRoles={['denunciante', 'cazador']}>
+                <DeleteAccount />
+              </ProtectedRoute>
+            }
+          />
+
+
+          {/*Tipo Anomalia*/}
+          <Route
+            path="add-tipo-anomalia"
             element={
               <ProtectedRoute allowedRoles={['operador']}>
-                <ShowTiposAnomalias />
+                <AddTiposAnomalias />
               </ProtectedRoute>
             }
           />
-
-          <Route
-            path="finalizar-pedido/:id"
-            element={
-              <ProtectedRoute allowedRoles={['cazador']}>
-                <FinalizarPedido />
-              </ProtectedRoute>
-            }
-          />
-
           <Route
             path="update-tipo-anomalia/:id"
             element={
@@ -113,47 +141,16 @@ function App() {
             }
           />
           <Route
-            path="add-tipo-anomalia"
+            path="show-tipo-anomalia"
             element={
               <ProtectedRoute allowedRoles={['operador']}>
-                <AddTiposAnomalias />
+                <ShowTiposAnomalias />
               </ProtectedRoute>
             }
           />
 
-          <Route
-            path="show-denunciante"
-            element={
-              <ProtectedRoute allowedRoles={['operador']}>
-                <ShowDenunciantes />
-              </ProtectedRoute>
-            }
-          />
-          {/*<Route
-            path="add-denunciante"
-            element={
-              <ProtectedRoute allowedRoles={['operador']}>
-                <AddDenunciantes />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="update-denunciante/:id"
-            element={
-              <ProtectedRoute allowedRoles={['operador']}>
-                <UpdateDenunciantes />
-              </ProtectedRoute>
-            }
-          />*/}
 
-          <Route
-            path="show-localidad"
-            element={
-              <ProtectedRoute allowedRoles={['operador']}>
-                <ShowLocalidad />
-              </ProtectedRoute>
-            }
-          />
+          {/*Localidad*/}
           <Route
             path="add-localidad"
             element={
@@ -170,15 +167,17 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
-            path="show-zona"
+            path="show-localidad"
             element={
               <ProtectedRoute allowedRoles={['operador']}>
-                <ShowZonas />
+                <ShowLocalidad />
               </ProtectedRoute>
             }
           />
+
+
+          {/*Zona*/}
           <Route
             path="add-zona"
             element={
@@ -194,32 +193,18 @@ function App() {
                 <UpdateZona />
               </ProtectedRoute>
             }
-          ></Route>
+          />
+          <Route
+            path="show-zona"
+            element={
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowZonas />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route
-            path="show-usuario"
-            element={
-              <ProtectedRoute allowedRoles={['operador']}>
-                <ShowUsuario />
-              </ProtectedRoute>
-            }
-          />
-          {/*<Route
-            path="add-usuario"
-            element={
-              <ProtectedRoute allowedRoles={['operador']}>
-                <AddUsuario />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="update-usuario/:id"
-            element={
-              <ProtectedRoute allowedRoles={['operador']}>
-                <UpdateUsuario />
-              </ProtectedRoute>
-            }
-          />*/}
+
+          {/*Usuario*/}
           <Route
             path="approve-usuario"
             element={
@@ -228,34 +213,28 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
-            path="show-pedido"
+            path="show-usuario"
             element={
               <ProtectedRoute allowedRoles={['operador']}>
-                <ShowPedidosResolucion />
+                <ShowUsuario />
               </ProtectedRoute>
             }
           />
 
+
+          {/*Denunciante*/}
           <Route
-            path="show-mis-pedidos-denunciante"
+            path="show-denunciante"
             element={
-              <ProtectedRoute allowedRoles={['denunciante']}>
-                <ShowMisPedidosDenunciante />
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowDenunciantes />
               </ProtectedRoute>
             }
           />
 
-          <Route
-            path="show-mis-pedidos-resueltos-denunciante"
-            element={
-              <ProtectedRoute allowedRoles={['denunciante']}>
-                <ShowMisPedidosResueltosDenunciante />
-              </ProtectedRoute>
-            }
-          />
 
+          {/*Pedido de Resolución*/}
           <Route
             path="/generar-pedido-paso-1"
             element={
@@ -272,16 +251,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          <Route
-            path="/show-mis-pedidos"
-            element={
-              <ProtectedRoute allowedRoles={['cazador']}>
-                <ShowMisPedidos />
-              </ProtectedRoute>
-            }
-          />
-
           <Route
             path="/add-inspeccion/:id"
             element={
@@ -290,7 +259,38 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+          <Route
+            path="finalizar-pedido/:id"
+            element={
+              <ProtectedRoute allowedRoles={['cazador']}>
+                <FinalizarPedido />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="show-mis-pedidos-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['denunciante']}>
+                <ShowMisPedidosDenunciante />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="show-mis-pedidos-resueltos-denunciante"
+            element={
+              <ProtectedRoute allowedRoles={['denunciante']}>
+                <ShowMisPedidosResueltosDenunciante />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/show-mis-pedidos"
+            element={
+              <ProtectedRoute allowedRoles={['cazador']}>
+                <ShowMisPedidos />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/mostrar-posibles-pedidos"
             element={
@@ -299,23 +299,17 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
-            path="show-pedidos-agregacion"
-            element={
-              <ProtectedRoute allowedRoles={['cazador']}>
-                <ShowPedidosAgregacion />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="show-pedidos-agregacion-operador"
+            path="show-pedido"
             element={
               <ProtectedRoute allowedRoles={['operador']}>
-                <ShowPedidosAgregacionOperador />
+                <ShowPedidosResolucion />
               </ProtectedRoute>
             }
           />
+          
+
+          {/*Pedido de Agregación*/}
           <Route
             path="/generar-pedido-agregacion-1"
             element={
@@ -340,39 +334,19 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           <Route
-            path="/modificar-perfil"
+            path="show-pedidos-agregacion"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
-                <ModificarPerfil />
+              <ProtectedRoute allowedRoles={['cazador']}>
+                <ShowPedidosAgregacion />
               </ProtectedRoute>
             }
           />
-
           <Route
-            path="/change-password"
+            path="show-pedidos-agregacion-operador"
             element={
-              <ProtectedRoute allowedRoles={['operador', 'denunciante', 'cazador']}>
-                <ChangePassword />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/update-profile"
-            element={
-              <ProtectedRoute allowedRoles={['denunciante', 'cazador', 'operador']}>
-                <UpdatePerfil />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/delete-account"
-            element={
-              <ProtectedRoute allowedRoles={['denunciante', 'cazador']}>
-                <DeleteAccount />
+              <ProtectedRoute allowedRoles={['operador']}>
+                <ShowPedidosAgregacionOperador />
               </ProtectedRoute>
             }
           />

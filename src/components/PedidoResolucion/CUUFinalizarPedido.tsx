@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { patch } from '../../api/dataManager.ts'
-import { Link } from 'react-router-dom'
 
 export function FinalizarPedido() {
   const navigate = useNavigate()

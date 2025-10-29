@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { BACKEND_URL } from '../../../endpoints.config'
-import { useAuth } from '../../auth/AuthContext.tsx'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/AuthContext.tsx'
+import { BACKEND_URL } from '../../../endpoints.config'
 import type { Zona } from '../../entities/entities.ts'
 import ZonaByLocalidadSelection from '../ZonaByLocalidadSelection.tsx'
 
@@ -73,7 +73,7 @@ export function UpdatePerfil() {
 
   const handleCloseModal = () => {
     setShowModal(false)
-    navigate('/nav-map') //cambiar a home despues
+    navigate('/')
   }
 
   if (loading) return <p className="text-center mt-4">Cargando perfil...</p>

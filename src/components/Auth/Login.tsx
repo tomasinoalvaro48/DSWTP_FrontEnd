@@ -21,19 +21,7 @@ export function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    /*
-    const response = await postAuth(email, password)
-    if (response.token && response.rol) {
-      login(response.token, response.rol)
-      navigate('/')
-    }
-    if (
-      response.message !== 'Acceso denegado. Cazador pendiente de aprobación.' &&
-      response.message !== 'Acceso denegado. Cazador rechazado.'
-    ) {
-      setAlertMessage(response.message)
-      setModalAlert(true)
-*/
+
     if (!email || !password) {
       showMessage('Debe completar todos los campos', 'warning')
       return

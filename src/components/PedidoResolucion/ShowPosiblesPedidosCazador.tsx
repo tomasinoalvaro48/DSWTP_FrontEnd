@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Accordion, Spinner, Alert } from 'react-bootstrap'
 import { get, patch, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
-import { Accordion, Spinner, Alert } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react' // <-- Agregado useEffect
 
 export function ShowPosiblesPedidos() {
   //para busqueda para tomar pedido
@@ -20,13 +20,13 @@ export function ShowPosiblesPedidos() {
   const navigate = useNavigate()
 
   const [dificultadFilter, setDificultadFilter] = useState(0)
-  const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter) // <-- Nuevo estado
+  const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter)
   const [errorTakePedido, setErrorTakePedido] = useState<string | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setDificultadMostrada(dificultadFilter)
-    }, 200) // 300 ms de delay
+    }, 300) // 300 ms de delay
 
     return () => clearTimeout(timer)
   }, [dificultadFilter])

@@ -1,7 +1,7 @@
+import { Link } from 'react-router-dom'
 import TheMysteryMachine from '../imagenes/The_Mystery_Machine.jpg'
 import Cazafantasmas from '../imagenes/cazafantasmas.jpg'
 import CasosWarren from '../imagenes/casos-warren.jpg'
-import { Link } from 'react-router-dom'
 
 export function DenuncianteHome() {
   return (

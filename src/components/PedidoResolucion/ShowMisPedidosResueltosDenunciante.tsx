@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
+import { Accordion, Spinner, Alert } from 'react-bootstrap'
 import { get, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
-import { Accordion, Spinner, Alert } from 'react-bootstrap'
 
 export function ShowMisPedidosResueltosDenunciante() {
   const token = localStorage.getItem('token')
@@ -22,7 +22,7 @@ export function ShowMisPedidosResueltosDenunciante() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDificultadMostrada(dificultadFilter)
-    }, 200) // 300 ms de delay
+    }, 200) // 200 ms de delay
 
     return () => clearTimeout(timer)
   }, [dificultadFilter])

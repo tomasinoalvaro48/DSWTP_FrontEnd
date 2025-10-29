@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import axios from 'axios'
-import { useAuth } from '../../auth/AuthContext.tsx'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/AuthContext.tsx'
 import { BACKEND_URL } from '../../../endpoints.config'
 
 export function DeleteAccount() {
