@@ -12,7 +12,9 @@ export function GenerarPedidoAgregacion2() {
     dificultad_pedido_agregacion: number
   }
 
-  const [evidencias, setEvidencias] = useState< { url_evidencia?: string; archivo_evidencia?: File | null }[] >([])
+  const [evidencias, setEvidencias] = useState<
+    { url_evidencia?: string; archivo_evidencia?: File | null }[]
+  >([])
   const [url, setUrl] = useState('')
   const [archivo, setArchivo] = useState<File | null>(null)
   const [error, setError] = useState('')
@@ -40,7 +42,10 @@ export function GenerarPedidoAgregacion2() {
 
     const formData = new FormData()
     formData.append('descripcion_pedido_agregacion', pedidoPaso1.descripcion_pedido_agregacion)
-    formData.append('dificultad_pedido_agregacion', pedidoPaso1.dificultad_pedido_agregacion.toString())
+    formData.append(
+      'dificultad_pedido_agregacion',
+      pedidoPaso1.dificultad_pedido_agregacion.toString()
+    )
 
     // Evidencias con URL
     const evidenciasConUrl = evidencias
@@ -49,7 +54,7 @@ export function GenerarPedidoAgregacion2() {
 
     formData.append('evidencias', JSON.stringify(evidenciasConUrl))
 
-    // Evidencias con archivos PDF
+    // Evidencias con archivos
     evidencias
       .filter((ev) => ev.archivo_evidencia)
       .forEach((ev) => formData.append('archivos', ev.archivo_evidencia as File))
@@ -106,11 +111,10 @@ export function GenerarPedidoAgregacion2() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label fw-bold">Archivo de evidencia (PDF)</label>
+                <label className="form-label fw-bold">Archivo de evidencia</label>
                 <input
                   id="archivoInput"
                   type="file"
-                  accept="application/pdf"
                   className="form-control"
                   onChange={(e) => setArchivo(e.target.files ? e.target.files[0] : null)}
                 />
@@ -134,7 +138,7 @@ export function GenerarPedidoAgregacion2() {
                     key={idx}
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <div>
+                    <div className="d-flex flex-column">
                       {ev.url_evidencia && (
                         <a
                           href={ev.url_evidencia}
@@ -146,7 +150,7 @@ export function GenerarPedidoAgregacion2() {
                         </a>
                       )}
                       {ev.archivo_evidencia && (
-                        <span className="ms-2 text-muted">
+                        <span className="text-muted">
                           {ev.archivo_evidencia instanceof File
                             ? ev.archivo_evidencia.name
                             : ev.archivo_evidencia}
