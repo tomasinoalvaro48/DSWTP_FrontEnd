@@ -34,10 +34,9 @@ export function ApproveUsuario() {
   }
 
   return (
-    <div className="ApproveUsuario container mt-4 mb-5">
-      <h1>Aprobar Cuentas de Cazadores</h1>
+    <div className="ApproveUsuario container-fluid px-4 py-4">
+      <h1 className="mb-4">Aprobar Cuentas de Cazadores</h1>
 
-      {/* Mensajes de feedback */}
       {message && (
         <div
           className={`alert alert-${message.type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`}
