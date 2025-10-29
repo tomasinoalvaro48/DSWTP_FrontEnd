@@ -13,38 +13,66 @@ export function GenerarPedidoAgregacion2() {
   }
 
   const [evidencias, setEvidencias] = useState<
-    { url_evidencia?: string; archivo_evidencia?: string }[]
+    { url_evidencia?: string; archivo_evidencia?: File | null }[]
   >([])
   const [url, setUrl] = useState('')
-  const [archivo, setArchivo] = useState('')
+  const [archivo, setArchivo] = useState<File | null>(null)
   const [error, setError] = useState('')
   const [showModalAlert, setShowModalAlert] = useState(false)
 
   const handleAddEvidencia = (e: React.FormEvent) => {
     e.preventDefault()
     if (!url && !archivo) {
-      setError('Debes ingresar al menos una URL o un archivo.')
+      setError('Debes ingresar al menos una URL o subir un archivo.')
       return
     }
     setError('')
     setEvidencias([...evidencias, { url_evidencia: url, archivo_evidencia: archivo }])
     setUrl('')
-    setArchivo('')
+    setArchivo(null)
+    const fileInput = document.getElementById('archivoInput') as HTMLInputElement
+    if (fileInput) fileInput.value = ''
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (evidencias.length === 0) {
       setShowModalAlert(true)
       return
     }
 
-    const pedidoCompleto = { ...pedidoPaso1, evidencias }
+    const formData = new FormData()
+    formData.append('descripcion_pedido_agregacion', pedidoPaso1.descripcion_pedido_agregacion)
+    formData.append(
+      'dificultad_pedido_agregacion',
+      pedidoPaso1.dificultad_pedido_agregacion.toString()
+    )
+
+    // Evidencias con URL
+    const evidenciasConUrl = evidencias
+      .filter((ev) => ev.url_evidencia)
+      .map((ev) => ({ url_evidencia: ev.url_evidencia }))
+
+    formData.append('evidencias', JSON.stringify(evidenciasConUrl))
+
+    // Evidencias con archivos
+    evidencias
+      .filter((ev) => ev.archivo_evidencia)
+      .forEach((ev) => formData.append('archivos', ev.archivo_evidencia as File))
 
     const token = localStorage.getItem('token')
-    post('pedido_agregacion', pedidoCompleto, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    navigate('/show-pedidos-agregacion')
+
+    try {
+      await post('pedido_agregacion', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      navigate('/show-pedidos-agregacion')
+    } catch (err) {
+      console.error(err)
+      alert('Error al generar el pedido.')
+    }
   }
 
   return (
@@ -85,11 +113,10 @@ export function GenerarPedidoAgregacion2() {
               <div className="mb-3">
                 <label className="form-label fw-bold">Archivo de evidencia</label>
                 <input
-                  type="text"
-                  value={archivo}
+                  id="archivoInput"
+                  type="file"
                   className="form-control"
-                  placeholder="Nombre de archivo (por ahora texto)"
-                  onChange={(e) => setArchivo(e.target.value)}
+                  onChange={(e) => setArchivo(e.target.files ? e.target.files[0] : null)}
                 />
               </div>
 
@@ -111,7 +138,7 @@ export function GenerarPedidoAgregacion2() {
                     key={idx}
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <div>
+                    <div className="d-flex flex-column">
                       {ev.url_evidencia && (
                         <a
                           href={ev.url_evidencia}
@@ -122,7 +149,13 @@ export function GenerarPedidoAgregacion2() {
                           {ev.url_evidencia}
                         </a>
                       )}
-                      {ev.archivo_evidencia && <span className="ms-2">{ev.archivo_evidencia}</span>}
+                      {ev.archivo_evidencia && (
+                        <span className="text-muted">
+                          {ev.archivo_evidencia instanceof File
+                            ? ev.archivo_evidencia.name
+                            : ev.archivo_evidencia}
+                        </span>
+                      )}
                     </div>
                     <span className="badge bg-light text-dark">#{idx + 1}</span>
                   </li>

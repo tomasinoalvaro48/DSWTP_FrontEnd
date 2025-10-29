@@ -143,6 +143,32 @@ async function post<T>(url: string, data: T) {
 }
 */
 
+/*
+//POST IMPLEMENTANDO MULTER
+async function post<T>(url: string, data: T | FormData, config: Record<string, any> = {}) {
+  try {
+    const isFormData = data instanceof FormData
+
+    const headers = {
+      ...(config.headers || {}),
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+    }
+
+    const response = await axios.post(`${BACKEND_URL}/api/${url}`, data, {
+      ...config,
+      headers,
+    })
+
+    return response
+  } catch (err: any) {
+    console.error(err)
+    return err.response
+  } finally {
+    console.log('Post request completed')
+  }
+}
+*/
+
 //post funtion + config
 async function post<T>(url: string, data: T, config?: object) {
   try {
