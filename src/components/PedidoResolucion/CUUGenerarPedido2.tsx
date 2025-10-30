@@ -58,6 +58,7 @@ export function GenerarPedidoPaso2() {
         headers: { Authorization: `Bearer ${token}` },
       })
       navigate('/show-mis-pedidos-denunciante')
+      window.location.reload()
     } catch (err: any) {
       setMensaje('Error al generar el pedido. Intente nuevamente.')
       setTipoMensaje('danger')
