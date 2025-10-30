@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Accordion, Spinner, Alert, Button, Modal } from 'react-bootstrap'
+import { Accordion, Spinner, Alert, Button, Modal, Badge } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
 import { BACKEND_URL } from '../../../endpoints.config.ts'
 import type { PedidoResolucion } from '../../entities/entities.ts'
@@ -191,9 +191,22 @@ export function ShowMisPedidosDenunciante() {
                                             <strong>Dificultad: </strong>
                                             {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                           </div>
-                                          <div className="col-md-4">
-                                            <strong>Resultado: </strong>
-                                            {anomalia.resultado_anomalia}
+                                          <div className="col-md-4 d-flex align-items-center">
+                                            <strong className="me-2">Resultado:</strong>
+                                            <Badge
+                                              bg={
+                                                anomalia.resultado_anomalia === 'inconcluso'
+                                                  ? 'warning'
+                                                  : 'success'
+                                              }
+                                              text={
+                                                anomalia.resultado_anomalia === 'inconcluso'
+                                                  ? 'dark'
+                                                  : 'light'
+                                              }
+                                            >
+                                              {anomalia.resultado_anomalia.toUpperCase()}
+                                            </Badge>
                                           </div>
                                         </div>
                                       ))}
@@ -371,9 +384,22 @@ export function ShowMisPedidosDenunciante() {
                                             <strong>Dificultad: </strong>
                                             {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                           </div>
-                                          <div className="col-md-3">
-                                            <strong>Resultado: </strong>
-                                            {anomalia.resultado_anomalia}
+                                          <div className="col-md-4 d-flex align-items-center">
+                                            <strong className="me-2">Resultado:</strong>
+                                            <Badge
+                                              bg={
+                                                anomalia.resultado_anomalia === 'inconcluso'
+                                                  ? 'warning'
+                                                  : 'success'
+                                              }
+                                              text={
+                                                anomalia.resultado_anomalia === 'inconcluso'
+                                                  ? 'dark'
+                                                  : 'light'
+                                              }
+                                            >
+                                              {anomalia.resultado_anomalia.toUpperCase()}
+                                            </Badge>
                                           </div>
                                         </div>
                                       ))}
