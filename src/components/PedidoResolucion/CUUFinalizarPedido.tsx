@@ -1,26 +1,43 @@
 import { useState } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { patch } from '../../api/dataManager.ts'
+import ModalAlert from '../../components/ModalAlert.tsx'
 
 export function FinalizarPedido() {
-  const navigate = useNavigate()
-
   const { id } = useParams()
 
   const [pedido_resolucion, setPedido] = useState({
     comentario_pedido_resolucion: '',
   })
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [showModalAlert, setShowModalAlert] = useState(false)
+  const [modalBody, setModalBody] = useState("")
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const form = event.currentTarget
-    if (form.checkValidity() === false) {
-      event.stopPropagation()
-    } else {
-      patch(`pedido_resolucion/finalizar-pedido-rsolucion/${id}`, pedido_resolucion)
-      navigate('/show-mis-pedidos')
-      // recargamos la página entera para actualizar el nivel del cazador en el navbar
-      window.location.reload()
+
+    try {
+      const body =
+        pedido_resolucion.comentario_pedido_resolucion.trim() === ''
+          ? {}
+          : pedido_resolucion
+
+      const response = await patch(
+        `pedido_resolucion/finalizar-pedido-resolucion/${id}`,
+        body
+      )
+
+      if (response.status === 200) {
+        setModalBody("Pedido finalizado correctamente.")
+        setShowModalAlert(true)
+      }
+    } catch (err: any) {
+      console.error("Error al finalizar pedido:", err)
+      setModalBody(
+        err?.response?.data?.message ??
+        "Ocurrió un error al intentar finalizar el pedido."
+      )
+      setShowModalAlert(true)
     }
   }
 
@@ -61,6 +78,15 @@ export function FinalizarPedido() {
           </form>
         </div>
       </div>
+
+      {showModalAlert && (
+        <ModalAlert
+          setShowModalAlert={setShowModalAlert}
+          title="Información"
+          body={modalBody}
+          navigateOnClose="/show-mis-pedidos"
+        />
+      )}
     </div>
   )
 }

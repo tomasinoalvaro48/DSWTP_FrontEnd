@@ -112,7 +112,6 @@ export function ShowMisPedidos() {
         }
       )
       setShowModalAlert(true)
-      location.reload()
     } catch (err: any) {
       console.error('Error al resolver anomalía:', err)
       alert(err?.response?.data?.message ?? 'No se pudo resolver la anomalía.')
@@ -125,26 +124,26 @@ export function ShowMisPedidos() {
 
   const haddleFinalizarPedido = async (idPedidoResolucion: string) => {
     try {
-      const response = await patch(
-        `pedido_resolucion/finalizar-pedido-resolucion/${idPedidoResolucion}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      const pedido = pedido_resolucion_actual.find(p => p.id === idPedidoResolucion);
 
-      if (response.status === 200) {
-        showMessage('Pedido finalizado correctamente.', 'success')
-        navigate(`/finalizar-pedido/${idPedidoResolucion}`)
-      }
-    } catch (err: any) {
-      console.error('Error al finalizar pedido:', err)
+      if (!pedido) return;
 
-      if (err.response?.status === 400) {
-        showMessage(err.response.data.message, 'danger')
-      } else {
-        showMessage('Ocurrió un error al intentar finalizar el pedido.', 'danger')
+      const tieneInconclusas = pedido.anomalias.some(a => a.resultado_anomalia === 'inconcluso');
+
+      if (tieneInconclusas) {
+        showMessage(
+          "Hay anomalías no resueltas. No es posible finalizar pedido hasta que todas sus anomalías estén resueltas",
+          'danger'
+        );
+        return;
       }
+
+      navigate(`/finalizar-pedido/${idPedidoResolucion}`);
+    } catch (err) {
+      console.error(err);
+      showMessage("Error al validar anomalías. Intente nuevamente.", "danger");
     }
-  }
+  };
 
   return (
     <div className="ShowPosiblesPedidos">
@@ -157,6 +156,7 @@ export function ShowMisPedidos() {
           setShowModalAlert={setShowModalAlert}
           title="Anomalía resuelta correctamente."
           body="La anomalía ha sido resuelta exitosamente."
+          navigateOnClose="reload"
         />
       )}
 

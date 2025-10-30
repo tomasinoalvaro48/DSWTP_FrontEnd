@@ -73,6 +73,7 @@ export function ShowPosiblesPedidos() {
     } catch (err: any) {
       console.error('Error al tomar el pedido:', err)
       setErrorTakePedido(err?.response?.data?.message ?? 'Error al tomar el pedido.')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
@@ -88,7 +89,7 @@ export function ShowPosiblesPedidos() {
       
       {errorTakePedido && (
         <div
-          className="alert alert-danger alert-dismissible fade show text-center fw-semibold mx-4 mt-3"
+          className="alert alert-danger alert-dismissible fade show text-center fw-semibold"
           role="alert"
         >
           {errorTakePedido}
@@ -109,7 +110,7 @@ export function ShowPosiblesPedidos() {
             {/* Slider de dificultad */}
             <div className="d-flex align-items-center">
               <label htmlFor="dificultad" className="me-2 mb-0 strong">
-                <strong> Dificultad: </strong>
+                <strong> Dificultad (≤): </strong>
               </label>
               <span className="ms-2" style={{ minWidth: '100px', display: 'inline-block' }}>
                 {dificultadMostrada === 0 ? 'No seleccionada' : dificultadMostrada}

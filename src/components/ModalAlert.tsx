@@ -17,7 +17,11 @@ const ModalAlert = ({ setShowModalAlert, title, body, navigateOnClose }: Props) 
     setShowModalAlert(false)
     setShow(false)
     if (navigateOnClose && navigate) {
-      navigate(navigateOnClose)
+      if (navigateOnClose === "reload") {
+        location.reload()
+      } else {
+        navigate(navigateOnClose)
+      }
     }
   }
 

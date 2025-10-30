@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Accordion, Spinner, Alert } from 'react-bootstrap'
+import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, getFilter } from '../../api/dataManager.ts'
 import type { PedidoResolucion, Localidad } from '../../entities/entities.ts'
 
@@ -258,10 +258,23 @@ export function ShowMisPedidosResueltosDenunciante() {
                                           <strong>Dificultad: </strong>
                                           {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                         </div>
-                                        <div className="col-md-4">
-                                          <strong>Resultado: </strong>
-                                          {anomalia.resultado_anomalia}
-                                        </div>
+                                        <div className="col-md-4 d-flex align-items-center">
+                                            <strong className="me-2">Resultado:</strong>
+                                            <Badge
+                                              bg={
+                                                anomalia.resultado_anomalia === 'inconcluso'
+                                                  ? 'warning'
+                                                  : 'success'
+                                              }
+                                              text={
+                                                anomalia.resultado_anomalia === 'inconcluso'
+                                                  ? 'dark'
+                                                  : 'light'
+                                              }
+                                            >
+                                              {anomalia.resultado_anomalia.toUpperCase()}
+                                            </Badge>
+                                          </div>
                                       </div>
                                     ))}
                                   </div>
