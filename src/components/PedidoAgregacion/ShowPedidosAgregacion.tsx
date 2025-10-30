@@ -12,11 +12,11 @@ export function ShowPedidosAgregacion() {
   })
 
   return (
-    <div className="ShowPedidosAgregacion mx-3 my-0 mb-5">
-      <div className="d-flex justify-content-between align-items-center">
-        <h1 className="mb-3">Pedidos de Agregación de Anomalías</h1>
+    <div className="mb-4 border-bottom border-2 ShowPedidosAgregacion">
+      <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-0 flex-wrap">
+        <h2 className="m-0 flex-shrink-0">Pedidos de Agregación de Anomalías</h2>
 
-        <Link to="/generar-pedido-agregacion-1" className="btn btn-lg btn-success m-4 mt-3">
+        <Link to="/generar-pedido-agregacion-1" className="btn btn-lg btn-outline-primary m-4 mt-3">
           + Nuevo Pedido de Agregación
         </Link>
       </div>
@@ -30,8 +30,8 @@ export function ShowPedidosAgregacion() {
       {error && <Alert variant="danger">Error al cargar pedidos: {error}</Alert>}
 
       {!loading && !error && data?.length === 0 && (
-        <Alert variant="info" className="mt-3">
-          No hay pedidos de agregación cargados.
+        <Alert variant="info" className="m-3">
+          No tenés pedidos de agregación de anomalías.
         </Alert>
       )}
 

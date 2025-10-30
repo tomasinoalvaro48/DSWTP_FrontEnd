@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Table, Badge } from 'react-bootstrap'
+import { Table, Badge, Alert } from 'react-bootstrap'
 import { get, patch } from '../../api/dataManager.ts'
 import type { Usuario } from '../../entities/entities.ts'
 
@@ -34,8 +34,10 @@ export function ApproveUsuario() {
   }
 
   return (
-    <div className="ApproveUsuario container-fluid px-4 py-4">
-      <h1 className="mb-4">Aprobar Cuentas de Cazadores</h1>
+    <div className="mb-4 border-bottom border-2 ApproveUsuario">
+      <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
+        <h2 className="m-0 flex-shrink-0">Aprobar Cuentas de Cazadores</h2>
+      </div>
 
       {message && (
         <div
@@ -61,7 +63,9 @@ export function ApproveUsuario() {
       {error && <div className="alert alert-danger">Error al cargar solicitudes: {error}</div>}
 
       {!loading && !error && usuarios.length === 0 && (
-        <div className="alert alert-info">No hay solicitudes de cazadores pendientes.</div>
+        <Alert variant="info" className="m-3">
+          No hay solicitudes de cazadores pendientes.
+        </Alert>
       )}
 
       {!loading && !error && usuarios.length > 0 && (

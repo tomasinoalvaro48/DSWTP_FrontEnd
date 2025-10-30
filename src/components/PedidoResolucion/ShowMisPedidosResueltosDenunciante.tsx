@@ -158,8 +158,15 @@ export function ShowMisPedidosResueltosDenunciante() {
             <span>Cargando pedidos...</span>
           </div>
         )}
+
         {pedido_resolucion_error_actual && (
           <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error_actual}</Alert>
+        )}
+
+        {!pedido_resolucion_loading_actual && !pedido_resolucion_error_actual && pedido_resolucion_actual?.length === 0 && (
+          <Alert variant="info" className="m-3">
+            No tenés pedidos resueltos.
+          </Alert>
         )}
 
         {!pedido_resolucion_loading_actual &&

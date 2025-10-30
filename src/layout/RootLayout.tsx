@@ -13,6 +13,7 @@ export function RootLayout() {
     location.pathname === '/show-pedidos-agregacion' ||
     location.pathname === '/show-mis-pedidos' ||
     location.pathname === '/show-mis-pedidos-denunciante' ||
+    location.pathname === '/show-mis-pedidos-resueltos-denunciante' ||
     location.pathname === '/show-tipo-anomalia' ||
     location.pathname === '/show-denunciante' ||
     location.pathname === '/show-localidad' ||

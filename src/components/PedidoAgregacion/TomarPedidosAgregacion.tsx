@@ -28,9 +28,9 @@ export function TomarPedidosAgregacion() {
   }
 
   return (
-    <div className="TomarPedidosAgregacion mx-3 my-3 mb-5">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className="m-0">Pedidos de Agregación de Anomalías Pendientes</h1>
+    <div className="mb-4 border-bottom border-2 TomarPedidosAgregacion">
+      <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
+        <h2 className="m-0 flex-shrink-0">Pedidos de Agregación de Anomalías Pendientes</h2>
 
         <Link
           to="/show-pedidos-agregacion-operador"
@@ -48,13 +48,11 @@ export function TomarPedidosAgregacion() {
       )}
       {error && <Alert variant="danger">Error al cargar pedidos: {error}</Alert>}
 
-      {!loading &&
-        !error &&
-        data?.filter((p) => p.estado_pedido_agregacion === 'pendiente').length === 0 && (
-          <Alert variant="info" className="mt-3">
-            No hay pedidos de agregación pendientes.
-          </Alert>
-        )}
+      {!loading && !error && data?.filter((p) => p.estado_pedido_agregacion === 'pendiente').length === 0 && (
+        <Alert variant="info" className="m-3">
+          No hay pedidos de agregación pendientes.
+        </Alert>
+      )}
 
       {!loading && !error && data?.length > 0 && (
         <div className="accordion my-0 mx-4">

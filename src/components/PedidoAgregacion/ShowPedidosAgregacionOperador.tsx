@@ -10,9 +10,9 @@ export function ShowPedidosAgregacionOperador() {
   })
 
   return (
-    <div className="ShowPedidosAgregacionOperador mx-3 my-0 mb-5">
-      <div className="d-flex justify-content-between align-items-center">
-        <h1 className="mb-3">Histórico de Pedidos de Agregación de Anomalías</h1>
+    <div className="mb-4 border-bottom border-2 ShowPedidosAgregacionOperador">
+      <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
+        <h2 className="m-0 flex-shrink-0">Histórico de Pedidos de Agregación de Anomalías</h2>
       </div>
 
       {loading && (
@@ -24,7 +24,9 @@ export function ShowPedidosAgregacionOperador() {
       {error && <Alert variant="danger">Error al cargar pedidos: {error}</Alert>}
 
       {!loading && !error && data?.length === 0 && (
-        <div className="alert alert-info">No hay agrgaciones historicas aún.</div>
+        <Alert variant="info" className="m-3">
+          No hay pedidos de agregación aceptados o rechazados.
+        </Alert>
       )}
 
       {!loading && !error && data?.length > 0 && (

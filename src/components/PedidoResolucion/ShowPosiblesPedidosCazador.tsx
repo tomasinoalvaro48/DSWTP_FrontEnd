@@ -77,7 +77,7 @@ export function ShowPosiblesPedidos() {
   }
 
   return (
-    <div className="ShowPosiblesPedidos">
+    <div className="mb-4 border-bottom border-2 ShowPosiblesPedidos">
       {loadingLoc && (
         <div className="d-flex align-items-center">
           <Spinner animation="border" role="status" size="sm" className="me-2" />
@@ -89,7 +89,7 @@ export function ShowPosiblesPedidos() {
 
       {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
         <nav className="navbar bg-body-tertiary px-3">
-          <h1 className="me-auto">Posibles Pedidos Resolucion</h1>
+          <h2 className="m-0 flex-shrink-0">Posibles Pedidos de Resolución para tomar</h2>
 
           <form className="d-flex align-items-center gap-3" onSubmit={haddleSearch}>
             {/* Slider de dificultad */}
@@ -147,8 +147,15 @@ export function ShowPosiblesPedidos() {
           <span>Cargando pedidos...</span>
         </div>
       )}
+
       {pedido_resolucion_error && (
         <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error}</Alert>
+      )}
+
+      {!pedido_resolucion_loading && !pedido_resolucion_error && pedido_resolucion?.length === 0 && (
+        <Alert variant="info" className="m-3">
+          No hay pedidos de resolución para tomar.
+        </Alert>
       )}
 
       {!pedido_resolucion_loading && !pedido_resolucion_error && pedido_resolucion && (
