@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext.tsx'
 import { postAuth } from '../../api/dataManager.ts'
@@ -12,6 +12,10 @@ export function Login() {
 
   const { login } = useAuth()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   const showMessage = (text: string, type: 'danger' | 'warning') => {
     setMessage(text)

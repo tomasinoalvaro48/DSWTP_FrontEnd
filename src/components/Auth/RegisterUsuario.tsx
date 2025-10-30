@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { post } from '../../api/dataManager.ts'
 import type { Zona } from '../../entities/entities.ts'
@@ -16,6 +16,10 @@ export function RegisterUsuario() {
   const [messageType, setMessageType] = useState<'success' | 'danger' | 'warning' | null>(null)
   const [showModal, setShowModal] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   const form = {
     nombre_usuario: nombre,

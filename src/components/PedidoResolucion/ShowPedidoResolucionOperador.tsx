@@ -123,7 +123,7 @@ export function ShowPedidosResolucion() {
                                   <strong>Email:</strong> {unPedido.cazador.email_usuario}
                                 </div>
                                 <div className="col-md-4">
-                                  <strong>Nivel:</strong> {/*unPedido.cazador ?? '-'*/}
+                                  <strong>Nivel:</strong> {unPedido.cazador.nivel_cazador}
                                 </div>
                               </div>
                             </Accordion.Body>
@@ -164,9 +164,22 @@ export function ShowPedidosResolucion() {
                                       <strong>Dificultad: </strong>
                                       {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
                                     </div>
-                                    <div className="col-md-4">
-                                      <strong>Resultado: </strong>
-                                      {anomalia.resultado_anomalia}
+                                    <div className="col-md-4 d-flex align-items-center">
+                                      <strong className="me-2">Resultado:</strong>
+                                      <Badge
+                                        bg={
+                                          anomalia.resultado_anomalia === 'inconcluso'
+                                            ? 'warning'
+                                            : 'success'
+                                        }
+                                        text={
+                                          anomalia.resultado_anomalia === 'inconcluso'
+                                            ? 'dark'
+                                            : 'light'
+                                        }
+                                      >
+                                        {anomalia.resultado_anomalia.toUpperCase()}
+                                      </Badge>
                                     </div>
                                   </div>
                                 ))}

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { BACKEND_URL } from '../../../endpoints.config'
 
@@ -19,6 +19,10 @@ export function RegisterDenunciante() {
   const [showModal, setShowModal] = useState(false)
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   const showMessage = (text: string, type: 'success' | 'danger' | 'warning') => {
     setMessage(text)
