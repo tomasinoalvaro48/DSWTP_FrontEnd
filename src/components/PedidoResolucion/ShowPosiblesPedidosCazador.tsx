@@ -85,7 +85,21 @@ export function ShowPosiblesPedidos() {
         </div>
       )}
       {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
-      {errorTakePedido && <Alert variant="warning">{errorTakePedido}</Alert>}
+      
+      {errorTakePedido && (
+        <div
+          className="alert alert-danger alert-dismissible fade show text-center fw-semibold mx-4 mt-3"
+          role="alert"
+        >
+          {errorTakePedido}
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Cerrar"
+            onClick={() => setErrorTakePedido(null)}
+          ></button>
+        </div>
+      )}
 
       {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
         <nav className="navbar bg-body-tertiary px-3">
