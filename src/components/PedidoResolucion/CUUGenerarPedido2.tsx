@@ -42,7 +42,7 @@ export function GenerarPedidoPaso2() {
     setAnoms(anoms.filter((a) => a.tipo_anomalia.id !== ida))
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const token = localStorage.getItem('token')
 
@@ -54,9 +54,11 @@ export function GenerarPedidoPaso2() {
     }
 
     try {
-      post<PedidoResolucion>('pedido_resolucion', pedidoRes, {
+      await post<PedidoResolucion>('pedido_resolucion', pedidoRes, {
         headers: { Authorization: `Bearer ${token}` },
       })
+      setMensaje('Pedido generado con éxito.')
+      setTipoMensaje('success')
       navigate('/show-mis-pedidos-denunciante')
       window.location.reload()
     } catch (err: any) {
