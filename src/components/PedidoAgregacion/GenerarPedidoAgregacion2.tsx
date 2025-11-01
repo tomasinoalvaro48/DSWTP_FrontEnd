@@ -34,7 +34,9 @@ export function GenerarPedidoAgregacion2() {
     if (fileInput) fileInput.value = ''
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
     if (evidencias.length === 0) {
       setShowModalAlert(true)
       return
