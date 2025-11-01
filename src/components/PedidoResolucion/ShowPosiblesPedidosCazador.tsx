@@ -24,6 +24,10 @@ export function ShowPosiblesPedidos() {
   const [errorTakePedido, setErrorTakePedido] = useState<string | null>(null)
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setDificultadMostrada(dificultadFilter)
     }, 300) // 300 ms de delay

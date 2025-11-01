@@ -10,6 +10,10 @@ export function ApproveUsuario() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([])
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  useEffect(() => {
     if (data) {
       setUsuarios(data)
     }

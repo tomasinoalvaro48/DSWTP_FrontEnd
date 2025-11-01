@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Accordion, Alert, Spinner, Badge } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
 import type { PedidoResolucion } from '../../entities/entities.ts'
@@ -5,6 +6,10 @@ import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowPedidosResolucion() {
   const { data, loading, error } = get<PedidoResolucion>('pedido_resolucion')
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="mb-4 border-bottom border-2 ShowPedidoResolucion">

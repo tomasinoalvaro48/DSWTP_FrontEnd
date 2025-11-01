@@ -1,4 +1,10 @@
+import { useEffect } from 'react'
+
 const PoliticasDeUso = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   return (
     <div className="politicas-bg d-flex align-items-start justify-content-center py-5 px-3">
       <div className="overlay"></div>

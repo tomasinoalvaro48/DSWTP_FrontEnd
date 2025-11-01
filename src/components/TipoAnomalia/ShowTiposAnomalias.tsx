@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
@@ -7,6 +8,10 @@ import DeleteEntityButton from '../DeleteEntityButton.tsx'
 // Componente para mostrar la tabla de Tipos de Anomalías
 export function ShowTiposAnomalias() {
   const { data, loading, error } = get<TipoAnomalia>('tipo_anomalia')
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="ShowTiposAnomalias container mt-4 mb-5">

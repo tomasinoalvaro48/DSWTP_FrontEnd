@@ -1,6 +1,11 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export function PublicHome() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+  
   return (
     <div className="container text-center mt-5 mb-5">
       <div className="text-center mb-4">

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card, Button } from 'react-bootstrap'
 import { useAuth } from '../../auth/AuthContext.tsx'
@@ -5,6 +6,10 @@ import { useAuth } from '../../auth/AuthContext.tsx'
 export function ModificarPerfil() {
   const navigate = useNavigate()
   const { userRol } = useAuth()
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="container mt-5">

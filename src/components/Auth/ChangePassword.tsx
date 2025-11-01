@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext.tsx'
 import { BACKEND_URL } from '../../../endpoints.config'
@@ -66,6 +66,10 @@ export function ChangePassword() {
     setShowModal(false)
     navigate('/')
   }
+    
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="container mt-4">

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, patch } from '../../api/dataManager.ts'
@@ -26,6 +26,10 @@ export function TomarPedidosAgregacion() {
       setProcesando(null)
     }
   }
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="mb-4 border-bottom border-2 TomarPedidosAgregacion">

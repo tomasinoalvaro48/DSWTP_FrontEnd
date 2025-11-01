@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, getFilter } from '../../api/dataManager.ts'
@@ -47,6 +47,10 @@ export function ShowPedidosAgregacion() {
   }
 
   const pedidos = busco ? dataFiltrada : data
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="mb-4 border-bottom border-2 ShowPedidosAgregacion">
@@ -100,7 +104,7 @@ export function ShowPedidosAgregacion() {
 
       {!loading && !error && pedidos?.length === 0 && (
         <Alert variant="info" className="m-3">
-          No hay pedidos que coincidan con el filtro seleccionado.
+          No hay tenés pedidos de agregación.
         </Alert>
       )}
 

@@ -1,9 +1,14 @@
+import { useEffect } from 'react'
 import { Table } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
 import type { Denunciante } from '../../entities/entities.ts'
 
 export function ShowDenunciantes() {
   const { data, loading, error } = get<Denunciante>('denunciantes')
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="ShowDenunciantes container mt-4 mb-5">

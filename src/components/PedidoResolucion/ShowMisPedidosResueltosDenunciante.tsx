@@ -20,6 +20,10 @@ export function ShowMisPedidosResueltosDenunciante() {
   const [dificultadMostrada, setDificultadMostrada] = useState(dificultadFilter)
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setDificultadMostrada(dificultadFilter)
     }, 200) // 200 ms de delay

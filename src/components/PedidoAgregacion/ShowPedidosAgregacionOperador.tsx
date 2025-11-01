@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, getFilter } from '../../api/dataManager.ts'
 import type { PedidoAgregacion } from '../../entities/entities.ts'
@@ -11,16 +11,11 @@ export function ShowPedidosAgregacionOperador() {
   const [dificultadFilter, setDificultadFilter] = useState(0)
   const [busco, setBusco] = useState(false)
 
-  // QUERY para histórico
   const [queryHistorico, setQueryHistorico] = useState(
     `pedido_agregacion?estado_pedido_agregacion=aceptado&estado_pedido_agregacion=rechazado`
   )
 
-  const {
-    data: dataFiltrada,
-    loading: loadingFiltrado,
-    error: errorFiltrado,
-  } = getFilter<PedidoAgregacion>(queryHistorico, {
+  const { data: dataFiltrada } = getFilter<PedidoAgregacion>(queryHistorico, {
     headers: { Authorization: `Bearer ${token}` },
   })
 
@@ -30,16 +25,13 @@ export function ShowPedidosAgregacionOperador() {
 
     const params = new URLSearchParams()
 
-    // Estado
     if (estadoFilter) {
       params.append("estado_pedido_agregacion", estadoFilter)
     } else {
-      // Si no elige estado, mostrar ambos
       params.append("estado_pedido_agregacion", "aceptado")
       params.append("estado_pedido_agregacion", "rechazado")
     }
 
-    // Dificultad
     if (dificultadFilter > 0) {
       params.append("dificultad_pedido_agregacion", dificultadFilter.toString())
     }
@@ -52,18 +44,9 @@ export function ShowPedidosAgregacionOperador() {
     headers: { Authorization: `Bearer ${token}` },
   })
 
-  const pedidosFiltrados = data
-    ?.filter((p) =>
-      ['aceptado', 'rechazado'].includes(p.estado_pedido_agregacion)
-    )
-    ?.filter((p) =>
-      estadoFilter ? p.estado_pedido_agregacion === estadoFilter : true
-    )
-    ?.filter((p) =>
-      dificultadFilter > 0
-        ? Number(p.dificultad_pedido_agregacion) === dificultadFilter
-        : true
-    )
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="mb-4 border-bottom border-2 ShowPedidosAgregacionOperador">
@@ -71,8 +54,6 @@ export function ShowPedidosAgregacionOperador() {
         <h2 className="m-0 flex-shrink-0">Histórico de Pedidos de Agregación de Anomalías</h2>
 
         <form onSubmit={handleSearch} className="d-flex gap-3 align-items-center p-3 px-4">
-
-          {/* FILTRO ESTADO */}
           <select
             className="form-select w-auto"
             value={estadoFilter}
@@ -83,7 +64,6 @@ export function ShowPedidosAgregacionOperador() {
             <option value="rechazado">Rechazado</option>
           </select>
 
-          {/* FILTRO DIFICULTAD */}
           <select
             className="form-select w-auto"
             value={dificultadFilter}
@@ -111,7 +91,6 @@ export function ShowPedidosAgregacionOperador() {
 
       {!loading && !error && (
         <>
-          {/* Si todavía no buscó, mostrar cartel SOLO si no hay datos reales */}
           {!busco && data && data.filter(
             (p) => p.estado_pedido_agregacion === 'aceptado' || p.estado_pedido_agregacion === 'rechazado'
           ).length === 0 && (
@@ -120,7 +99,6 @@ export function ShowPedidosAgregacionOperador() {
             </Alert>
           )}
 
-          {/* Si ya buscó, mostrar cartel si filtro no trajo nada */}
           {busco && dataFiltrada?.length === 0 && (
             <Alert variant="info" className="m-3">
               No hay pedidos que coincidan con el filtro seleccionado.

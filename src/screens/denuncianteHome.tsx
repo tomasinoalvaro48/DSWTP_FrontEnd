@@ -1,9 +1,14 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import TheMysteryMachine from '../imagenes/The_Mystery_Machine.jpg'
 import Cazafantasmas from '../imagenes/cazafantasmas.jpg'
 import CasosWarren from '../imagenes/casos-warren.jpg'
 
 export function DenuncianteHome() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+  
   return (
     <div className="container text-center mt-5">
       <div className="text-center mb-4">

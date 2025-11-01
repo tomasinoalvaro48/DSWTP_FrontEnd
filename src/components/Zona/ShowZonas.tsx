@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
@@ -6,6 +7,10 @@ import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowZonas() {
   const { data, loading, error } = get<Zona>('zona')
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="ShowZonas container mt-4 mb-5">

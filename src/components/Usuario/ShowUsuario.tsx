@@ -1,9 +1,14 @@
+import { useEffect } from 'react'
 import { Table, Badge } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
 import type { Usuario } from '../../entities/entities.ts'
 
 export function ShowUsuario() {
   const { data, loading, error } = get<Usuario>('usuario')
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="ShowUsuario container mt-4 mb-5">

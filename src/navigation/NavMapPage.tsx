@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext.tsx'
 import { NavMap } from './NavMap.tsx'
@@ -7,6 +8,10 @@ export function NavMapPage() {
   const { userRol } = useAuth()
   const rol: Rol = (userRol as Rol) ?? 'publico'
   const links = NavMap[rol]
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   return (
     <div className="container my-4">

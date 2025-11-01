@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Button, Modal, Badge } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
@@ -22,6 +22,10 @@ export function ShowMisPedidosDenunciante() {
     setShowModal(false)
     setPedidoAEliminar(null)
   }
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   async function handleEliminarPedido() {
     if (!pedidoAEliminar) return

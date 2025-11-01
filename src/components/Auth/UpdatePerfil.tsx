@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext.tsx'
 import { BACKEND_URL } from '../../../endpoints.config'
@@ -21,6 +21,10 @@ export function UpdatePerfil() {
     setMessage(text)
     setMessageType(type)
   }
+    
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   useEffect(() => {
     const fetchPerfil = async () => {
