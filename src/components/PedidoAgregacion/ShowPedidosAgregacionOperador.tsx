@@ -1,18 +1,104 @@
+import { useState } from 'react'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
-import { get } from '../../api/dataManager.ts'
+import { get, getFilter } from '../../api/dataManager.ts'
 import type { PedidoAgregacion } from '../../entities/entities.ts'
 import { BACKEND_URL } from '../../../endpoints.config.ts'
 
 export function ShowPedidosAgregacionOperador() {
   const token = localStorage.getItem('token')
+
+  const [estadoFilter, setEstadoFilter] = useState('')
+  const [dificultadFilter, setDificultadFilter] = useState(0)
+  const [busco, setBusco] = useState(false)
+
+  // QUERY para histórico
+  const [queryHistorico, setQueryHistorico] = useState(
+    `pedido_agregacion?estado_pedido_agregacion=aceptado&estado_pedido_agregacion=rechazado`
+  )
+
+  const {
+    data: dataFiltrada,
+    loading: loadingFiltrado,
+    error: errorFiltrado,
+  } = getFilter<PedidoAgregacion>(queryHistorico, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setBusco(true)
+
+    const params = new URLSearchParams()
+
+    // Estado
+    if (estadoFilter) {
+      params.append("estado_pedido_agregacion", estadoFilter)
+    } else {
+      // Si no elige estado, mostrar ambos
+      params.append("estado_pedido_agregacion", "aceptado")
+      params.append("estado_pedido_agregacion", "rechazado")
+    }
+
+    // Dificultad
+    if (dificultadFilter > 0) {
+      params.append("dificultad_pedido_agregacion", dificultadFilter.toString())
+    }
+
+    const nuevaUrl = `pedido_agregacion?${params.toString()}`
+    setQueryHistorico(nuevaUrl)
+  }
+
   const { data, loading, error } = get<PedidoAgregacion>('pedido_agregacion', {
     headers: { Authorization: `Bearer ${token}` },
   })
+
+  const pedidosFiltrados = data
+    ?.filter((p) =>
+      ['aceptado', 'rechazado'].includes(p.estado_pedido_agregacion)
+    )
+    ?.filter((p) =>
+      estadoFilter ? p.estado_pedido_agregacion === estadoFilter : true
+    )
+    ?.filter((p) =>
+      dificultadFilter > 0
+        ? Number(p.dificultad_pedido_agregacion) === dificultadFilter
+        : true
+    )
 
   return (
     <div className="mb-4 border-bottom border-2 ShowPedidosAgregacionOperador">
       <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
         <h2 className="m-0 flex-shrink-0">Histórico de Pedidos de Agregación de Anomalías</h2>
+
+        <form onSubmit={handleSearch} className="d-flex gap-3 align-items-center p-3 px-4">
+
+          {/* FILTRO ESTADO */}
+          <select
+            className="form-select w-auto"
+            value={estadoFilter}
+            onChange={(e) => setEstadoFilter(e.target.value)}
+          >
+            <option value="">Estado: Todos</option>
+            <option value="aceptado">Aceptado</option>
+            <option value="rechazado">Rechazado</option>
+          </select>
+
+          {/* FILTRO DIFICULTAD */}
+          <select
+            className="form-select w-auto"
+            value={dificultadFilter}
+            onChange={(e) => setDificultadFilter(Number(e.target.value))}
+          >
+            <option value={0}>Dificultad: Todas</option>
+            <option value={1}>Nivel 1</option>
+            <option value={2}>Nivel 2</option>
+            <option value={3}>Nivel 3</option>
+          </select>
+
+          <button className="btn btn-success px-4" type="submit">
+            Buscar
+          </button>
+        </form>
       </div>
 
       {loading && (
@@ -23,16 +109,30 @@ export function ShowPedidosAgregacionOperador() {
       )}
       {error && <Alert variant="danger">Error al cargar pedidos: {error}</Alert>}
 
-      {!loading && !error && data?.length === 0 && (
-        <Alert variant="info" className="m-3">
-          No hay pedidos de agregación aceptados o rechazados.
-        </Alert>
+      {!loading && !error && (
+        <>
+          {/* Si todavía no buscó, mostrar cartel SOLO si no hay datos reales */}
+          {!busco && data && data.filter(
+            (p) => p.estado_pedido_agregacion === 'aceptado' || p.estado_pedido_agregacion === 'rechazado'
+          ).length === 0 && (
+            <Alert variant="info" className="m-3">
+              No hay pedidos de agregación aceptados o rechazados.
+            </Alert>
+          )}
+
+          {/* Si ya buscó, mostrar cartel si filtro no trajo nada */}
+          {busco && dataFiltrada?.length === 0 && (
+            <Alert variant="info" className="m-3">
+              No hay pedidos que coincidan con el filtro seleccionado.
+            </Alert>
+          )}
+        </>
       )}
 
       {!loading && !error && data?.length > 0 && (
         <div className="accordion my-0 mx-4">
           <Accordion>
-            {data
+            {(dataFiltrada ?? data)
               .filter(
                 (unPedido) =>
                   unPedido.estado_pedido_agregacion === 'aceptado' ||

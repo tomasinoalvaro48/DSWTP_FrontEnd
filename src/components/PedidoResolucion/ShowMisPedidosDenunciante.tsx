@@ -151,7 +151,7 @@ export function ShowMisPedidosDenunciante() {
                               </div>
                               <div className="col-md-3">
                                 <strong>Nivel: </strong>
-                                {}
+                                {unPedido.cazador?.nivel_cazador}
                               </div>
                             </div>
                           </div>

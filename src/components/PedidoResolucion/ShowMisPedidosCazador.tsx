@@ -442,10 +442,10 @@ export function ShowMisPedidos() {
               {/* Dificultad */}
               <div className="d-flex align-items-center gap-3">
                 <label htmlFor="dificultad" className="mb-0">
-                  <strong>Dificultad:</strong>
+                  <strong>Dificultad (≥):</strong>
                 </label>
                 <span style={{ minWidth: '40px', textAlign: 'center' }}>
-                  {dificultadMostrada === 0 ? '0' : dificultadMostrada}
+                  {dificultadMostrada === 0 ? 'No seleccionada' : dificultadMostrada}
                 </span>
                 <input
                   id="dificultad"

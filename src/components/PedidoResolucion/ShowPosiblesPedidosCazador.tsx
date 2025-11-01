@@ -110,7 +110,7 @@ export function ShowPosiblesPedidos() {
             {/* Slider de dificultad */}
             <div className="d-flex align-items-center">
               <label htmlFor="dificultad" className="me-2 mb-0 strong">
-                <strong> Dificultad (≤): </strong>
+                <strong> Dificultad (≥): </strong>
               </label>
               <span className="ms-2" style={{ minWidth: '100px', display: 'inline-block' }}>
                 {dificultadMostrada === 0 ? 'No seleccionada' : dificultadMostrada}
@@ -179,22 +179,24 @@ export function ShowPosiblesPedidos() {
             {pedido_resolucion?.map((unPedido) => (
               <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
                 <Accordion.Header>
-                  <div className="d-flex justify-content-between w-100 align-items-center">
-                    <div>
+                  <div className="row w-100 text-start">
+                    <div className="col-4">
                       <strong>Localidad: </strong> {unPedido.zona.localidad.nombre_localidad} <br />
                       <strong>Zona: </strong> {unPedido.zona.nombre_zona}
                     </div>
 
-                    <div>
+                    <div className="col-3">
                       <strong>Dificultad: </strong> {unPedido.dificultad_pedido_resolucion}
                     </div>
 
-                    <div>
+                    <div className="col-4">
                       <strong>Fecha Realiz: </strong>{' '}
                       {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString('es-AR')}
                     </div>
 
-                    <div>Detalle</div>
+                    <div className="col-1">
+                      Detalle
+                    </div>
                   </div>
                 </Accordion.Header>
                 <Accordion.Body>

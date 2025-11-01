@@ -1,15 +1,52 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
-import { get } from '../../api/dataManager.ts'
+import { get, getFilter } from '../../api/dataManager.ts'
 import { BACKEND_URL } from '../../../endpoints.config.ts'
 import type { PedidoAgregacion } from '../../entities/entities.ts'
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
 export function ShowPedidosAgregacion() {
   const token = localStorage.getItem('token')
+
+  const [estadoFilter, setEstadoFilter] = useState('')
+  const [dificultadFilter, setDificultadFilter] = useState(0)
+  const [busco, setBusco] = useState(false)
+  const [query, setQuery] = useState(`pedido_agregacion`)
+
   const { data, loading, error } = get<PedidoAgregacion>('pedido_agregacion', {
     headers: { Authorization: `Bearer ${token}` },
   })
+
+  const {
+    data: dataFiltrada,
+    loading: loadingFiltrado,
+    error: errorFiltrado,
+  } = getFilter<PedidoAgregacion>(query, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setBusco(true)
+
+    const params = new URLSearchParams()
+
+    // Estado
+    if (estadoFilter) {
+      params.append("estado_pedido_agregacion", estadoFilter)
+    }
+
+    // Dificultad
+    if (dificultadFilter > 0) {
+      params.append("dificultad_pedido_agregacion", dificultadFilter.toString())
+    }
+
+    const nuevaUrl = `pedido_agregacion?${params.toString()}`
+    setQuery(nuevaUrl)
+  }
+
+  const pedidos = busco ? dataFiltrada : data
 
   return (
     <div className="mb-4 border-bottom border-2 ShowPedidosAgregacion">
@@ -21,24 +58,56 @@ export function ShowPedidosAgregacion() {
         </Link>
       </div>
 
-      {loading && (
+      <div className="bg-body-tertiary d-flex align-items-center px-4 py-0 flex-wrap gap-2">
+        <h6 className="m-0">Filtrar:</h6>
+        <form onSubmit={handleSearch} className="d-flex gap-3 align-items-center p-3 px-4">
+          <select
+            className="form-select w-auto"
+            value={estadoFilter}
+            onChange={(e) => setEstadoFilter(e.target.value)}
+          >
+            <option value="">Estado: Todos</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="aceptado">Aceptado</option>
+            <option value="rechazado">Rechazado</option>
+          </select>
+
+          <select
+            className="form-select w-auto"
+            value={dificultadFilter}
+            onChange={(e) => setDificultadFilter(Number(e.target.value))}
+          >
+            <option value={0}>Dificultad: Todas</option>
+            <option value={1}>Nivel 1</option>
+            <option value={2}>Nivel 2</option>
+            <option value={3}>Nivel 3</option>
+          </select>
+
+          <button className="btn btn-success px-4" type="submit">
+            Buscar
+          </button>
+        </form>
+      </div>
+
+      {(loading || loadingFiltrado) && (
         <div className="d-flex align-items-center">
           <Spinner animation="border" role="status" size="sm" className="me-2" />
           <span>Cargando pedidos...</span>
         </div>
       )}
-      {error && <Alert variant="danger">Error al cargar pedidos: {error}</Alert>}
 
-      {!loading && !error && data?.length === 0 && (
+      {(error || errorFiltrado) && <Alert variant="danger">Error al cargar pedidos</Alert>}
+
+      {!loading && !error && pedidos?.length === 0 && (
         <Alert variant="info" className="m-3">
-          No tenés pedidos de agregación de anomalías.
+          No hay pedidos que coincidan con el filtro seleccionado.
         </Alert>
       )}
 
-      {!loading && !error && data?.length > 0 && (
+      {!loading && !error && pedidos?.length > 0 && (
         <div className="accordion my-0 mx-4">
           <Accordion>
-            {data.map((unPedido) => (
+            {pedidos.map((unPedido) => (
               <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
                 <Accordion.Header>
                   <div className="d-flex w-100 align-items-center">
