@@ -5,6 +5,7 @@ interface BaseDTO {
 interface TipoAnomalia extends BaseDTO {
   nombre_tipo_anomalia: string
   dificultad_tipo_anomalia: number
+  pedido_agregacion?: PedidoAgregacion | null
 }
 
 interface Denunciante extends BaseDTO {
