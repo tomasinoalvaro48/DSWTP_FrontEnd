@@ -1,54 +1,80 @@
-# React + TypeScript + Vite
+# Sistema de Resolución de Anomalías - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Contenidos
 
-Currently, two official plugins are available:
+- [Tecnologías](#tecnologías)
+- [Instalación](#instalación)
+- [Ejecución](#ejecución)
+- [Scripts Disponibles](#scripts)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologías
 
-## Expanding the ESLint configuration
+| Tecnología   | Versión |
+| ------------ | ------- |
+| PNPM         | 10.6.5  |
+| Node.js      | 18      |
+| TypeScript   | ~5.8.3  |
+| React        | 19.1.0  |
+| Vite         | 6.3.5   |
+| React Router | 7.9.1   |
+| Bootstrap    | 5.3.7   |
+| Axios        | 1.11.0  |
+| ESLint       | 9.33.0  |
+| Prettier     | 3.6.2   |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Instalación
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tomasinoalvaro48/DSWTP_FrontEnd.git
+cd DSWTP_FrontEnd
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Instalar dependencias
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+pnpm install
 ```
+
+### 3. Configurar el endpoint del backend
+
+Crea y edita el archivo `endpoints.config.ts`:
+
+```typescript
+const FRONTEND_PORT = 5173
+const BACKEND_URL = 'http://localhost:3000'
+
+export { FRONTEND_PORT, BACKEND_URL }
+```
+
+### 4. Ejecutar el proyecto
+
+```bash
+pnpm dev
+```
+
+La aplicación estará disponible en `http://localhost:5173`
+
+## Ejecución
+
+### Modo Desarrollo
+
+```bash
+pnpm dev
+```
+
+Este comando inicia el servidor de desarrollo con hot-reload en `http://localhost:5173`
+
+### Modo Producción
+
+```bash
+pnpm build
+```
+
+## Scripts
+
+| Script  | Comando      | Descripción                                        |
+| ------- | ------------ | -------------------------------------------------- |
+| `dev`   | `pnpm dev`   | Inicia el servidor de desarrollo con hot-reload    |
+| `build` | `pnpm build` | Compila TypeScript y genera el build de producción |
