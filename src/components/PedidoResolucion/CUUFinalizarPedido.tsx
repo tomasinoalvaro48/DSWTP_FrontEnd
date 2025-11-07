@@ -11,31 +11,25 @@ export function FinalizarPedido() {
   })
 
   const [showModalAlert, setShowModalAlert] = useState(false)
-  const [modalBody, setModalBody] = useState("")
+  const [modalBody, setModalBody] = useState('')
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     try {
       const body =
-        pedido_resolucion.comentario_pedido_resolucion.trim() === ''
-          ? {}
-          : pedido_resolucion
+        pedido_resolucion.comentario_pedido_resolucion.trim() === '' ? {} : pedido_resolucion
 
-      const response = await patch(
-        `pedido_resolucion/finalizar-pedido-resolucion/${id}`,
-        body
-      )
+      const response = await patch(`pedido_resolucion/finalizar-pedido-resolucion/${id}`, body)
 
       if (response.status === 200) {
-        setModalBody("Pedido finalizado correctamente.")
+        setModalBody('Pedido finalizado correctamente.')
         setShowModalAlert(true)
       }
     } catch (err: any) {
-      console.error("Error al finalizar pedido:", err)
+      console.error('Error al finalizar pedido:', err)
       setModalBody(
-        err?.response?.data?.message ??
-        "Ocurrió un error al intentar finalizar el pedido."
+        err?.response?.data?.message ?? 'Ocurrió un error al intentar finalizar el pedido.'
       )
       setShowModalAlert(true)
     }
