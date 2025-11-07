@@ -67,10 +67,7 @@ export function AddTiposAnomalias() {
 
               <div className="row gy-2 justify-content-between">
                 <div className="col-12 col-md-5">
-                  <Link
-                    className="btn btn-secondary w-100"
-                    to="/show-tipo-anomalia"
-                  >
+                  <Link className="btn btn-secondary w-100" to="/show-tipo-anomalia">
                     Cancelar
                   </Link>
                 </div>
