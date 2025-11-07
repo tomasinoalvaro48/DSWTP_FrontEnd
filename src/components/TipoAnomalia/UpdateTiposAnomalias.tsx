@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { getOne, patch } from '../../api/dataManager.ts'
+import ModalAlert from '../ModalAlert.tsx'
 import type { TipoAnomalia } from '../../entities/entities.ts'
 
 export function UpdateTiposAnomalias() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { data } = getOne<TipoAnomalia>('tipo_anomalia/' + id)
+  const [modalAlert, setModalAlert] = useState(false)
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
 
   const [tipoToUpdate, setTipoToUpdate] = useState<TipoAnomalia>({
     id: '',
@@ -30,11 +34,9 @@ export function UpdateTiposAnomalias() {
       await patch('tipo_anomalia/' + id, tipoToUpdate)
       navigate('/show-tipo-anomalia')
     } catch (err: any) {
-      console.error('Error al actualizar tipo de anomalía:', err)
-      alert(
-        err?.response?.data?.message ??
-          'No se pudo actualizar el tipo de anomalía.'
-      )
+      setTitle('Nombre de Tipo de Anomalía Duplicado')
+      setBody('El nombre del tipo de anomalía ya existe. Por favor, elija otro nombre.')
+      setModalAlert(true)
     }
   }
 
@@ -43,6 +45,9 @@ export function UpdateTiposAnomalias() {
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-6">
           <div className="d-flex flex-column bg-light p-4 border rounded shadow-sm">
+            {modalAlert && (
+              <ModalAlert title={title} body={body} setShowModalAlert={setModalAlert} />
+            )}
             <h1 className="text-center mb-4">Editar Tipo de Anomalía</h1>
 
             <form className="d-flex flex-column" onSubmit={handleUpdate}>
@@ -89,10 +94,7 @@ export function UpdateTiposAnomalias() {
 
               <div className="row gy-2 justify-content-between">
                 <div className="col-12 col-md-5">
-                  <Link
-                    className="btn btn-secondary w-100"
-                    to="/show-tipo-anomalia"
-                  >
+                  <Link className="btn btn-secondary w-100" to="/show-tipo-anomalia">
                     Cancelar
                   </Link>
                 </div>
