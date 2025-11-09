@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { remove } from '../api/dataManager.ts'
+import ModalAlert from './ModalAlert.tsx'
 
 interface Props {
   idToDelete: string
@@ -10,19 +11,32 @@ interface Props {
 
 const DeleteEntityButton = ({ idToDelete, nameToDelete, route }: Props) => {
   const [show, setShow] = useState(false)
+  const [showModalAlert, setShowModalAlert] = useState(false)
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
   // Función para manejar la eliminación
-  function handleDelete() {
-    remove(`${route}/${idToDelete}`)
+  async function handleDelete() {
+    const message = await remove(`${route}/${idToDelete}`)
     handleClose()
-    location.reload()
+    setTitle(message)
+    setBody(message)
+    setShowModalAlert(true)
   }
 
   return (
     <>
+      {showModalAlert && (
+        <ModalAlert
+          title={title}
+          body={body}
+          setShowModalAlert={setShowModalAlert}
+          navigateOnClose="reload"
+        />
+      )}
       <button className="btn btn-sm btn-outline-danger" onClick={handleShow}>
         Eliminar
       </button>
@@ -32,7 +46,7 @@ const DeleteEntityButton = ({ idToDelete, nameToDelete, route }: Props) => {
           <Modal.Title>Confirmar eliminación</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Está seguro que desea eliminar esta entidad: <strong>{nameToDelete}</strong>?
+          ¿Está seguro que desea eliminar <strong>{nameToDelete}</strong>?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

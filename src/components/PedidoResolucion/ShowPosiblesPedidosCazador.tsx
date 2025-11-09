@@ -90,7 +90,7 @@ export function ShowPosiblesPedidos() {
         </div>
       )}
       {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
-      
+
       {errorTakePedido && (
         <div
           className="alert alert-danger alert-dismissible fade show text-center fw-semibold"
@@ -154,7 +154,7 @@ export function ShowPosiblesPedidos() {
 
             {/* Botón buscar */}
             <button className="btn btn-success" type="submit">
-              Search
+              Buscar
             </button>
           </form>
         </nav>
@@ -171,11 +171,13 @@ export function ShowPosiblesPedidos() {
         <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error}</Alert>
       )}
 
-      {!pedido_resolucion_loading && !pedido_resolucion_error && pedido_resolucion?.length === 0 && (
-        <Alert variant="info" className="m-3">
-          No hay pedidos de resolución para tomar.
-        </Alert>
-      )}
+      {!pedido_resolucion_loading &&
+        !pedido_resolucion_error &&
+        pedido_resolucion?.length === 0 && (
+          <Alert variant="info" className="m-3">
+            No hay pedidos de resolución para tomar.
+          </Alert>
+        )}
 
       {!pedido_resolucion_loading && !pedido_resolucion_error && pedido_resolucion && (
         <div className="accordion my-3 mx-4">
@@ -198,9 +200,7 @@ export function ShowPosiblesPedidos() {
                       {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString('es-AR')}
                     </div>
 
-                    <div className="col-1">
-                      Detalle
-                    </div>
+                    <div className="col-1">Detalle</div>
                   </div>
                 </Accordion.Header>
                 <Accordion.Body>

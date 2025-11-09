@@ -96,11 +96,10 @@ async function postAuth(email: string, password: string) {
 // delete function:
 async function remove(url: string) {
   try {
-    await axios.delete(`${BACKEND_URL}/api/${url}`)
+    const res = await axios.delete(`${BACKEND_URL}/api/${url}`)
+    return res.data.message
   } catch (err: any) {
-    console.log(err.message)
-  } finally {
-    console.log('Delete request completed')
+    return err.response.data.message
   }
 }
 
@@ -122,7 +121,6 @@ function getFilter<T>(url: string, config?: object) {
         setError(err.message)
       } finally {
         setLoading(false)
-        console.log('Data request completed', url)
       }
     }
 

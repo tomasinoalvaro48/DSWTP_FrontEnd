@@ -34,12 +34,12 @@ export function ShowPedidosAgregacion() {
 
     // Estado
     if (estadoFilter) {
-      params.append("estado_pedido_agregacion", estadoFilter)
+      params.append('estado_pedido_agregacion', estadoFilter)
     }
 
     // Dificultad
     if (dificultadFilter > 0) {
-      params.append("dificultad_pedido_agregacion", dificultadFilter.toString())
+      params.append('dificultad_pedido_agregacion', dificultadFilter.toString())
     }
 
     const nuevaUrl = `pedido_agregacion?${params.toString()}`
@@ -47,7 +47,7 @@ export function ShowPedidosAgregacion() {
   }
 
   const pedidos = busco ? dataFiltrada : data
-  
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
@@ -306,14 +306,15 @@ export function ShowPedidosAgregacion() {
                       </div>
                     </div>
 
-                    {/* Botón de eliminar */}
-                    <div className="text-center mt-4">
-                      <DeleteEntityButton
-                        idToDelete={unPedido.id}
-                        nameToDelete={unPedido.descripcion_pedido_agregacion}
-                        route={'pedido_agregacion'}
-                      />
-                    </div>
+                    {unPedido.estado_pedido_agregacion === 'pendiente' && (
+                      <div className="text-center mt-4">
+                        <DeleteEntityButton
+                          idToDelete={unPedido.id}
+                          nameToDelete={unPedido.descripcion_pedido_agregacion}
+                          route={'pedido_agregacion'}
+                        />
+                      </div>
+                    )}
                   </div>
                 </Accordion.Body>
               </Accordion.Item>
