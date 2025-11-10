@@ -6,6 +6,7 @@
 - [Instalación](#instalación)
 - [Ejecución](#ejecución)
 - [Scripts Disponibles](#scripts)
+- [Ejecución de Tests](#ejecución-de-tests)
 
 ## Tecnologías
 
@@ -78,3 +79,11 @@ pnpm build
 | ------- | ------------ | -------------------------------------------------- |
 | `dev`   | `pnpm dev`   | Inicia el servidor de desarrollo con hot-reload    |
 | `build` | `pnpm build` | Compila TypeScript y genera el build de producción |
+
+## Ejecución de Tests
+
+[Videos de Ejecución de Tests](https://drive.google.com/drive/folders/1NDyjkOL_AKKLR-kaGWmaDavEDl680VbS?usp=sharing)
+
+Los tests del Frontend se encuentran disponibles en la rama:
+
+- "tests" (para tests de integración)
