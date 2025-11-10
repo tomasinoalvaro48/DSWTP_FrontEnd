@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext.tsx'
-import { BACKEND_URL } from '../../../endpoints.config'
 
 export function DeleteAccount() {
   const { token, logout, userRol } = useAuth()
@@ -20,9 +19,12 @@ export function DeleteAccount() {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`${BACKEND_URL}/api/auth/delete-account`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/delete-account`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
 
       showMessage(response.data.message, 'success')
       setShowModal(true)
@@ -50,7 +52,7 @@ export function DeleteAccount() {
     logout()
     navigate('/')
   }
-    
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])

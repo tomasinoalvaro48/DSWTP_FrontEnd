@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, patch } from '../../api/dataManager.ts'
-import { BACKEND_URL } from '../../../endpoints.config.ts'
 import type { PedidoAgregacion } from '../../entities/entities.ts'
 
 export function TomarPedidosAgregacion() {
@@ -52,11 +51,13 @@ export function TomarPedidosAgregacion() {
       )}
       {error && <Alert variant="danger">Error al cargar pedidos: {error}</Alert>}
 
-      {!loading && !error && data?.filter((p) => p.estado_pedido_agregacion === 'pendiente').length === 0 && (
-        <Alert variant="info" className="m-3">
-          No hay pedidos de agregación pendientes.
-        </Alert>
-      )}
+      {!loading &&
+        !error &&
+        data?.filter((p) => p.estado_pedido_agregacion === 'pendiente').length === 0 && (
+          <Alert variant="info" className="m-3">
+            No hay pedidos de agregación pendientes.
+          </Alert>
+        )}
 
       {!loading && !error && data?.length > 0 && (
         <div className="accordion my-0 mx-4">
@@ -179,7 +180,7 @@ export function TomarPedidosAgregacion() {
                                                 .toLowerCase()
                                                 .endsWith('.pdf') ? (
                                                 <iframe
-                                                  src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                  src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                   width="100%"
                                                   height="350px"
                                                   title="PDF Preview"
@@ -189,7 +190,7 @@ export function TomarPedidosAgregacion() {
                                                   /\.(jpg|jpeg|png|gif|webp)$/i
                                                 ) ? (
                                                 <img
-                                                  src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                  src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                   alt="Evidencia"
                                                   className="img-fluid border rounded w-100"
                                                   style={{
@@ -206,14 +207,14 @@ export function TomarPedidosAgregacion() {
                                                   style={{ maxHeight: '350px' }}
                                                 >
                                                   <source
-                                                    src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                    src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                     type={`video/${e.archivo_evidencia.split('.').pop()}`}
                                                   />
                                                   Tu navegador no soporta el elemento de video.
                                                 </video>
                                               ) : (
                                                 <a
-                                                  href={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                  href={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                   target="_blank"
                                                   rel="noopener noreferrer"
                                                   className="btn btn-sm btn-outline-primary"

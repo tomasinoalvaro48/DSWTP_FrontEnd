@@ -1,11 +1,14 @@
-import { defineConfig } from 'vite'
+import 'dotenv/config'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
-import { FRONTEND_PORT } from './endpoints.config.ts'
 
 // https://vite.dev/config/
-export default defineConfig({
-  server: {
-    port: FRONTEND_PORT,
-  },
-  plugins: [react()],
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  return {
+    server: {
+      port: Number(env.VITE_PORT),
+    },
+    plugins: [react()],
+  }
 })

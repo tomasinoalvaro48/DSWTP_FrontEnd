@@ -4,6 +4,7 @@
 
 - [Tecnologías](#tecnologías)
 - [Instalación](#instalación)
+- [Configuración](#configuración)
 - [Ejecución](#ejecución)
 - [Scripts Disponibles](#scripts)
 - [Ejecución de Tests](#ejecución-de-tests)
@@ -38,16 +39,21 @@ cd DSWTP_FrontEnd
 pnpm install
 ```
 
-### 3. Configurar el endpoint del backend
+### 3. Configurar variables de entorno
 
-Crea y edita el archivo `endpoints.config.ts`:
+Crea el archivo .env y configura tus variables:
 
-```typescript
-const FRONTEND_PORT = 5173
-const BACKEND_URL = 'http://localhost:3000'
+Edita el archivo `.env`:
 
-export { FRONTEND_PORT, BACKEND_URL }
+```env
+# Puerto del frontend
+VITE_PORT=5173
+
+# URL del backend
+VITE_BACKEND_URL=http://localhost:3000
 ```
+
+**Nota**: Las variables de entorno en Vite deben tener el prefijo `VITE_` para ser accesibles en el código cliente.
 
 ### 4. Ejecutar el proyecto
 
@@ -75,10 +81,13 @@ pnpm build
 
 ## Scripts
 
-| Script  | Comando      | Descripción                                        |
-| ------- | ------------ | -------------------------------------------------- |
-| `dev`   | `pnpm dev`   | Inicia el servidor de desarrollo con hot-reload    |
-| `build` | `pnpm build` | Compila TypeScript y genera el build de producción |
+| Script    | Comando        | Descripción                                        |
+| --------- | -------------- | -------------------------------------------------- |
+| `dev`     | `pnpm dev`     | Inicia el servidor de desarrollo con hot-reload    |
+| `build`   | `pnpm build`   | Compila TypeScript y genera el build de producción |
+| `preview` | `pnpm preview` | Previsualiza el build de producción localmente     |
+| `lint`    | `pnpm lint`    | Ejecuta ESLint para verificar calidad del código   |
+| `format`  | `pnpm format`  | Formatea el código con Prettier                    |
 
 ## Ejecución de Tests
 

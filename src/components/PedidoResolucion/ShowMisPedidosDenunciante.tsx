@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Button, Modal, Badge } from 'react-bootstrap'
 import { get } from '../../api/dataManager.ts'
-import { BACKEND_URL } from '../../../endpoints.config.ts'
 import type { PedidoResolucion } from '../../entities/entities.ts'
 
 export function ShowMisPedidosDenunciante() {
@@ -30,10 +29,13 @@ export function ShowMisPedidosDenunciante() {
   async function handleEliminarPedido() {
     if (!pedidoAEliminar) return
     try {
-      await axios.delete(`${BACKEND_URL}/api/pedido_resolucion/denunciante/${pedidoAEliminar.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-        data: { user: { id: pedidoAEliminar.denunciante?.id } },
-      })
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/pedido_resolucion/denunciante/${pedidoAEliminar.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          data: { user: { id: pedidoAEliminar.denunciante?.id } },
+        }
+      )
       setMensaje('Pedido eliminado correctamente.')
       setShowModal(false)
 

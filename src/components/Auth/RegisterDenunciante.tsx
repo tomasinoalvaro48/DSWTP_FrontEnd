@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { BACKEND_URL } from '../../../endpoints.config'
 
 export function RegisterDenunciante() {
   const [form, setForm] = useState({
@@ -33,9 +32,21 @@ export function RegisterDenunciante() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const { nombre_apellido_denunciante, telefono_denunciante, email_denunciante, password_denunciante, confir_password } = form
+    const {
+      nombre_apellido_denunciante,
+      telefono_denunciante,
+      email_denunciante,
+      password_denunciante,
+      confir_password,
+    } = form
 
-    if (!nombre_apellido_denunciante || !telefono_denunciante || !email_denunciante || !password_denunciante || !confir_password) {
+    if (
+      !nombre_apellido_denunciante ||
+      !telefono_denunciante ||
+      !email_denunciante ||
+      !password_denunciante ||
+      !confir_password
+    ) {
       showMessage('Debe completar todos los campos', 'warning')
       return
     }
@@ -51,7 +62,7 @@ export function RegisterDenunciante() {
     }
 
     try {
-      await axios.post(`${BACKEND_URL}/api/auth/register-denunciante`, form)
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register-denunciante`, form)
       setMessage('Se ha registrado como denunciante.')
       setMessageType('success')
       setShowModal(true)
@@ -70,9 +81,17 @@ export function RegisterDenunciante() {
       <h3 className="mb-3 text-center">Registrarse como Denunciante</h3>
 
       {message && messageType !== 'success' && (
-        <div className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`} role="alert">
+        <div
+          className={`alert alert-${messageType} alert-dismissible fade show text-center fw-semibold`}
+          role="alert"
+        >
           {message}
-          <button type="button" className="btn-close" onClick={() => setMessage(null)} aria-label="Cerrar"></button>
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setMessage(null)}
+            aria-label="Cerrar"
+          ></button>
         </div>
       )}
 
@@ -174,12 +193,19 @@ export function RegisterDenunciante() {
       </div>
 
       {showModal && (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+        <div
+          className="modal fade show"
+          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+        >
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header bg-success text-white">
                 <h5 className="modal-title">Registro exitoso</h5>
-                <button type="button" className="btn-close btn-close-white" onClick={handleCloseModal}></button>
+                <button
+                  type="button"
+                  className="btn-close btn-close-white"
+                  onClick={handleCloseModal}
+                ></button>
               </div>
               <div className="modal-body text-center">
                 <p className="fw-semibold mb-0">{message}</p>

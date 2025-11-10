@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, getFilter } from '../../api/dataManager.ts'
 import type { PedidoAgregacion } from '../../entities/entities.ts'
-import { BACKEND_URL } from '../../../endpoints.config.ts'
 
 export function ShowPedidosAgregacionOperador() {
   const token = localStorage.getItem('token')
@@ -26,14 +25,14 @@ export function ShowPedidosAgregacionOperador() {
     const params = new URLSearchParams()
 
     if (estadoFilter) {
-      params.append("estado_pedido_agregacion", estadoFilter)
+      params.append('estado_pedido_agregacion', estadoFilter)
     } else {
-      params.append("estado_pedido_agregacion", "aceptado")
-      params.append("estado_pedido_agregacion", "rechazado")
+      params.append('estado_pedido_agregacion', 'aceptado')
+      params.append('estado_pedido_agregacion', 'rechazado')
     }
 
     if (dificultadFilter > 0) {
-      params.append("dificultad_pedido_agregacion", dificultadFilter.toString())
+      params.append('dificultad_pedido_agregacion', dificultadFilter.toString())
     }
 
     const nuevaUrl = `pedido_agregacion?${params.toString()}`
@@ -91,13 +90,17 @@ export function ShowPedidosAgregacionOperador() {
 
       {!loading && !error && (
         <>
-          {!busco && data && data.filter(
-            (p) => p.estado_pedido_agregacion === 'aceptado' || p.estado_pedido_agregacion === 'rechazado'
-          ).length === 0 && (
-            <Alert variant="info" className="m-3">
-              No hay pedidos de agregación aceptados o rechazados.
-            </Alert>
-          )}
+          {!busco &&
+            data &&
+            data.filter(
+              (p) =>
+                p.estado_pedido_agregacion === 'aceptado' ||
+                p.estado_pedido_agregacion === 'rechazado'
+            ).length === 0 && (
+              <Alert variant="info" className="m-3">
+                No hay pedidos de agregación aceptados o rechazados.
+              </Alert>
+            )}
 
           {busco && dataFiltrada?.length === 0 && (
             <Alert variant="info" className="m-3">
@@ -262,7 +265,7 @@ export function ShowPedidosAgregacionOperador() {
                                                 .toLowerCase()
                                                 .endsWith('.pdf') ? (
                                                 <iframe
-                                                  src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                  src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                   width="100%"
                                                   height="350px"
                                                   title="PDF Preview"
@@ -272,7 +275,7 @@ export function ShowPedidosAgregacionOperador() {
                                                   /\.(jpg|jpeg|png|gif|webp)$/i
                                                 ) ? (
                                                 <img
-                                                  src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                  src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                   alt="Evidencia"
                                                   className="img-fluid border rounded w-100"
                                                   style={{
@@ -289,14 +292,14 @@ export function ShowPedidosAgregacionOperador() {
                                                   style={{ maxHeight: '350px' }}
                                                 >
                                                   <source
-                                                    src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                    src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                     type={`video/${e.archivo_evidencia.split('.').pop()}`}
                                                   />
                                                   Tu navegador no soporta el elemento de video.
                                                 </video>
                                               ) : (
                                                 <a
-                                                  href={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                  href={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                   target="_blank"
                                                   rel="noopener noreferrer"
                                                   className="btn btn-sm btn-outline-primary"

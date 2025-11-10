@@ -5,7 +5,7 @@ export function PublicHome() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
-  
+
   return (
     <div className="container text-center mt-5 mb-5">
       <div className="text-center mb-4">
@@ -15,7 +15,7 @@ export function PublicHome() {
         <h4 className="text-muted mb-3">No solo cazamos fantasmas</h4>
       </div>
 
-      <img src="/logo.png" alt="Logo" width="250" height="250" className="mb-4" />
+      <img src="/src/imagenes/logo.png" alt="Logo" width="250" height="250" className="mb-4" />
 
       <p className="mb-4">Iniciá sesión para empezar a denunciar o resolver anomalías.</p>
 

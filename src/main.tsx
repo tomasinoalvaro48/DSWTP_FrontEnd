@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AuthProvider } from './auth/AuthContext.tsx'
 import App from './App.tsx'
-import '../endpoints.config.ts'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 // Importar estilos Bootstrap

@@ -112,7 +112,7 @@ export function MainNavbar() {
     <Navbar expand="lg" className="bg-light shadow-sm sticky-top">
       <Container fluid className="align-items-center">
         <NavLink to="/" className="d-flex align-items-center text-decoration-none me-3">
-          <img src="/logo.png" alt="Logo" width="60" height="60" className="me-2" />
+          <img src="/src/imagenes/logo.png" alt="Logo" width="60" height="60" className="me-2" />
           <span className="fw-bold fs-5 text-dark">Resolución de Anomalías</span>
         </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

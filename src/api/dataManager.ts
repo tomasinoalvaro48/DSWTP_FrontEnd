@@ -1,21 +1,11 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { BACKEND_URL } from '../../endpoints.config.ts'
 
 // Definición de las funciones para manejar las operaciones CRUD.
 
 // Usé generics para que las funciones sean reutilizables con diferentes tipos de datos
 // Cuando se llame a la función (usando import { get, post, patch, remove } from './api/dataManager.ts')
 // se debe especificar el tipo de dato que se espera (por ejemplo, get<TipoAnomalia>("tipo_anomalia"))
-
-// Controlador global de recargas
-/*
-let reloadListeners: (() => void)[] = [];
-
-export function triggerReload() {
-  reloadListeners.forEach(listener => listener());
-}
-*/
 
 // get function:
 function get<T>(url: string, config?: object) {
@@ -27,7 +17,7 @@ function get<T>(url: string, config?: object) {
   }, [])
   const fetchAll = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/${url}`, config)
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/${url}`, config)
       setData(response.data.data)
     } catch (err: any) {
       setError(err.message)
@@ -47,7 +37,7 @@ function getOne<T>(url: string) {
   }, [])
   async function fetchOne() {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/${url}`)
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/${url}`)
       setData(response.data.data)
     } catch (err: any) {
       console.error(err.message)
@@ -61,7 +51,7 @@ function getOne<T>(url: string) {
 //post funtion + config
 async function post<T>(url: string, data: T, config?: object) {
   try {
-    return await axios.post(`${BACKEND_URL}/api/${url}`, data, config)
+    return await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
     console.error(err)
     return err.response
@@ -73,7 +63,7 @@ async function post<T>(url: string, data: T, config?: object) {
 // update function:
 async function patch<T>(url: string, data?: T, config?: object) {
   try {
-    return await axios.patch(`${BACKEND_URL}/api/${url}`, data, config)
+    return await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/${url}`, data, config)
   } catch (err: any) {
     console.error(err.message)
     throw err
@@ -82,7 +72,10 @@ async function patch<T>(url: string, data?: T, config?: object) {
 
 async function postAuth(email: string, password: string) {
   try {
-    const res = await axios.post(`${BACKEND_URL}/api/auth/login`, { email, password })
+    const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+      email,
+      password,
+    })
     return { token: res.data.token, rol: res.data.rol, message: null }
   } catch (err: any) {
     return {
@@ -96,7 +89,7 @@ async function postAuth(email: string, password: string) {
 // delete function:
 async function remove(url: string) {
   try {
-    const res = await axios.delete(`${BACKEND_URL}/api/${url}`)
+    const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/${url}`)
     return res.data.message
   } catch (err: any) {
     return err.response.data.message
@@ -115,7 +108,7 @@ function getFilter<T>(url: string, config?: object) {
       setLoading(true)
       setError(null)
       try {
-        const response = await axios.get(`${BACKEND_URL}/api/${url}`, config)
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/${url}`, config)
         setData(response.data.data)
       } catch (err: any) {
         setError(err.message)

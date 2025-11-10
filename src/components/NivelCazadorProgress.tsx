@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../auth/AuthContext.tsx'
-import { BACKEND_URL } from '../../endpoints.config'
 
 export const NivelCazadorProgress = () => {
   const [nivel, setNivel] = useState<string | null>(null)
@@ -14,7 +13,7 @@ export const NivelCazadorProgress = () => {
       setLoading(true)
       setMessage(null)
       try {
-        const res = await axios.get(`${BACKEND_URL}/api/auth/get-profile`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/get-profile`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         setNivel(res.data.data.nivel_cazador)

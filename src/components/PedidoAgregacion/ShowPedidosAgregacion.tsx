@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Accordion, Spinner, Alert, Badge } from 'react-bootstrap'
 import { get, getFilter } from '../../api/dataManager.ts'
-import { BACKEND_URL } from '../../../endpoints.config.ts'
 import type { PedidoAgregacion } from '../../entities/entities.ts'
 import DeleteEntityButton from '../DeleteEntityButton.tsx'
 
@@ -255,7 +254,7 @@ export function ShowPedidosAgregacion() {
                                           <div className="mt-2">
                                             {e.archivo_evidencia.toLowerCase().endsWith('.pdf') ? (
                                               <iframe
-                                                src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                 width="100%"
                                                 height="350px"
                                                 title="PDF Preview"
@@ -265,7 +264,7 @@ export function ShowPedidosAgregacion() {
                                                 /\.(jpg|jpeg|png|gif|webp)$/i
                                               ) ? (
                                               <img
-                                                src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                 alt="Evidencia"
                                                 className="img-fluid border rounded w-100"
                                                 style={{ maxHeight: '350px', objectFit: 'contain' }}
@@ -277,14 +276,14 @@ export function ShowPedidosAgregacion() {
                                                 style={{ maxHeight: '350px' }}
                                               >
                                                 <source
-                                                  src={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                  src={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                   type={`video/${e.archivo_evidencia.split('.').pop()}`}
                                                 />
                                                 Tu navegador no soporta el elemento de video.
                                               </video>
                                             ) : (
                                               <a
-                                                href={`${BACKEND_URL}${e.archivo_evidencia}`}
+                                                href={`${import.meta.env.VITE_BACKEND_URL}${e.archivo_evidencia}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="btn btn-sm btn-outline-primary"

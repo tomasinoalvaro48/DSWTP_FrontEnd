@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../auth/AuthContext.tsx'
-import { BACKEND_URL } from '../../../endpoints.config'
 
 export function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('')
@@ -40,7 +39,7 @@ export function ChangePassword() {
 
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/api/auth/change-password`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/change-password`,
         { currentPassword, newPassword, confirmNewPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -66,7 +65,7 @@ export function ChangePassword() {
     setShowModal(false)
     navigate('/')
   }
-    
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
@@ -162,11 +161,7 @@ export function ChangePassword() {
                 <p className="fw-semibold mb-0">{message}</p>
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={handleCloseModal}
-                >
+                <button type="button" className="btn btn-success" onClick={handleCloseModal}>
                   Cerrar
                 </button>
               </div>
