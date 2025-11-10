@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import logoImg from '../imagenes/logo.png'
 
 export function PublicHome() {
   useEffect(() => {
@@ -15,7 +16,7 @@ export function PublicHome() {
         <h4 className="text-muted mb-3">No solo cazamos fantasmas</h4>
       </div>
 
-      <img src="/src/imagenes/logo.png" alt="Logo" width="250" height="250" className="mb-4" />
+      <img src={logoImg} alt="Logo" width="250" height="250" className="mb-4" />
 
       <p className="mb-4">Iniciá sesión para empezar a denunciar o resolver anomalías.</p>
 
