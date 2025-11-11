@@ -77,6 +77,7 @@ Este comando inicia el servidor de desarrollo con hot-reload en `http://localhos
 
 ```bash
 pnpm build
+pnpm preview
 ```
 
 ## Scripts
