@@ -32,15 +32,33 @@ export function TomarPedidosAgregacion() {
 
   return (
     <div className="mb-4 border-bottom border-2 TomarPedidosAgregacion">
-      <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
-        <h2 className="m-0 flex-shrink-0">Pedidos de Agregación de Anomalías Pendientes</h2>
+      {/* Header con título y botón */}
+      <div className="bg-body-tertiary border-bottom shadow-sm">
+        <div className="container-fluid px-3 py-4">
+          <div className="row align-items-center g-3">
+            {/* Título */}
+            <div className="col-12 col-lg-7">
+              <h1 className="m-0 fw-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}>
+                <i className="bi bi-clipboard-check me-2"></i>
+                Pedidos de Agregación Pendientes
+              </h1>
+            </div>
 
-        <Link
-          to="/show-pedidos-agregacion-operador"
-          className="btn btn-outline-secondary px-4 py-2 fs-5 rounded-pill shadow-sm"
-        >
-          Ver histórico de pedidos de agregación
-        </Link>
+            {/* Botón */}
+            <div className="col-12 col-lg-5">
+              <div className="d-flex justify-content-lg-end">
+                <Link
+                  to="/show-pedidos-agregacion-operador"
+                  className="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm text-nowrap"
+                  style={{ fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}
+                >
+                  <i className="bi bi-clock-history me-2"></i>
+                  Ver histórico
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {loading && (
@@ -60,79 +78,89 @@ export function TomarPedidosAgregacion() {
         )}
 
       {!loading && !error && data?.length > 0 && (
-        <div className="accordion my-0 mx-4">
+        <div className="accordion my-3 mx-2 mx-md-4">
           <Accordion>
             {data
               .filter((p) => p.estado_pedido_agregacion === 'pendiente')
               .map((p) => (
                 <Accordion.Item eventKey={p.id.toString()} key={p.id}>
                   <Accordion.Header>
-                    <div className="d-flex w-100 align-items-center">
-                      <div
-                        style={{ flexBasis: '30%', overflow: 'hidden', textOverflow: 'ellipsis' }}
-                      >
-                        <strong>Descripción de la anomalía:</strong>{' '}
-                        {p.descripcion_pedido_agregacion}
+                    <div className="w-100">
+                      <div className="row g-2 align-items-center">
+                        {/* Descripción */}
+                        <div className="col-12 col-md-5">
+                          <div className="small">
+                            <strong className="d-block">Descripción:</strong>
+                            <span className="text-muted text-truncate d-block">
+                              {p.descripcion_pedido_agregacion}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Dificultad */}
+                        <div className="col-6 col-md-3">
+                          <Badge bg="info">
+                            Dificultad: Nivel {p.dificultad_pedido_agregacion}
+                          </Badge>
+                        </div>
+
+                        {/* Estado */}
+                        <div className="col-6 col-md-4">
+                          <Badge bg="warning" text="dark">
+                            {p.estado_pedido_agregacion.toUpperCase()}
+                          </Badge>
+                        </div>
                       </div>
-                      <div style={{ flexBasis: '30%', textAlign: 'center' }}>
-                        <strong>Dificultad de la anomalía:</strong> {p.dificultad_pedido_agregacion}
-                      </div>
-                      <div style={{ flexBasis: '30%', textAlign: 'center' }}>
-                        <Badge bg="warning" text="dark">
-                          {p.estado_pedido_agregacion.toUpperCase()}
-                        </Badge>
-                      </div>
-                      <div style={{ flexBasis: '10%', textAlign: 'end' }}>Detalle</div>
                     </div>
                   </Accordion.Header>
 
                   <Accordion.Body>
-                    <div className="container-fluid">
+                    <div className="container-fluid px-2 px-md-3">
                       <div className="row g-4">
-                        {/* Columna izquierda - Información del pedido */}
+                        {/* Información del pedido */}
                         <div className="col-lg-5">
-                          <div className="card border-0 shadow-sm h-100">
-                            <div className="card-header bg-primary text-white">
-                              <h5 className="mb-0">Información del Pedido</h5>
+                          <div className="border rounded-3 p-3 bg-light h-100">
+                            <h5 className="mb-3">
+                              <i className="bi bi-info-circle me-2"></i>
+                              Información del Pedido
+                            </h5>
+
+                            <div className="mb-3">
+                              <strong className="d-block small text-muted">Solicitado por</strong>
+                              <span className="fs-5">{p.cazador?.nombre_usuario}</span>
                             </div>
-                            <div className="card-body">
-                              <div className="mb-3">
-                                <small className="text-muted d-block">Solicitado por</small>
-                                <strong className="fs-5">{p.cazador?.nombre_usuario}</strong>
-                              </div>
 
-                              <div className="mb-3">
-                                <small className="text-muted d-block">Descripción</small>
-                                <p className="mb-0">{p.descripcion_pedido_agregacion}</p>
-                              </div>
+                            <div className="mb-3">
+                              <strong className="d-block small text-muted">Descripción</strong>
+                              <p className="mb-0">{p.descripcion_pedido_agregacion}</p>
+                            </div>
 
-                              <div className="mb-3">
-                                <small className="text-muted d-block">Dificultad</small>
-                                <Badge bg="info" className="fs-6">
-                                  Nivel {p.dificultad_pedido_agregacion}
-                                </Badge>
-                              </div>
+                            <div className="mb-3">
+                              <strong className="d-block small text-muted">Dificultad</strong>
+                              <Badge bg="info" className="fs-6">
+                                Nivel {p.dificultad_pedido_agregacion}
+                              </Badge>
+                            </div>
 
-                              <div>
-                                <small className="text-muted d-block">Estado</small>
-                                <Badge bg="warning" text="dark" className="fs-6">
-                                  {p.estado_pedido_agregacion.toUpperCase()}
-                                </Badge>
-                              </div>
+                            <div>
+                              <strong className="d-block small text-muted">Estado</strong>
+                              <Badge bg="warning" text="dark" className="fs-6">
+                                {p.estado_pedido_agregacion.toUpperCase()}
+                              </Badge>
                             </div>
                           </div>
                         </div>
 
-                        {/* Columna derecha - Evidencias */}
+                        {/* Evidencias */}
                         <div className="col-lg-7">
-                          <div className="card border-0 shadow-sm h-100">
-                            <div className="card-header bg-secondary text-white">
-                              <h5 className="mb-0">Evidencias ({p.evidencias.length})</h5>
+                          <div className="border rounded-3 bg-light h-100">
+                            <div className="p-3 border-bottom bg-secondary text-white rounded-top">
+                              <h5 className="mb-0">
+                                <i className="bi bi-paperclip me-2"></i>
+                                Evidencias ({p.evidencias.length})
+                              </h5>
                             </div>
-                            <div
-                              className="card-body"
-                              style={{ maxHeight: '500px', overflowY: 'auto' }}
-                            >
+                            <div className="p-3" style={{ maxHeight: '500px', overflowY: 'auto' }}>
                               {p.evidencias.length === 0 ? (
                                 <p className="text-muted text-center my-4">
                                   No hay evidencias cargadas
@@ -166,7 +194,7 @@ export function TomarPedidosAgregacion() {
                                           <small className="text-muted d-block mb-2">
                                             Archivo:
                                           </small>
-                                          <div className="bg-light border rounded p-3">
+                                          <div className="bg-white border rounded p-3">
                                             <div className="mb-2 d-flex align-items-center">
                                               <i className="bi bi-file-earmark me-2 text-primary"></i>
                                               <strong className="small">
@@ -237,11 +265,10 @@ export function TomarPedidosAgregacion() {
                       </div>
 
                       {/* Botones de acción */}
-                      <div className="row mt-4">
-                        <div className="col text-center">
+                      <div className="row g-2 mt-3">
+                        <div className="col-12 col-md-6">
                           <button
-                            className="btn btn-success btn-lg me-3"
-                            style={{ minWidth: '160px' }}
+                            className="btn btn-success w-100"
                             disabled={procesando === p.id}
                             onClick={() => handleTomarPedido(p.id!, 'aceptar')}
                           >
@@ -257,10 +284,11 @@ export function TomarPedidosAgregacion() {
                               </>
                             )}
                           </button>
+                        </div>
 
+                        <div className="col-12 col-md-6">
                           <button
-                            className="btn btn-danger btn-lg"
-                            style={{ minWidth: '160px' }}
+                            className="btn btn-danger w-100"
                             disabled={procesando === p.id}
                             onClick={() => handleTomarPedido(p.id!, 'rechazar')}
                           >

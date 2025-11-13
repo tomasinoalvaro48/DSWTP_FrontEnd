@@ -49,35 +49,73 @@ export function ShowPedidosAgregacionOperador() {
 
   return (
     <div className="mb-4 border-bottom border-2 ShowPedidosAgregacionOperador">
-      <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
-        <h2 className="m-0 flex-shrink-0">Histórico de Pedidos de Agregación de Anomalías</h2>
+      {/* Header con título */}
+      <div className="bg-body-tertiary border-bottom shadow-sm">
+        <div className="container-fluid px-3 py-4">
+          <h1 className="m-0 fw-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}>
+            <i className="bi bi-clock-history me-2"></i>
+            Histórico de Pedidos de Agregación de Anomalías
+          </h1>
+        </div>
+      </div>
 
-        <form onSubmit={handleSearch} className="d-flex gap-3 align-items-center p-3 px-4">
-          <select
-            className="form-select w-auto"
-            value={estadoFilter}
-            onChange={(e) => setEstadoFilter(e.target.value)}
-          >
-            <option value="">Estado: Todos</option>
-            <option value="aceptado">Aceptado</option>
-            <option value="rechazado">Rechazado</option>
-          </select>
+      {/* Sección de filtros */}
+      <div className="bg-body-tertiary border-bottom shadow-sm px-3 py-3">
+        <div className="row g-3 align-items-center">
+          <div className="col-12 col-lg-2">
+            <h5 className="m-0 fw-semibold">
+              <i className="bi bi-funnel me-2"></i>
+              Filtros
+            </h5>
+          </div>
 
-          <select
-            className="form-select w-auto"
-            value={dificultadFilter}
-            onChange={(e) => setDificultadFilter(Number(e.target.value))}
-          >
-            <option value={0}>Dificultad: Todas</option>
-            <option value={1}>Nivel 1</option>
-            <option value={2}>Nivel 2</option>
-            <option value={3}>Nivel 3</option>
-          </select>
+          <div className="col-12 col-lg-10">
+            <form className="row g-3 align-items-center" onSubmit={handleSearch}>
+              {/* Estado */}
+              <div className="col-12 col-md-5">
+                <label htmlFor="estado" className="form-label mb-1">
+                  <strong>Estado:</strong>
+                </label>
+                <select
+                  id="estado"
+                  className="form-select"
+                  value={estadoFilter}
+                  onChange={(e) => setEstadoFilter(e.target.value)}
+                >
+                  <option value="">Todos</option>
+                  <option value="aceptado">Aceptado</option>
+                  <option value="rechazado">Rechazado</option>
+                </select>
+              </div>
 
-          <button className="btn btn-success px-4" type="submit">
-            Buscar
-          </button>
-        </form>
+              {/* Dificultad */}
+              <div className="col-12 col-md-4">
+                <label htmlFor="dificultad" className="form-label mb-1">
+                  <strong>Dificultad:</strong>
+                </label>
+                <select
+                  id="dificultad"
+                  className="form-select"
+                  value={dificultadFilter}
+                  onChange={(e) => setDificultadFilter(Number(e.target.value))}
+                >
+                  <option value={0}>Todas</option>
+                  <option value={1}>Nivel 1</option>
+                  <option value={2}>Nivel 2</option>
+                  <option value={3}>Nivel 3</option>
+                </select>
+              </div>
+
+              {/* Botón Buscar */}
+              <div className="col-12 col-md-3 d-flex align-items-end">
+                <button className="btn btn-success w-100" type="submit">
+                  <i className="bi bi-search me-2"></i>
+                  Buscar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
 
       {loading && (
@@ -111,7 +149,7 @@ export function ShowPedidosAgregacionOperador() {
       )}
 
       {!loading && !error && data?.length > 0 && (
-        <div className="accordion my-0 mx-4">
+        <div className="accordion my-3 mx-2 mx-md-4">
           <Accordion>
             {(dataFiltrada ?? data)
               .filter(
@@ -122,102 +160,111 @@ export function ShowPedidosAgregacionOperador() {
               .map((unPedido) => (
                 <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
                   <Accordion.Header>
-                    <div className="d-flex w-100 align-items-center">
-                      <div
-                        style={{ flexBasis: '30%', overflow: 'hidden', textOverflow: 'ellipsis' }}
-                      >
-                        <strong>Descripción de la anomalía:</strong>{' '}
-                        {unPedido.descripcion_pedido_agregacion}
+                    <div className="w-100">
+                      <div className="row g-2 align-items-center">
+                        {/* Descripción */}
+                        <div className="col-12 col-md-4">
+                          <div className="small">
+                            <strong className="d-block">Descripción:</strong>
+                            <span className="text-muted text-truncate d-block">
+                              {unPedido.descripcion_pedido_agregacion}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Dificultad */}
+                        <div className="col-6 col-md-3">
+                          <Badge bg="success">
+                            Dificultad:{' '}
+                            {Number(unPedido.dificultad_pedido_agregacion) === 1
+                              ? 'Nivel 1'
+                              : Number(unPedido.dificultad_pedido_agregacion) === 2
+                                ? 'Nivel 2'
+                                : Number(unPedido.dificultad_pedido_agregacion) === 3
+                                  ? 'Nivel 3'
+                                  : unPedido.dificultad_pedido_agregacion}
+                          </Badge>
+                        </div>
+
+                        {/* Estado */}
+                        <div className="col-6 col-md-3">
+                          <Badge
+                            bg={
+                              unPedido.estado_pedido_agregacion === 'aceptado'
+                                ? 'success'
+                                : 'danger'
+                            }
+                            text="light"
+                          >
+                            {unPedido.estado_pedido_agregacion.toUpperCase()}
+                          </Badge>
+                        </div>
                       </div>
-                      <div style={{ flexBasis: '30%', textAlign: 'center' }}>
-                        <strong>Dificultad de la anomalía:</strong>{' '}
-                        {Number(unPedido.dificultad_pedido_agregacion) === 1
-                          ? 'Nivel 1'
-                          : Number(unPedido.dificultad_pedido_agregacion) === 2
-                            ? 'Nivel 2'
-                            : Number(unPedido.dificultad_pedido_agregacion) === 3
-                              ? 'Nivel 3'
-                              : unPedido.dificultad_pedido_agregacion}
-                      </div>
-                      <div style={{ flexBasis: '30%', textAlign: 'center' }}>
-                        <Badge
-                          bg={
-                            unPedido.estado_pedido_agregacion === 'aceptado' ? 'success' : 'danger'
-                          }
-                          text="light"
-                        >
-                          {unPedido.estado_pedido_agregacion.toUpperCase()}
-                        </Badge>
-                      </div>
-                      <div style={{ flexBasis: '10%', textAlign: 'end' }}>Detalle</div>
                     </div>
                   </Accordion.Header>
 
                   <Accordion.Body>
-                    <div className="container-fluid">
+                    <div className="container-fluid px-2 px-md-3">
                       <div className="row g-4">
+                        {/* Información del Pedido */}
                         <div className="col-lg-5">
-                          <div className="card border-0 shadow-sm h-100">
-                            <div className="card-header bg-primary text-white">
-                              <h5 className="mb-0">Información del Pedido</h5>
+                          <div className="border rounded-3 p-3 bg-light h-100">
+                            <h5 className="mb-3">
+                              <i className="bi bi-info-circle me-2"></i>
+                              Información del Pedido
+                            </h5>
+
+                            <div className="mb-3">
+                              <strong className="d-block small text-muted">Descripción</strong>
+                              <p className="mb-0">{unPedido.descripcion_pedido_agregacion}</p>
                             </div>
-                            <div className="card-body">
-                              <div className="mb-3">
-                                <h5 className="d-block">Id del pedido</h5>
-                                <strong className="fs-5">{unPedido.id}</strong>
-                              </div>
 
-                              <div className="mb-3">
-                                <h5 className="d-block">Descripción</h5>
-                                <p className="mb-0">{unPedido.descripcion_pedido_agregacion}</p>
-                              </div>
+                            <div className="mb-3">
+                              <strong className="d-block small text-muted">Dificultad</strong>
+                              <Badge bg="success" className="fs-6">
+                                {Number(unPedido.dificultad_pedido_agregacion) === 1
+                                  ? 'Nivel 1'
+                                  : Number(unPedido.dificultad_pedido_agregacion) === 2
+                                    ? 'Nivel 2'
+                                    : Number(unPedido.dificultad_pedido_agregacion) === 3
+                                      ? 'Nivel 3'
+                                      : unPedido.dificultad_pedido_agregacion}
+                              </Badge>
+                            </div>
 
-                              <div className="mb-3">
-                                <h5 className="d-block">Dificultad</h5>
-                                <Badge bg="info" className="fs-6">
-                                  {Number(unPedido.dificultad_pedido_agregacion) === 1
-                                    ? 'Nivel 1'
-                                    : Number(unPedido.dificultad_pedido_agregacion) === 2
-                                      ? 'Nivel 2'
-                                      : Number(unPedido.dificultad_pedido_agregacion) === 3
-                                        ? 'Nivel 3'
-                                        : unPedido.dificultad_pedido_agregacion}
-                                </Badge>
-                              </div>
-
-                              <div>
-                                <h5 className="d-block">Estado</h5>
-                                <Badge
-                                  bg={
-                                    unPedido.estado_pedido_agregacion === 'pendiente'
-                                      ? 'warning'
-                                      : unPedido.estado_pedido_agregacion === 'aceptado'
-                                        ? 'success'
-                                        : 'danger'
-                                  }
-                                  text={
-                                    unPedido.estado_pedido_agregacion === 'pendiente'
-                                      ? 'dark'
-                                      : 'light'
-                                  }
-                                  className="fs-6"
-                                >
-                                  {unPedido.estado_pedido_agregacion.toUpperCase()}
-                                </Badge>
-                              </div>
+                            <div>
+                              <strong className="d-block small text-muted">Estado</strong>
+                              <Badge
+                                bg={
+                                  unPedido.estado_pedido_agregacion === 'pendiente'
+                                    ? 'warning'
+                                    : unPedido.estado_pedido_agregacion === 'aceptado'
+                                      ? 'success'
+                                      : 'danger'
+                                }
+                                text={
+                                  unPedido.estado_pedido_agregacion === 'pendiente'
+                                    ? 'dark'
+                                    : 'light'
+                                }
+                                className="fs-6"
+                              >
+                                {unPedido.estado_pedido_agregacion.toUpperCase()}
+                              </Badge>
                             </div>
                           </div>
                         </div>
 
+                        {/* Evidencias */}
                         <div className="col-lg-7">
-                          <div className="card border-0 shadow-sm h-100">
-                            <div className="card-header bg-secondary text-white">
-                              <h5 className="mb-0">Evidencias ({unPedido.evidencias.length})</h5>
+                          <div className="border rounded-3 bg-light h-100">
+                            <div className="p-3 border-bottom bg-secondary text-white rounded-top">
+                              <h5 className="mb-0">
+                                <i className="bi bi-paperclip me-2"></i>
+                                Evidencias ({unPedido.evidencias.length})
+                              </h5>
                             </div>
-                            <div
-                              className="card-body"
-                              style={{ maxHeight: '500px', overflowY: 'auto' }}
-                            >
+                            <div className="p-3" style={{ maxHeight: '500px', overflowY: 'auto' }}>
                               {unPedido.evidencias.length === 0 ? (
                                 <p className="text-muted text-center my-4">
                                   No hay evidencias cargadas
@@ -251,7 +298,7 @@ export function ShowPedidosAgregacionOperador() {
                                           <small className="text-muted d-block mb-2">
                                             Archivo:
                                           </small>
-                                          <div className="bg-light border rounded p-3">
+                                          <div className="bg-white border rounded p-3">
                                             <div className="mb-2 d-flex align-items-center">
                                               <i className="bi bi-file-earmark me-2 text-primary"></i>
                                               <strong className="small">
