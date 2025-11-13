@@ -32,12 +32,14 @@ export function MainNavbar() {
     if (!token) {
       return (
         <>
-          <Nav.Link as={NavLink} to="/login">
+          <NavLink to="/login" className="btn btn-outline-primary px-3 py-2">
+            <i className="bi bi-box-arrow-in-right me-2"></i>
             Iniciar Sesión
-          </Nav.Link>
-          <Nav.Link as={NavLink} to="/register-denunciante">
-            Registrarse como Denunciante
-          </Nav.Link>
+          </NavLink>
+          <NavLink to="/register-denunciante" className="btn btn-success text-white px-3 py-2">
+            <i className="bi bi-person-plus me-2"></i>
+            Registrarse
+          </NavLink>
         </>
       )
     }

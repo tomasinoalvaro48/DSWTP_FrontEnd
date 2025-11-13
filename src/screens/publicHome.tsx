@@ -40,7 +40,7 @@ export function PublicHome() {
         <div className="text-end w-100">
           <Link
             to="/register-usuario"
-            className="text-success text-decoration-none fw-semibold small"
+            className="text-secondary text-decoration-none fw-semibold small"
           >
             Quiero ser cazador
           </Link>

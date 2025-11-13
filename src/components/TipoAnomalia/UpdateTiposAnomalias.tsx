@@ -52,7 +52,7 @@ export function UpdateTiposAnomalias() {
 
             <form className="d-flex flex-column" onSubmit={handleUpdate}>
               <label htmlFor="nombre" className="form-label">
-                Nombre del tipo:
+                Nombre del tipo de anomalía:
               </label>
               <input
                 required
