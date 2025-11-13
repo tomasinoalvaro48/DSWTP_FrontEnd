@@ -8,12 +8,12 @@ export function DenuncianteHome() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
-  
+
   return (
     <div className="container text-center mt-5">
       <div className="text-center mb-4">
-        <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>
-          ¡Bienvenido a Cazadores de Anomalías!
+        <h1 className="fw-bold" style={{ fontSize: '2rem' }}>
+          ¡Resolución de Anomalías!
         </h1>
         <h4 className="text-muted mb-4">No solo cazamos fantasmas</h4>
 
@@ -23,8 +23,7 @@ export function DenuncianteHome() {
           className="btn btn-lg px-5 py-3 mb-4 shadow-sm"
           style={{
             borderRadius: '50px',
-            background:
-              'linear-gradient(135deg, rgba(154, 205, 50, 0.9) 0%, rgba(154, 205, 50, 0.7) 100%)',
+            backgroundColor: '#cd202fff',
             color: 'white',
             border: '1.5px solid #000',
             boxShadow: '0 1px 5px rgba(0, 0, 0, 0.2)',

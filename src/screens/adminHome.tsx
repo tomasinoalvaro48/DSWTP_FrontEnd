@@ -7,7 +7,7 @@ export function AdminHome() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
-  
+
   return (
     <div className="container text-center mt-5">
       <div className="text-center mb-4">

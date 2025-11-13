@@ -8,21 +8,57 @@ export function CazadorHome() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
-  
+
   return (
-    <div className="container mt-5 mb-5">
-      <div className="position-relative mb-4" style={{ height: '50px' }}>
-        <h3
-          className="fw-bold position-absolute top-50 start-50 translate-middle mb-0"
-          style={{ fontSize: '1.8rem' }}
-        >
-          ¡Bienvenido, Cazador!
-        </h3>
+    <div className="container text-center mt-5">
+      <div className="text-center mb-4">
+        <h1 className="fw-bold" style={{ fontSize: '2rem' }}>
+          ¡Bienvenido Cazador!
+        </h1>
+        <h4 className="text-muted mb-4">Resolvé anomalías y subí de nivel</h4>
+
+        {/* Botones de acción */}
+        <div className="d-flex flex-column flex-sm-row justify-content-center gap-3 mb-4">
+          <Link
+            to="/mostrar-posibles-pedidos"
+            className="btn btn-lg px-5 py-3 shadow-sm"
+            style={{
+              borderRadius: '50px',
+              backgroundColor: '#16911eff',
+              color: 'white',
+              border: '1.5px solid #000',
+              boxShadow: '0 1px 5px rgba(0, 0, 0, 0.2)',
+            }}
+          >
+            <i className="bi bi-search me-2"></i>
+            Tomar un Pedido
+          </Link>
+          <Link
+            to="/show-mis-pedidos"
+            className="btn btn-lg btn-outline-secondary px-5 py-3 shadow-sm"
+            style={{
+              borderRadius: '50px',
+            }}
+          >
+            <i className="bi bi-clipboard-check me-2"></i>
+            Mis Pedidos
+          </Link>
+        </div>
+        <div className="text-center mt-4">
+          <Link
+            to="/generar-pedido-agregacion-1"
+            className="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm"
+          >
+            <i className="bi bi-plus-circle me-2"></i>
+            Solicitar agregar una nueva anomalía
+          </Link>
+        </div>
       </div>
 
+      {/* Contenedor del carrusel */}
       <div
         id="carouselCazador"
-        className="carousel slide mx-auto mb-5 shadow rounded overflow-hidden"
+        className="carousel slide mx-auto mb-4 shadow rounded overflow-hidden"
         data-bs-ride="carousel"
         style={{ maxWidth: '700px' }}
       >
@@ -53,6 +89,7 @@ export function CazadorHome() {
           </div>
         </div>
 
+        {/* Controles del carrusel */}
         <button
           className="carousel-control-prev"
           type="button"
@@ -71,21 +108,6 @@ export function CazadorHome() {
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Siguiente</span>
         </button>
-      </div>
-
-      <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
-        <Link
-          to="/generar-pedido-agregacion-1"
-          className="btn btn-outline-secondary px-3 py-3 fs-6 rounded shadow-sm flex-fill"
-        >
-          Solicitar agregar una nueva anomalía
-        </Link>
-        <Link
-          to="/show-mis-pedidos"
-          className="btn btn-outline-primary px-3 py-3 fs-6 rounded shadow-sm flex-fill"
-        >
-          Ver mis pedidos
-        </Link>
       </div>
     </div>
   )

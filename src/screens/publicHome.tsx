@@ -9,16 +9,18 @@ export function PublicHome() {
 
   return (
     <div className="container text-center mt-5 mb-5">
-      <div className="text-center mb-4">
-        <h1 className="fw-bold mb-2" style={{ fontSize: '2rem' }}>
-          ¡Bienvenido a Cazadores de Anomalías!
+      <div className="text-center">
+        <h1 className="fw-bold" style={{ fontSize: '2rem' }}>
+          ¡Resolución de Anomalías!
         </h1>
         <h4 className="text-muted mb-3">No solo cazamos fantasmas</h4>
       </div>
 
-      <img src={logoImg} alt="Logo" width="250" height="250" className="mb-4" />
+      <img src={logoImg} alt="Logo" width="150" height="150" className="d-none d-lg-inline-block" />
 
-      <p className="mb-4">Iniciá sesión para empezar a denunciar o resolver anomalías.</p>
+      <p className="mt-3 d-none d-lg-block">
+        Iniciá sesión para empezar a denunciar o resolver anomalías.
+      </p>
 
       {/* Botones y link */}
       <div
@@ -31,12 +33,15 @@ export function PublicHome() {
 
         <Link
           to="/register-denunciante"
-          className="btn btn-outline-secondary w-100 py-3 fs-6 rounded shadow-sm"
+          className="btn btn-outline-danger w-100 py-3 fs-6 rounded shadow-sm"
         >
-          Quiero registrarme y hacer una denuncia
+          Hacer una denuncia
         </Link>
-        <div className="text-end w-100 mt-2">
-          <Link to="/register-usuario" className="text-success text-decoration-none fw-semibold">
+        <div className="text-end w-100">
+          <Link
+            to="/register-usuario"
+            className="text-success text-decoration-none fw-semibold small"
+          >
             Quiero ser cazador
           </Link>
         </div>
