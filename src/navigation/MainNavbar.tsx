@@ -38,9 +38,6 @@ export function MainNavbar() {
           <Nav.Link as={NavLink} to="/register-denunciante">
             Registrarse como Denunciante
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/register-usuario">
-            Registrarse como Cazador
-          </Nav.Link>
         </>
       )
     }
@@ -91,11 +88,11 @@ export function MainNavbar() {
     if (userRol === 'cazador') {
       return (
         <>
+          <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">
+            Tomar un Pedido
+          </Nav.Link> 
           <Nav.Link as={NavLink} to="/show-mis-pedidos">
             Mis Pedidos
-          </Nav.Link>
-          <Nav.Link as={NavLink} to="/mostrar-posibles-pedidos">
-            Posibles Pedidos para tomar
           </Nav.Link>
           <Nav.Link as={NavLink} to="/show-pedidos-agregacion">
             Pedidos de Agregación
@@ -110,11 +107,11 @@ export function MainNavbar() {
   }
 
   return (
-    <Navbar expand="lg" className="bg-light shadow-sm sticky-top">
+    <Navbar expand="lg" className="bg-light shadow-sm sticky-top-lg py-1">
       <Container fluid className="align-items-center">
         <NavLink to="/" className="d-flex align-items-center text-decoration-none me-3">
-          <img src={logoImg} alt="Logo" width="60" height="60" className="me-2" />
-          <span className="fw-bold fs-5 text-dark">Resolución de Anomalías</span>
+          <img src={logoImg} alt="Logo del sitio" width="50" height="50" className="m-2" />
+          <span className="fw-bold fs-6 text-dark d-none d-sm-inline-block">Resolución de Anomalías</span>
         </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
