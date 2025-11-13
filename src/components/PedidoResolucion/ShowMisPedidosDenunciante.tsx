@@ -72,29 +72,55 @@ export function ShowMisPedidosDenunciante() {
 
   return (
     <div className="ShowPosiblesPedidos">
-      <nav>
-        <div className="navbar bg-body-tertiary px-3">
-          <h1 className="me-auto">Mis Pedidos</h1>
-          <div className="d-flex flex-column flex-md-row gap-3">
-            <Link
-              to="/generar-pedido-paso-1"
-              className="btn btn-outline-dark px-4 py-2 fs-5 rounded-pill shadow-sm"
-            >
-              Realizar una denuncia
-            </Link>
-            <Link
-              to="/show-mis-pedidos-resueltos-denunciante"
-              className="btn btn-outline-secondary px-4 py-2 fs-5 rounded-pill shadow-sm"
-            >
-              Ver mis pedidos resueltos
-            </Link>
+      {/* Header con título y botones */}
+      <div className="bg-body-tertiary border-bottom shadow-sm">
+        <div className="container-fluid px-3 py-4">
+          <div className="row align-items-center g-3">
+            {/* Título */}
+            <div className="col-12 col-lg-4">
+              <h1 className="m-0 fw-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}>
+                Mis Pedidos
+              </h1>
+            </div>
+
+            {/* Botones */}
+            <div className="col-12 col-lg-8">
+              <div className="d-flex flex-column flex-sm-row gap-2 justify-content-lg-end">
+                <Link
+                  to="/generar-pedido-paso-1"
+                  className="btn px-4 py-2 shadow-sm text-nowrap"
+                  style={{
+                    borderRadius: '50px',
+                    backgroundColor: '#cd202fff',
+                    color: 'white',
+                    border: '1.5px solid #000',
+                    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+                  }}
+                >
+                  <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                  Realizar una denuncia
+                </Link>
+                <Link
+                  to="/show-mis-pedidos-resueltos-denunciante"
+                  className="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm text-nowrap"
+                  style={{ fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}
+                >
+                  <i className="bi bi-clock-history me-2"></i>
+                  Ver historial
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </nav>
-      <div className="mb-4 border-bottom border-2">
-        <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
-          {/* Título */}
-          <h2 className="m-0 flex-shrink-0">Pedidos tomados por un cazador</h2>
+      </div>
+
+      {/* Sección de pedidos tomados */}
+      <div className="mb-4">
+        <div className="bg-light border-bottom px-3 py-3">
+          <h2 className="m-0 fw-semibold" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }}>
+            <i className="bi bi-hourglass-split text-warning me-2"></i>
+            En curso
+          </h2>
         </div>
         {pedido_resolucion_loading_actual && (
           <div className="d-flex align-items-center">
@@ -115,185 +141,220 @@ export function ShowMisPedidosDenunciante() {
                   No tenés pedidos tomados por un cazador.
                 </Alert>
               ) : (
-                <div className="accordion my-3 mx-4">
+                <div className="accordion my-3 mx-2 mx-md-4">
                   <Accordion>
                     {pedido_resolucion_actual?.map((unPedido) => (
                       <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
                         <Accordion.Header>
-                          <div className="row justify-content-between w-100 align-items-center">
-                            <div className="col-3 md">
-                              <strong>Localidad: </strong>{' '}
-                              {unPedido.zona.localidad.nombre_localidad} <br />
-                              <strong>Zona: </strong> {unPedido.zona.nombre_zona}
-                            </div>
+                          <div className="w-100">
+                            <div className="row g-2 align-items-center">
+                              {/* Localidad y Zona */}
+                              <div className="col-12 col-md-3">
+                                <div className="small">
+                                  <strong className="d-block text-truncate">
+                                    {unPedido.zona.localidad.nombre_localidad}
+                                  </strong>
+                                  <span className="text-muted text-truncate d-block">
+                                    {unPedido.zona.nombre_zona}
+                                  </span>
+                                </div>
+                              </div>
 
-                            <div className="col-3 md">
-                              <strong>Direccion: </strong> {unPedido.direccion_pedido_resolucion}
-                            </div>
+                              {/* Dirección */}
+                              <div className="col-12 col-md-3 d-none d-md-block">
+                                <div className="small text-truncate">
+                                  <i className="bi bi-geo-alt me-1"></i>
+                                  {unPedido.direccion_pedido_resolucion}
+                                </div>
+                              </div>
 
-                            <div className="col-2 md">
-                              <strong>Dificultad: </strong> {unPedido.dificultad_pedido_resolucion}
-                            </div>
+                              {/* Dificultad */}
+                              <div className="col-6 col-md-2">
+                                <span className="badge bg-primary">
+                                  Dificultad: {unPedido.dificultad_pedido_resolucion}
+                                </span>
+                              </div>
 
-                            <div className="col-md-3 col-sm-2">
-                              <strong>Fecha Realiz: </strong>
-                              {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString(
-                                'es-AR'
-                              )}
-                            </div>
-
-                            <div className="col-md-1 col-sm-2 justify-content-right">
-                              Ver detalle
+                              {/* Fecha */}
+                              <div className="col-6 col-md-4">
+                                <small className="text-muted">
+                                  <i className="bi bi-calendar3 me-1"></i>
+                                  {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString(
+                                    'es-AR'
+                                  )}
+                                </small>
+                              </div>
                             </div>
                           </div>
                         </Accordion.Header>
                         <Accordion.Body>
-                          <div className="container">
-                            <div className="container denunciante border rounded-4 mb-4 p-4">
-                              <div className="row justify-content-left w-100 align-items-center ">
-                                <h2>Datos Cazador</h2>
-                              </div>
-                              <div className="row justify-content-between w-100 align-items-center ">
-                                <div className="col-3 md">
-                                  <strong>Nombre: </strong>
+                          <div className="container-fluid px-2 px-md-3">
+                            {/* Dirección completa en móviles */}
+                            <div className="d-md-none mb-3 p-2 bg-light rounded">
+                              <small className="text-muted">Dirección</small>
+                              <div>{unPedido.direccion_pedido_resolucion}</div>
+                            </div>
+
+                            {/* Datos Cazador */}
+                            <div className="border rounded-3 mb-3 p-3 bg-light">
+                              <h5 className="mb-3">
+                                <i className="bi bi-person-badge me-2"></i>
+                                Datos del Cazador
+                              </h5>
+                              <div className="row g-3">
+                                <div className="col-12 col-md-4">
+                                  <strong className="d-block small text-muted">Nombre</strong>
                                   {unPedido.cazador?.nombre_usuario}
                                 </div>
-
-                                <div className="col-md-3">
-                                  <strong>Email: </strong>
-                                  {unPedido.cazador?.email_usuario}
+                                <div className="col-12 col-md-4">
+                                  <strong className="d-block small text-muted">Email</strong>
+                                  <span className="text-break">
+                                    {unPedido.cazador?.email_usuario}
+                                  </span>
                                 </div>
-                                <div className="col-md-3">
-                                  <strong>Nivel: </strong>
-                                  {unPedido.cazador?.nivel_cazador}
+                                <div className="col-12 col-md-4">
+                                  <strong className="d-block small text-muted">Nivel</strong>
+                                  <span className="badge bg-success">
+                                    Nivel {unPedido.cazador?.nivel_cazador}
+                                  </span>
                                 </div>
                               </div>
                             </div>
 
-                            <div className="mb-4">
-                              <strong>Descripcion: </strong>
-                              {unPedido.descripcion_pedido_resolucion
-                                ? unPedido.descripcion_pedido_resolucion
-                                : 'No hay descripcion cargada'}
+                            {/* Descripción */}
+                            <div className="mb-3">
+                              <strong className="d-block mb-2">
+                                <i className="bi bi-text-paragraph me-2"></i>
+                                Descripción
+                              </strong>
+                              <p className="text-muted mb-0">
+                                {unPedido.descripcion_pedido_resolucion ||
+                                  'No hay descripción cargada'}
+                              </p>
                             </div>
 
-                            <div className="mb-4">
-                              {/* Ver anomalías */}
-                              <Accordion>
-                                {/* La primera anomalía (la de mayor dificultad) */}
-                                {unPedido.anomalias.length > 0 && (
-                                  <Accordion.Item eventKey={`${unPedido.id}-top`}>
+                            {/* Anomalías */}
+                            {unPedido.anomalias.length > 0 && (
+                              <div className="mb-3">
+                                <Accordion>
+                                  <Accordion.Item eventKey={`${unPedido.id}-anomalias`}>
                                     <Accordion.Header>
-                                      <div className="row justify-content-center w-100 align-items-center">
-                                        Ver Anomalías
+                                      <div className="w-100">
+                                        <i className="bi bi-exclamation-triangle me-2"></i>
+                                        <strong>Ver Anomalías ({unPedido.anomalias.length})</strong>
                                       </div>
                                     </Accordion.Header>
                                     <Accordion.Body>
-                                      {/* Cuando se despliega muestro TODAS las anomalías */}
-                                      <div className="row justify-content-center w-100 align-items-center">
+                                      <div className="row g-2">
                                         {unPedido.anomalias.map((anomalia) => (
-                                          <div
-                                            key={anomalia.id}
-                                            className="row border-bottom py-1 text-center"
-                                          >
-                                            <div className="col-md-4">
-                                              <strong>
-                                                {anomalia.tipo_anomalia.nombre_tipo_anomalia}
-                                              </strong>
-                                            </div>
-                                            <div className="col-md-4">
-                                              <strong>Dificultad: </strong>
-                                              {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
-                                            </div>
-                                            <div className="col-md-4 d-flex align-items-center">
-                                              <strong className="me-2">Resultado:</strong>
-                                              <Badge
-                                                bg={
-                                                  anomalia.resultado_anomalia === 'inconcluso'
-                                                    ? 'warning'
-                                                    : 'success'
-                                                }
-                                                text={
-                                                  anomalia.resultado_anomalia === 'inconcluso'
-                                                    ? 'dark'
-                                                    : 'light'
-                                                }
-                                              >
-                                                {anomalia.resultado_anomalia.toUpperCase()}
-                                              </Badge>
+                                          <div key={anomalia.id} className="col-12">
+                                            <div className="border rounded p-2 bg-light">
+                                              <div className="row g-2 align-items-center">
+                                                <div className="col-12 col-md-5">
+                                                  <strong className="d-block small text-muted">
+                                                    Nombre:
+                                                  </strong>
+                                                  <span>
+                                                    {anomalia.tipo_anomalia.nombre_tipo_anomalia}
+                                                  </span>
+                                                </div>
+                                                <div className="col-6 col-md-3">
+                                                  <strong className="d-block small text-muted">
+                                                    Dificultad
+                                                  </strong>
+                                                  <span className="badge bg-info">
+                                                    {
+                                                      anomalia.tipo_anomalia
+                                                        .dificultad_tipo_anomalia
+                                                    }
+                                                  </span>
+                                                </div>
+                                                <div className="col-6 col-md-4">
+                                                  <strong className="d-block small text-muted">
+                                                    Resultado
+                                                  </strong>
+                                                  <Badge
+                                                    bg={
+                                                      anomalia.resultado_anomalia === 'inconcluso'
+                                                        ? 'warning'
+                                                        : 'success'
+                                                    }
+                                                    text={
+                                                      anomalia.resultado_anomalia === 'inconcluso'
+                                                        ? 'dark'
+                                                        : 'light'
+                                                    }
+                                                  >
+                                                    {anomalia.resultado_anomalia.toUpperCase()}
+                                                  </Badge>
+                                                </div>
+                                              </div>
                                             </div>
                                           </div>
                                         ))}
                                       </div>
                                     </Accordion.Body>
                                   </Accordion.Item>
-                                )}
-                              </Accordion>
-                            </div>
+                                </Accordion>
+                              </div>
+                            )}
 
-                            <div className="mb-4">
-                              <Accordion>
-                                {/* Inspecciones) */}
-
-                                {unPedido.inspecciones.length > 0 && (
-                                  <Accordion.Item eventKey={`${unPedido.id}-top`}>
-                                    {' '}
+                            {/* Inspecciones */}
+                            {unPedido.inspecciones.length > 0 && (
+                              <div className="mb-3">
+                                <Accordion>
+                                  <Accordion.Item eventKey={`${unPedido.id}-inspecciones`}>
                                     <Accordion.Header>
-                                      <div className="row justify-content-center w-100 align-items-center">
-                                        <div className="row justify-content-center w-100 align-items-center">
-                                          <div className="col-md-12">
-                                            <h2>Inspecciones</h2>
-                                          </div>
-                                        </div>
-
-                                        <div className="row justify-content-between w-100 align-items-left">
-                                          <div className="col-md-2">
-                                            <strong>Inspeccion Número: </strong>{' '}
-                                            {unPedido.inspecciones[0].numero_inspeccion}
-                                          </div>
-                                          <div className="col-md-2">
-                                            <strong>Fecha: </strong>
-                                            {new Date(
-                                              unPedido.inspecciones[0].fecha_inspeccion
-                                            ).toLocaleDateString('es-AR')}
-                                          </div>
-                                          <div className="col-md-8 text-">
-                                            <strong>Comentario de avance: </strong>
-                                            {unPedido.inspecciones[0].comentario_inspeccion}
-                                          </div>
-                                        </div>
+                                      <div className="w-100">
+                                        <i className="bi bi-clipboard-check me-2"></i>
+                                        <strong>
+                                          Ver Inspecciones ({unPedido.inspecciones.length})
+                                        </strong>
                                       </div>
                                     </Accordion.Header>
                                     <Accordion.Body>
-                                      {/* Cuando se despliega muestro TODAS las anomalías */}
-                                      <div className="row justify-content-center w-100 align-items-left">
+                                      <div className="row g-2">
                                         {unPedido.inspecciones.map((inspeccion) => (
-                                          <div
-                                            key={inspeccion.id}
-                                            className="row border-bottom py-1 text-left"
-                                          >
-                                            <div className="col-md-2">
-                                              <strong>Inspeccion Número: </strong>{' '}
-                                              {inspeccion.numero_inspeccion}
-                                            </div>
-                                            <div className="col-md-2">
-                                              <strong>Fecha: </strong>
-                                              {new Date(
-                                                inspeccion.fecha_inspeccion
-                                              ).toLocaleDateString('es-AR')}
-                                            </div>
-                                            <div className="col-md-8">
-                                              <strong>Comentario de avance: </strong>{' '}
-                                              {inspeccion.comentario_inspeccion}
+                                          <div key={inspeccion.id} className="col-12">
+                                            <div className="border rounded p-3 bg-light">
+                                              <div className="row g-2">
+                                                <div className="col-12 col-md-2">
+                                                  <strong className="d-block small text-muted">
+                                                    Inspección N°
+                                                  </strong>
+                                                  <span className="badge bg-secondary">
+                                                    #{inspeccion.numero_inspeccion}
+                                                  </span>
+                                                </div>
+                                                <div className="col-12 col-md-3">
+                                                  <strong className="d-block small text-muted">
+                                                    Fecha
+                                                  </strong>
+                                                  <small>
+                                                    <i className="bi bi-calendar3 me-1"></i>
+                                                    {new Date(
+                                                      inspeccion.fecha_inspeccion
+                                                    ).toLocaleDateString('es-AR')}
+                                                  </small>
+                                                </div>
+                                                <div className="col-12 col-md-7">
+                                                  <strong className="d-block small text-muted">
+                                                    Comentario
+                                                  </strong>
+                                                  <span className="text-break">
+                                                    {inspeccion.comentario_inspeccion}
+                                                  </span>
+                                                </div>
+                                              </div>
                                             </div>
                                           </div>
                                         ))}
                                       </div>
                                     </Accordion.Body>
                                   </Accordion.Item>
-                                )}
-                              </Accordion>
-                            </div>
+                                </Accordion>
+                              </div>
+                            )}
                           </div>
                         </Accordion.Body>
                       </Accordion.Item>
@@ -308,9 +369,11 @@ export function ShowMisPedidosDenunciante() {
         {pedido_resolucion_error_actual && <div>{pedido_resolucion_error_actual}</div>}
       </div>
 
-      <div className="bg-body-tertiary d-flex align-items-center justify-content-between px-4 py-3 flex-wrap">
-        {/* Título */}
-        <h2 className="m-0 flex-shrink-0">Pedidos pendientes de ser tomados</h2>
+      <div className="bg-light border-bottom px-3 py-3">
+        <h2 className="m-0 fw-semibold" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }}>
+          <i className="bi bi-hourglass me-2"></i>
+          Pendientes
+        </h2>
       </div>
 
       <div>
@@ -335,103 +398,145 @@ export function ShowMisPedidosDenunciante() {
                   No tenés pedidos pendientes de ser tomados.
                 </Alert>
               ) : (
-                <div className="accordion my-3 mx-4">
+                <div className="accordion my-3 mx-2 mx-md-4">
                   <Accordion>
                     {pedido_resolucion_historico?.map((unPedido) => (
                       <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
                         <Accordion.Header>
-                          <div className="row justify-content-between w-100 align-items-center">
-                            <div className="col-3 md">
-                              <strong>Localidad: </strong>{' '}
-                              {unPedido.zona.localidad.nombre_localidad} <br />
-                              <strong>Zona: </strong> {unPedido.zona.nombre_zona}
-                            </div>
+                          <div className="w-100">
+                            <div className="row g-2 align-items-center">
+                              {/* Localidad y Zona */}
+                              <div className="col-12 col-md-3">
+                                <div className="small">
+                                  <strong className="d-block text-truncate">
+                                    {unPedido.zona.localidad.nombre_localidad}
+                                  </strong>
+                                  <span className="text-muted text-truncate d-block">
+                                    {unPedido.zona.nombre_zona}
+                                  </span>
+                                </div>
+                              </div>
 
-                            <div className="col-3 md">
-                              <strong>Direccion: </strong> {unPedido.direccion_pedido_resolucion}
-                            </div>
+                              {/* Dirección */}
+                              <div className="col-12 col-md-3 d-none d-md-block">
+                                <div className="small text-truncate">
+                                  <i className="bi bi-geo-alt me-1"></i>
+                                  {unPedido.direccion_pedido_resolucion}
+                                </div>
+                              </div>
 
-                            <div className="col-2 md">
-                              <strong>Dificultad: </strong> {unPedido.dificultad_pedido_resolucion}
-                            </div>
+                              {/* Dificultad */}
+                              <div className="col-6 col-md-2">
+                                <span className="badge bg-warning text-dark">
+                                  Dificultad: {unPedido.dificultad_pedido_resolucion}
+                                </span>
+                              </div>
 
-                            <div className="col-md-3 col-sm-2">
-                              <strong>Fecha Realiz: </strong>
-                              {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString(
-                                'es-AR'
-                              )}
-                            </div>
-
-                            <div className="col-md-1 col-sm-2 justify-content-right">
-                              Ver detalle
+                              {/* Fecha */}
+                              <div className="col-6 col-md-4">
+                                <small className="text-muted">
+                                  <i className="bi bi-calendar3 me-1"></i>
+                                  {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString(
+                                    'es-AR'
+                                  )}
+                                </small>
+                              </div>
                             </div>
                           </div>
                         </Accordion.Header>
                         <Accordion.Body>
-                          <div className="container">
-                            <div className="mb-4">
-                              <strong>Descripcion: </strong>
-                              {unPedido.descripcion_pedido_resolucion
-                                ? unPedido.descripcion_pedido_resolucion
-                                : 'No hay descripcion cargada'}
+                          <div className="container-fluid px-2 px-md-3">
+                            {/* Dirección completa en móviles */}
+                            <div className="d-md-none mb-3 p-2 bg-light rounded">
+                              <small className="text-muted">Dirección</small>
+                              <div>{unPedido.direccion_pedido_resolucion}</div>
                             </div>
 
-                            <div className="mb-4">
-                              {/* Ver anomalías */}
-                              <Accordion>
-                                {/* La primera anomalía (la de mayor dificultad) */}
-                                {unPedido.anomalias.length > 0 && (
-                                  <Accordion.Item eventKey={`${unPedido.id}-top`}>
+                            {/* Descripción */}
+                            <div className="mb-3">
+                              <strong className="d-block mb-2">
+                                <i className="bi bi-text-paragraph me-2"></i>
+                                Descripción
+                              </strong>
+                              <p className="text-muted mb-0">
+                                {unPedido.descripcion_pedido_resolucion ||
+                                  'No hay descripción cargada'}
+                              </p>
+                            </div>
+
+                            {/* Anomalías */}
+                            {unPedido.anomalias.length > 0 && (
+                              <div className="mb-3">
+                                <Accordion>
+                                  <Accordion.Item eventKey={`${unPedido.id}-anomalias-pendiente`}>
                                     <Accordion.Header>
-                                      <div className="row justify-content-center w-100 align-items-center">
-                                        Ver Anomalías
+                                      <div className="w-100">
+                                        <i className="bi bi-exclamation-triangle me-2"></i>
+                                        <strong>Ver Anomalías ({unPedido.anomalias.length})</strong>
                                       </div>
                                     </Accordion.Header>
                                     <Accordion.Body>
-                                      {/* Cuando se despliega muestro TODAS las anomalías */}
-                                      <div className="row justify-content-center w-100 align-items-center">
+                                      <div className="row g-2">
                                         {unPedido.anomalias.map((anomalia) => (
-                                          <div
-                                            key={anomalia.id}
-                                            className="row border-bottom py-1 text-center"
-                                          >
-                                            <div className="col-md-3">
-                                              <strong>
-                                                {anomalia.tipo_anomalia.nombre_tipo_anomalia}
-                                              </strong>
-                                            </div>
-                                            <div className="col-md-3">
-                                              <strong>Dificultad: </strong>
-                                              {anomalia.tipo_anomalia.dificultad_tipo_anomalia}
-                                            </div>
-                                            <div className="col-md-4 d-flex align-items-center">
-                                              <strong className="me-2">Resultado:</strong>
-                                              <Badge
-                                                bg={
-                                                  anomalia.resultado_anomalia === 'inconcluso'
-                                                    ? 'warning'
-                                                    : 'success'
-                                                }
-                                                text={
-                                                  anomalia.resultado_anomalia === 'inconcluso'
-                                                    ? 'dark'
-                                                    : 'light'
-                                                }
-                                              >
-                                                {anomalia.resultado_anomalia.toUpperCase()}
-                                              </Badge>
+                                          <div key={anomalia.id} className="col-12">
+                                            <div className="border rounded p-2 bg-light">
+                                              <div className="row g-2 align-items-center">
+                                                <div className="col-12 col-md-5">
+                                                  <strong className="d-block small text-muted">
+                                                    Tipo
+                                                  </strong>
+                                                  <span>
+                                                    {anomalia.tipo_anomalia.nombre_tipo_anomalia}
+                                                  </span>
+                                                </div>
+                                                <div className="col-6 col-md-3">
+                                                  <strong className="d-block small text-muted">
+                                                    Dificultad
+                                                  </strong>
+                                                  <span className="badge bg-info">
+                                                    {
+                                                      anomalia.tipo_anomalia
+                                                        .dificultad_tipo_anomalia
+                                                    }
+                                                  </span>
+                                                </div>
+                                                <div className="col-6 col-md-4">
+                                                  <strong className="d-block small text-muted">
+                                                    Resultado
+                                                  </strong>
+                                                  <Badge
+                                                    bg={
+                                                      anomalia.resultado_anomalia === 'inconcluso'
+                                                        ? 'warning'
+                                                        : 'success'
+                                                    }
+                                                    text={
+                                                      anomalia.resultado_anomalia === 'inconcluso'
+                                                        ? 'dark'
+                                                        : 'light'
+                                                    }
+                                                  >
+                                                    {anomalia.resultado_anomalia.toUpperCase()}
+                                                  </Badge>
+                                                </div>
+                                              </div>
                                             </div>
                                           </div>
                                         ))}
                                       </div>
                                     </Accordion.Body>
                                   </Accordion.Item>
-                                )}
-                              </Accordion>
-                            </div>
+                                </Accordion>
+                              </div>
+                            )}
 
                             <div className="text-center mt-3">
-                              <Button variant="danger" onClick={() => handleShowModal(unPedido)}>
+                              <Button
+                                variant="danger"
+                                onClick={() => handleShowModal(unPedido)}
+                                className="w-100 w-md-auto"
+                              >
+                                <i className="bi bi-trash me-2"></i>
                                 Eliminar pedido
                               </Button>
                             </div>

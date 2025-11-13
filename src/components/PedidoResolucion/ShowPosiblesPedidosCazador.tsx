@@ -82,18 +82,10 @@ export function ShowPosiblesPedidos() {
   }
 
   return (
-    <div className="mb-4 border-bottom border-2 ShowPosiblesPedidos">
-      {loadingLoc && (
-        <div className="d-flex align-items-center">
-          <Spinner animation="border" role="status" size="sm" className="me-2" />
-          <span>Cargando localidades...</span>
-        </div>
-      )}
-      {errorLoc && <Alert variant="danger">Error al cargar pedidos: {errorLoc}</Alert>}
-
+    <div className="container-fluid">
       {errorTakePedido && (
         <div
-          className="alert alert-danger alert-dismissible fade show text-center fw-semibold"
+          className="alert alert-danger alert-dismissible fade show text-center fw-semibold m-3"
           role="alert"
         >
           {errorTakePedido}
@@ -106,162 +98,251 @@ export function ShowPosiblesPedidos() {
         </div>
       )}
 
-      {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
-        <nav className="navbar bg-body-tertiary px-3">
-          <h2 className="m-0 flex-shrink-0">Posibles Pedidos de Resolución para tomar</h2>
+      <div className="row">
+        {/* Panel de filtros lateral */}
+        <div className="col-lg-3 col-md-4 bg-body-tertiary p-3 border">
+          <h4 className="mb-3">
+            <i className="bi bi-funnel me-2"></i>Filtros
+          </h4>
 
-          <form className="d-flex align-items-center gap-3" onSubmit={haddleSearch}>
-            {/* Slider de dificultad */}
+          {loadingLoc && (
             <div className="d-flex align-items-center">
-              <label htmlFor="dificultad" className="me-2 mb-0 strong">
-                <strong> Dificultad (≥): </strong>
-              </label>
-              <span className="ms-2" style={{ minWidth: '100px', display: 'inline-block' }}>
-                {dificultadMostrada === 0 ? 'No seleccionada' : dificultadMostrada}
-              </span>
-              <input
-                id="dificultad"
-                type="range"
-                min="0"
-                max="10"
-                step="1"
-                value={dificultadFilter}
-                onChange={(e) => setDificultadFilter(parseInt(e.target.value))}
-                className="form-range dificultad-slider"
-                style={{
-                  width: '120px',
-                  height: '4px',
-                  accentColor: '#0d6efd',
-                }}
-              />
+              <Spinner animation="border" role="status" size="sm" className="me-2" />
+              <span>Cargando...</span>
             </div>
+          )}
 
-            {/* Selector de localidad */}
-            <select
-              className="form-select"
-              id="localidad"
-              name="localidad"
-              value={localidadSeleccionada?.id}
-              onChange={handleCambioLocalidad}
-            >
-              <option value="">Seleccionar localidad</option>
-              {localidades?.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.nombre_localidad}
-                </option>
-              ))}
-            </select>
+          {errorLoc && <Alert variant="danger">Error: {errorLoc}</Alert>}
 
-            {/* Botón buscar */}
-            <button className="btn btn-success" type="submit">
-              Buscar
-            </button>
-          </form>
-        </nav>
-      )}
+          {!loadingLoc && !errorLoc && (localidades?.length ?? 0) > 0 && (
+            <form onSubmit={haddleSearch}>
+              {/* Dificultad */}
+              <div className="mb-4">
+                <label htmlFor="dificultad" className="form-label">
+                  <strong>Dificultad (≥):</strong>
+                </label>
+                <div className="d-flex align-items-center gap-2 mb-2">
+                  <span style={{ minWidth: '40px', textAlign: 'center', fontWeight: 'bold' }}>
+                    {dificultadMostrada}
+                  </span>
+                  <input
+                    id="dificultad"
+                    type="range"
+                    min="0"
+                    max="10"
+                    step="1"
+                    value={dificultadFilter}
+                    onChange={(e) => setDificultadFilter(parseInt(e.target.value))}
+                    className="form-range flex-grow-1"
+                    style={{
+                      height: '6px',
+                      accentColor: '#0d6efd',
+                    }}
+                  />
+                </div>
+              </div>
 
-      {pedido_resolucion_loading && (
-        <div className="d-flex align-items-center">
-          <Spinner animation="border" role="status" size="sm" className="me-2" />
-          <span>Cargando pedidos...</span>
+              {/* Localidad */}
+              <div className="mb-4">
+                <label htmlFor="localidad" className="form-label">
+                  <strong>Localidad:</strong>
+                </label>
+                <select
+                  className="form-select"
+                  id="localidad"
+                  name="localidad"
+                  value={localidadSeleccionada?.id}
+                  onChange={handleCambioLocalidad}
+                >
+                  <option value="">Todas las localidades</option>
+                  {localidades?.map((loc) => (
+                    <option key={loc.id} value={loc.id}>
+                      {loc.nombre_localidad}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Botón */}
+              <button className="btn btn-success w-100" type="submit">
+                <i className="bi bi-search me-2"></i>Buscar
+              </button>
+            </form>
+          )}
         </div>
-      )}
 
-      {pedido_resolucion_error && (
-        <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error}</Alert>
-      )}
+        {/* Contenido principal */}
+        <div className="col-lg-9 col-md-8 p-0">
+          <div className="bg-body-tertiary border-bottom shadow-sm px-3 py-3">
+            <h2 className="m-0 fw-semibold" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }}>
+              <i className="bi bi-search me-2"></i>
+              <span className="d-none d-md-inline">Posibles </span>Pedidos para tomar
+            </h2>
+          </div>
 
-      {!pedido_resolucion_loading &&
-        !pedido_resolucion_error &&
-        pedido_resolucion?.length === 0 && (
-          <Alert variant="info" className="m-3">
-            No hay pedidos de resolución para tomar.
-          </Alert>
-        )}
+          {pedido_resolucion_loading && (
+            <div className="d-flex align-items-center">
+              <Spinner animation="border" role="status" size="sm" className="me-2" />
+              <span>Cargando pedidos...</span>
+            </div>
+          )}
 
-      {!pedido_resolucion_loading && !pedido_resolucion_error && pedido_resolucion && (
-        <div className="accordion my-3 mx-4">
-          <Accordion>
-            {pedido_resolucion?.map((unPedido) => (
-              <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
-                <Accordion.Header>
-                  <div className="row w-100 text-start">
-                    <div className="col-4">
-                      <strong>Localidad: </strong> {unPedido.zona.localidad.nombre_localidad} <br />
-                      <strong>Zona: </strong> {unPedido.zona.nombre_zona}
-                    </div>
+          {pedido_resolucion_error && (
+            <Alert variant="danger">Error al cargar pedidos: {pedido_resolucion_error}</Alert>
+          )}
 
-                    <div className="col-3">
-                      <strong>Dificultad: </strong> {unPedido.dificultad_pedido_resolucion}
-                    </div>
+          {!pedido_resolucion_loading &&
+            !pedido_resolucion_error &&
+            pedido_resolucion?.length === 0 && (
+              <Alert variant="info" className="m-3">
+                No hay pedidos de resolución para tomar.
+              </Alert>
+            )}
 
-                    <div className="col-4">
-                      <strong>Fecha Realiz: </strong>{' '}
-                      {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString('es-AR')}
-                    </div>
+          {!pedido_resolucion_loading && !pedido_resolucion_error && pedido_resolucion && (
+            <div className="accordion my-3 mx-4">
+              <Accordion>
+                {pedido_resolucion?.map((unPedido) => (
+                  <Accordion.Item eventKey={unPedido.id.toString()} key={unPedido.id}>
+                    <Accordion.Header>
+                      <div className="w-100">
+                        <div className="row g-2 align-items-center">
+                          {/* Localidad y Zona */}
+                          <div className="col-12 col-md-3">
+                            <div className="small">
+                              <strong className="d-block text-truncate">
+                                {unPedido.zona.localidad.nombre_localidad}
+                              </strong>
+                              <span className="text-muted text-truncate d-block">
+                                {unPedido.zona.nombre_zona}
+                              </span>
+                            </div>
+                          </div>
 
-                    <div className="col-1">Detalle</div>
-                  </div>
-                </Accordion.Header>
-                <Accordion.Body>
-                  <div className="container">
-                    <div className="row text-start">
-                      <div className="col-md-6">
-                        <ul>
-                          <strong>Direccion: </strong>
-                          {unPedido.direccion_pedido_resolucion}
-                        </ul>
-                        <ul>
-                          <strong>Denunciante: </strong>
-                          {unPedido.denunciante.nombre_apellido_denunciante}
-                        </ul>
-                        <ul>
-                          <strong>Denunciante Email: </strong>
-                          {unPedido.denunciante.email_denunciante}
-                        </ul>
-                        <ul>
-                          <strong>Denunciante Telefono: </strong>
-                          {unPedido.denunciante.telefono_denunciante}
-                        </ul>
-                        <ul>
-                          <strong>Denunciante Telefono: </strong>
-                          {unPedido.denunciante.telefono_denunciante}
-                        </ul>
+                          {/* Dirección */}
+                          <div className="col-12 col-md-3 d-none d-md-block">
+                            <div className="small text-truncate">
+                              <i className="bi bi-geo-alt me-1"></i>
+                              {unPedido.direccion_pedido_resolucion}
+                            </div>
+                          </div>
+
+                          {/* Dificultad */}
+                          <div className="col-6 col-md-2">
+                            <span className="badge bg-warning text-dark">
+                              Dificultad: {unPedido.dificultad_pedido_resolucion}
+                            </span>
+                          </div>
+
+                          {/* Fecha */}
+                          <div className="col-6 col-md-4">
+                            <small className="text-muted">
+                              <i className="bi bi-calendar3 me-1"></i>
+                              {new Date(unPedido.fecha_pedido_resolucion).toLocaleDateString(
+                                'es-AR'
+                              )}
+                            </small>
+                          </div>
+                        </div>
                       </div>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div className="container-fluid px-2 px-md-3">
+                        {/* Dirección completa en móviles */}
+                        <div className="d-md-none mb-3 p-2 bg-light rounded">
+                          <small className="text-muted">Dirección</small>
+                          <div>{unPedido.direccion_pedido_resolucion}</div>
+                        </div>
 
-                      <div className="col-md-6">
-                        <ul>
-                          <strong>Anomalías:</strong>
-                          {unPedido.anomalias.map((unaAnomalia) => (
-                            <ul key={unaAnomalia.id}>
-                              <strong>Nombre Anomalia: </strong>
-                              {unaAnomalia.tipo_anomalia.nombre_tipo_anomalia}
-                              <strong> Dificultad Anomalia: </strong>
-                              {unaAnomalia.tipo_anomalia.dificultad_tipo_anomalia}
-                            </ul>
-                          ))}
-                        </ul>
+                        {/* Datos Denunciante */}
+                        <div className="border rounded-3 mb-3 p-3 bg-light">
+                          <h5 className="mb-3">
+                            <i className="bi bi-person me-2"></i>Datos del Denunciante
+                          </h5>
+                          <div className="row g-3">
+                            <div className="col-12 col-md-4">
+                              <strong>Nombre: </strong>
+                              <span className="d-block d-md-inline">
+                                {unPedido.denunciante.nombre_apellido_denunciante}
+                              </span>
+                            </div>
+                            <div className="col-12 col-md-4">
+                              <strong>Email: </strong>
+                              <span className="d-block d-md-inline text-break">
+                                {unPedido.denunciante.email_denunciante}
+                              </span>
+                            </div>
+                            <div className="col-12 col-md-4">
+                              <strong>Teléfono: </strong>
+                              <span className="d-block d-md-inline">
+                                {unPedido.denunciante.telefono_denunciante}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Descripción */}
+                        <div className="border rounded-3 mb-3 p-3 bg-light">
+                          <h5 className="mb-2">
+                            <i className="bi bi-text-left me-2"></i>Descripción
+                          </h5>
+                          <p className="mb-0">
+                            {unPedido.descripcion_pedido_resolucion || 'No hay descripción cargada'}
+                          </p>
+                        </div>
+
+                        {/* Anomalías */}
+                        <div className="border rounded-3 mb-3 p-3 bg-light">
+                          <h5 className="mb-3">
+                            <i className="bi bi-exclamation-triangle me-2"></i>
+                            Anomalías ({unPedido.anomalias.length})
+                          </h5>
+                          <div className="row g-3">
+                            {unPedido.anomalias.map((unaAnomalia) => (
+                              <div key={unaAnomalia.id} className="col-12 border-bottom pb-2">
+                                <div className="row g-2">
+                                  <div className="col-12 col-md-6">
+                                    <strong>Nombre: </strong>
+                                    <span className="d-block d-md-inline">
+                                      {unaAnomalia.tipo_anomalia.nombre_tipo_anomalia}
+                                    </span>
+                                  </div>
+                                  <div className="col-12 col-md-6">
+                                    <strong>Dificultad: </strong>
+                                    <span className="badge bg-warning text-dark">
+                                      {unaAnomalia.tipo_anomalia.dificultad_tipo_anomalia}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Botón de acción */}
+                        <div className="text-center mt-3">
+                          <button
+                            className="btn btn-primary btn-lg w-100 w-md-auto px-5"
+                            type="button"
+                            onClick={() => haddleTakePedido(unPedido)}
+                          >
+                            Tomar Pedido
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row text-start align-items-center">
-                      <button
-                        className="btn btn-primary"
-                        type="button"
-                        onClick={() => haddleTakePedido(unPedido)}
-                      >
-                        Tomar Pedido
-                      </button>
-                    </div>
-                  </div>
-                </Accordion.Body>
-              </Accordion.Item>
-            ))}
-          </Accordion>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                ))}
+              </Accordion>
+            </div>
+          )}
+
+          {pedido_resolucion_loading && <div className="p-3">Cargando...</div>}
+          {pedido_resolucion_error && (
+            <div className="p-3 text-danger">{pedido_resolucion_error}</div>
+          )}
         </div>
-      )}
-
-      {pedido_resolucion_loading && <div>Cargando...</div>}
-      {pedido_resolucion_error && <div>{pedido_resolucion_error}</div>}
+      </div>
     </div>
   )
 }
