@@ -170,7 +170,7 @@ export function ShowMisPedidosDenunciante() {
 
                               {/* Dificultad */}
                               <div className="col-6 col-md-2">
-                                <span className="badge bg-primary">
+                                <span className="badge bg-success">
                                   Dificultad: {unPedido.dificultad_pedido_resolucion}
                                 </span>
                               </div>
@@ -262,7 +262,7 @@ export function ShowMisPedidosDenunciante() {
                                                   <strong className="d-block small text-muted">
                                                     Dificultad
                                                   </strong>
-                                                  <span className="badge bg-info">
+                                                  <span className="badge bg-success">
                                                     {
                                                       anomalia.tipo_anomalia
                                                         .dificultad_tipo_anomalia
